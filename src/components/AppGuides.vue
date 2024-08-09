@@ -26,7 +26,7 @@ export default {
         {
           url: 'https://getbootstrap.com/docs/5.3/getting-started/contribute/',
           title: 'Contributing to Bootstrap'
-        },
+        }
       ]
     }
   }

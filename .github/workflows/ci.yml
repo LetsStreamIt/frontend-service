@@ -40,7 +40,7 @@ jobs:
         run: npm ci
       - name: Check code format
         run: npm run format:check
-  
+
   linter:
     runs-on: ubuntu-latest
     steps:
@@ -54,5 +54,3 @@ jobs:
         run: npm ci
       - name: Run ESLint
         run: npm run lint:check
-  
-
