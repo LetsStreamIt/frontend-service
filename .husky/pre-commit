@@ -1,0 +1,1 @@
+CI=true npm run test:unit && npm run lint:check && npm run format:check
