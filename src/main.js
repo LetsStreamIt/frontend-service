@@ -1,11 +1,15 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
 
-const app = createApp(App)
+// Import our custom CSS
+import './scss/styles.scss'
 
-app.use(router)
+// Import only the Bootstrap components we need
+import { Popover } from 'bootstrap'
 
-app.mount('#app')
+createApp(App).mount('#app')
+
+// Create an example popover
+document.querySelectorAll('[data-bs-toggle="popover"]').forEach((popover) => {
+  new Popover(popover)
+})
