@@ -1,7 +1,5 @@
 {
-  "name": "template-for-vuejs-projects",
-  "version": "0.0.0",
-  "private": true,
+  "name": "letsstreamit-frontend-service",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,8 +8,8 @@
     "docs:build": "vuepress build docs",
     "preview": "vite preview",
     "test:unit": "vitest",
-    "lint:fix": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "lint:check": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --ignore-path .gitignore",
+    "lint:fix": "eslint src --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint:check": "eslint src --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
     "format:write": "prettier --write src/",
     "format:check": "prettier --check src/",
     "prepare": "husky"
@@ -23,9 +21,11 @@
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "@rushstack/eslint-patch": "^1.8.0",
     "@vitejs/plugin-vue": "^5.0.5",
+    "@eslint/js": "^9.9.0",
+    "@rushstack/eslint-patch": "^1.8.0",
     "@vue/eslint-config-prettier": "^9.0.0",
+    "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/test-utils": "^2.4.6",
     "@vuepress/bundler-vite": "^2.0.0-rc.14",
     "@vuepress/theme-default": "^2.0.0-rc.40",
@@ -33,9 +33,10 @@
     "eslint-plugin-vue": "^9.23.0",
     "husky": "^9.1.4",
     "jsdom": "^24.1.0",
-    "lint-staged": "^15.2.8",
     "prettier": "^3.2.5",
     "semantic-release-preconfigured-conventional-commits": "^1.1.95",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.0.1",
     "vite": "^5.3.1",
     "vitest": "^1.6.0",
     "vuepress": "^2.0.0-rc.14"
