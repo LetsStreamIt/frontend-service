@@ -21,12 +21,13 @@ import { RouterLink } from 'vue-router'
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <RouterLink to="/" class="nav-link"
-              >Home <span class="sr-only">(current)</span></RouterLink
-            >
+            <RouterLink to="/" class="nav-link">Home</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/about" class="nav-link">About</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink to="/" class="nav-link">Profile</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/session" class="nav-link">Session</RouterLink>
