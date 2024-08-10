@@ -1,20 +1,20 @@
 <script>
-import SessionHeader from '@/components/common/session/SessionHeader.vue'
-import SessionFooter from '@/components/common/session/SessionFooter.vue'
+import DefaultHeader from '@/components/common/default/DefaultHeader.vue'
+import FooterComponent from '@/components/common/FooterComponent.vue'
 
 export default {
   components: {
-    SessionHeader,
-    SessionFooter
+    DefaultHeader,
+    FooterComponent
   }
 }
 </script>
 
 <template>
   <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <SessionHeader />
+    <DefaultHeader />
     <router-view />
-    <SessionFooter />
+    <FooterComponent />
   </div>
 </template>
 

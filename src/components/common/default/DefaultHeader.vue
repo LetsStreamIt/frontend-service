@@ -5,10 +5,11 @@ import { RouterLink } from 'vue-router'
 <template>
   <header class="masthead mb-auto">
     <div class="inner">
-      <h3 class="masthead-brand">Cover</h3>
+      <h3 class="masthead-brand">LetsStreamIt</h3>
       <nav class="nav nav-masthead justify-content-center">
-        <RouterLink to="/home" class="nav-link">Home</RouterLink>
+        <RouterLink to="/" class="nav-link">Home</RouterLink>
         <RouterLink to="/about" class="nav-link">About</RouterLink>
+        <RouterLink to="/" class="nav-link">Profile</RouterLink>
         <RouterLink to="/session" class="nav-link">Session</RouterLink>
       </nav>
     </div>
