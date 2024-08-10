@@ -3,7 +3,11 @@
 </script>
 
 <template>
-    <iframe class="responsive-iframe embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+  <iframe
+    class="responsive-iframe embed-responsive-item"
+    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+    allowfullscreen
+  ></iframe>
 </template>
 
 <style>
