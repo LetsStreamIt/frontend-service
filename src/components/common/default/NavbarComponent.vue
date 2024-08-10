@@ -3,8 +3,10 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
+
+  
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container-fluid">
       <a class="navbar-brand" href="#">Let's Stream It!</a>
       <button
         class="navbar-toggler"

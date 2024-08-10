@@ -33,7 +33,7 @@ export default {
 <template>
   <div @click="toggleChat" style="border-radius: 15px">
     <div
-      class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0"
+      class="card-header d-flex justify-content-between align-items-center p-3 bg-dark text-white border-bottom-0"
       style="border-top-left-radius: 15px; border-top-right-radius: 15px"
     >
       <i class="fas fa-angle-left"></i>
