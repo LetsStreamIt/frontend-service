@@ -3,13 +3,16 @@
 </script>
 
 <template>
-  <div class="embed-responsive embed-responsive-16by9">
-    <iframe
-      class="embed-responsive-item"
-      src="https://www.youtube.com/embed/JQHZ1hS__Bk?si=rQ7hk3BfdCw12tPJ"
-      allowfullscreen
-    ></iframe>
-  </div>
+    <iframe class="responsive-iframe embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
 </template>
 
-<style></style>
+<style>
+.responsive-iframe {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
