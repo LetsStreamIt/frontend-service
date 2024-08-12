@@ -1,3 +1,18 @@
+## [0.3.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.2.0...v0.3.0) (2024-08-12)
+
+### Features
+
+* scrolling and responsive chat ([dcc22cc](https://github.com/LetsStreamIt/frontend-service/commit/dcc22cc6e24214fb4886446e6f92ea0a57a43fbc))
+
+### Dependency updates
+
+* **deps:** update dependency vue to v3.4.37 ([c04b5d0](https://github.com/LetsStreamIt/frontend-service/commit/c04b5d017aa860760d6fb4a702458346b94546ac))
+
+### General maintenance
+
+* format code ([220131a](https://github.com/LetsStreamIt/frontend-service/commit/220131abaa7ad77bb50250313e3f636d666efbc9))
+* organize containers and layouts ([d0a5ecb](https://github.com/LetsStreamIt/frontend-service/commit/d0a5ecbacd1ee37f14820128a290362fd0da42d4))
+
 ## [0.2.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.1.0...v0.2.0) (2024-08-10)
 
 ### Features
