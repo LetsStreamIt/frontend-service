@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router'
 <template>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Let's Stream It!</a>
+      <a class="navbar-brand" href="#">LetsStreamIt</a>
       <button
         class="navbar-toggler"
         type="button"

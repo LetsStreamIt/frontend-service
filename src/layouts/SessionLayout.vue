@@ -13,9 +13,7 @@ export default {
 <template>
   <SessionNavbar />
   <router-view />
-  <div class="row">
-    <FooterComponent />
-  </div>
+  <FooterComponent />
 </template>
 
 <style></style>
