@@ -1,20 +1,19 @@
 <template>
-  <div class="mb-3">
-    <label :for="id" class="form-label">{{ label }}</label>
-    <input
-      :id="id"
-      :type="type"
-      :placeholder="placeholder"
-      :value="modelValue"
-      @input="onInput"
-      @blur="onBlur"
-      :class="['form-control', { 'is-invalid': hasErrors }]"
-    />
-    <div v-if="hasErrors" class="invalid-feedback">
-      <ul class="mb-0">
-        <li v-for="error in errors" :key="error">{{ error }}</li>
-      </ul>
-    </div>
+  <input
+    :id="id"
+    :type="type"
+    :placeholder="placeholder"
+    :value="modelValue"
+    :autofocus="autofocus"
+    :required="required"
+    @input="onInput"
+    @blur="onBlur"
+    :class="['form-control', { 'is-invalid': hasErrors }]"
+  />
+  <div v-if="hasErrors" class="invalid-feedback">
+    <ul class="my-1">
+      <li v-for="error in errors" :key="error">{{ error }}</li>
+    </ul>
   </div>
 </template>
 
@@ -41,6 +40,14 @@ const props = defineProps({
   modelValue: {
     type: String,
     default: ''
+  },
+  autofocus: {
+    type: Boolean,
+    default: false
+  },
+  required: {
+    type: Boolean,
+    default: false
   },
   errors: {
     type: Array as () => string[],
