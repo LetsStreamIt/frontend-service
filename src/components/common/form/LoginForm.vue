@@ -1,24 +1,41 @@
 <template>
-  <form @submit.prevent="submitForm" novalidate>
-    <InputField
-      id="email"
-      label="Email"
-      type="email"
-      v-model="form.email"
-      placeholder="Enter your email"
-    />
-    <InputField
-      id="password"
-      label="Password"
-      type="password"
-      v-model="form.password"
-      placeholder="Enter your password"
-    />
-    <div v-if="form.error" class="alert alert-danger mt-3" role="alert">
-      {{ form.error }}
+  <div class="form-signin mt-auto row text-center justify-content-center p-3">
+    <div class="col-lg-4 col-md-6">
+      <!-- TODO: insert logo -->
+      <img class="mb-5 logo" src="https://via.placeholder.com/300x150" alt="Logo" />
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <form @submit.prevent="submitForm" novalidate>
+        <div class="py-3">
+          <InputField
+            id="email"
+            label="Email"
+            type="email"
+            v-model="form.email"
+            placeholder="Email"
+            autofocus
+            required
+          />
+          <InputField
+            id="password"
+            label="Password"
+            type="password"
+            v-model="form.password"
+            placeholder="Password"
+            required
+          />
+          <div v-if="form.error" class="alert alert-danger mt-3" role="alert">
+            {{ form.error }}
+          </div>
+        </div>
+        <div class="text-center my-2">
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+        </div>
+        <div class="text-center mt-3">
+          <p>Not a member? <a href="#!">Create an account</a></p>
+        </div>
+      </form>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -63,3 +80,22 @@ function submitForm() {
     })
 }
 </script>
+
+<style lang="scss">
+.form-signin {
+  .logo {
+    max-width: 100%;
+  }
+  input[type='email'] {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  input[type='password'] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  button[type='submit'] {
+    width: 100%;
+  }
+}
+</style>
