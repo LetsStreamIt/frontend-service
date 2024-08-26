@@ -1,8 +1,19 @@
 <script>
+import TextMessageComponent from '@/components/session/TextMessageComponent.vue'
+import { socket } from '@/socket'
+import { connectToChat } from './message'
+import { Ack } from './message'
 export default {
+  components: {
+    TextMessageComponent
+  },
+
   data() {
     return {
-      isHidden: false
+      chatMessages: [],
+      isHidden: false,
+      room: 'myroom',
+      inputMessage: ''
     }
   },
 
@@ -15,18 +26,51 @@ export default {
       }
     },
     toggleChatChar() {
-      if (this.isHidden) {
-        return '▲'
-      } else {
-        return '▼'
-      }
+      return this.isHidden ? '▲' : '▼'
     }
   },
 
   methods: {
+    connect() {
+      socket.connect()
+    },
+
+    disconnect() {
+      socket.disconnect()
+    },
+
     toggleChat() {
       this.isHidden = !this.isHidden
+    },
+
+    sendMessage() {
+      if (this.inputMessage && this.room) {
+        socket.emit('sendMessage', { message: this.inputMessage }, (ack) => {
+          if (Ack[ack] == 'OK') {
+            console.log('SENT')
+          } else {
+            console.log('FAILURE SEND')
+          }
+        })
+        this.inputMessage = ''
+      }
+    },
+
+    joinRoom() {
+      if (this.room) {
+        socket.emit('joinRoom', { room: this.room }, (ack) => {
+          if (Ack[ack] == 'OK') {
+            console.log('JOINED')
+          } else {
+            console.log('FAILURE')
+          }
+        })
+      }
     }
+  },
+
+  mounted() {
+    connectToChat(socket, this.chatMessages, this.joinRoom)
   }
 }
 </script>
@@ -45,159 +89,16 @@ export default {
     </div>
 
     <div :class="cardClass" style="max-height: 500px">
-      <div class="d-flex flex-row justify-content-start mb-4">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-        <div
-          class="p-3 ms-3"
-          style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)"
-        >
-          <p class="small mb-0">
-            Hello and thank you for visiting MDBootstrap. Please click the video below.
-          </p>
-        </div>
-      </div>
-
-      <div class="d-flex flex-row justify-content-start mb-4">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-        <div
-          class="p-3 ms-3"
-          style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)"
-        >
-          <p class="small mb-0">
-            Hello and thank you for visiting MDBootstrap. Please click the video below.
-          </p>
-        </div>
-      </div>
-      <div class="d-flex flex-row justify-content-start mb-4">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-        <div
-          class="p-3 ms-3"
-          style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)"
-        >
-          <p class="small mb-0">
-            Hello and thank you for visiting MDBootstrap. Please click the video below.
-          </p>
-        </div>
-      </div>
-      <div class="d-flex flex-row justify-content-start mb-4">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-        <div
-          class="p-3 ms-3"
-          style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)"
-        >
-          <p class="small mb-0">
-            Hello and thank you for visiting MDBootstrap. Please click the video below.
-          </p>
-        </div>
-      </div>
-      <div class="d-flex flex-row justify-content-start mb-4">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-        <div
-          class="p-3 ms-3"
-          style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)"
-        >
-          <p class="small mb-0">
-            Hello and thank you for visiting MDBootstrap. Please click the video below.
-          </p>
-        </div>
-      </div>
-
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
+      <div v-for="message in chatMessages" :key="`${message.mame}-${message.surname}`">
+        <TextMessageComponent
+          :text="message.text"
+          :name="message.name"
+          :surname="message.surname"
         />
       </div>
 
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
-
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
-
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
-
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
+      <input type="text" v-model="inputMessage" placeholder="Message" @keyup.enter="sendMessage" />
+      <button @click="sendMessage">Send Message</button>
     </div>
   </div>
 </template>
-
-<style>
-/* .col-fixed {
-    display: flex;
-    flex-direction: column;
-    height: 300px;
-}
-
-.card-bottom {
-    margin-top: auto;
-} */
-</style>
