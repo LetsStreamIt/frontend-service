@@ -5,11 +5,11 @@ import {
   MessageContent,
   NotificationMessage,
   TextMessage
-} from '../../components/session/model/message'
+} from '../../../components/session/model/message'
 import {
   NotificationMessageDeserializer,
   TextMessageDeserializer
-} from '../../components/session/model/presentation/deserialization/messageDeserializer'
+} from '../../../components/session/model/presentation/deserialization/messageDeserializer'
 import { ChatController } from './chatController'
 
 export class ChatControllerImpl implements ChatController {
