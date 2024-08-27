@@ -9,7 +9,7 @@ import SessionFrame from '@/components/session/SessionFrame.vue'
       <SessionFrame />
     </div>
     <div class="col-md-4 col-12 d-flex align-items-end py-5">
-      <SessionChat />
+      <SessionChat :roomName="`myRoom`" :chatUrl="`http://localhost:3000`" />
     </div>
   </div>
 </template>

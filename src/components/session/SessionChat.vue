@@ -1,34 +1,59 @@
-<script>
-export default {
-  data() {
-    return {
-      isHidden: false
-    }
-  },
+<script setup lang="ts">
+import { ref, toRefs, onMounted, Ref } from 'vue'
+import { ChatController, ChatControllerImpl } from '../../controllers/chatController/chatController'
+import { NotificationMessage, TextMessage } from './model/message'
+import TextMessageComponent from './TextMessageComponent.vue'
+import NotificationMessageComponent from './NotificationMessageComponent.vue'
 
-  computed: {
-    cardClass() {
-      return {
-        'overflow-scroll': true,
-        card: true,
-        'd-none': this.isHidden
-      }
-    },
-    toggleChatChar() {
-      if (this.isHidden) {
-        return '▲'
-      } else {
-        return '▼'
-      }
-    }
+const props = defineProps({
+  chatUrl: {
+    type: String,
+    required: true
   },
-
-  methods: {
-    toggleChat() {
-      this.isHidden = !this.isHidden
-    }
+  roomName: {
+    type: String,
+    required: true
   }
+})
+
+const { chatUrl, roomName } = toRefs(props)
+
+const isChatHidden: Ref<boolean> = ref(false)
+const inputMessage: Ref<string> = ref('')
+const chatMessages: Ref<any[]> = ref([])
+const toggleChatChar: Ref<string> = ref('▼')
+const chatController: Ref<ChatController> = ref(
+  new ChatControllerImpl(chatUrl.value, 'token1', roomName.value)
+)
+
+function toggleChat() {
+  isChatHidden.value = !isChatHidden.value
+  toggleChatChar.value = isChatHidden.value ? '▲' : '▼'
 }
+
+function sendMessage() {
+  chatController.value.sendMessage(inputMessage.value)
+  inputMessage.value = ''
+}
+
+const cardClass = ref({
+  'overflow-scroll': true,
+  card: true,
+  'd-none': isChatHidden
+})
+
+function messageCallback(message: TextMessage) {
+  console.log('message', message)
+  chatMessages.value.push(message)
+}
+
+function notificationCallback(message: NotificationMessage) {
+  chatMessages.value.push(message)
+}
+
+onMounted(async () => {
+  await chatController.value.connectToChat(messageCallback, notificationCallback)
+})
 </script>
 
 <template>
@@ -45,159 +70,18 @@ export default {
     </div>
 
     <div :class="cardClass" style="max-height: 500px">
-      <div class="d-flex flex-row justify-content-start mb-4">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
+      <!-- <h1>{{ chatMessages }}</h1> -->
+      <!-- </dynamic :template="chatMessages"></dynamic> -->
+      <div v-for="(message, index) in chatMessages" :key="index">
+        <NotificationMessageComponent
+          v-if="message.type === 'notificationMessage'"
+          :message="message"
         />
-        <div
-          class="p-3 ms-3"
-          style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)"
-        >
-          <p class="small mb-0">
-            Hello and thank you for visiting MDBootstrap. Please click the video below.
-          </p>
-        </div>
+        <TextMessageComponent v-if="message.type === 'textMessage'" :message="message" />
       </div>
-
-      <div class="d-flex flex-row justify-content-start mb-4">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-        <div
-          class="p-3 ms-3"
-          style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)"
-        >
-          <p class="small mb-0">
-            Hello and thank you for visiting MDBootstrap. Please click the video below.
-          </p>
-        </div>
-      </div>
-      <div class="d-flex flex-row justify-content-start mb-4">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-        <div
-          class="p-3 ms-3"
-          style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)"
-        >
-          <p class="small mb-0">
-            Hello and thank you for visiting MDBootstrap. Please click the video below.
-          </p>
-        </div>
-      </div>
-      <div class="d-flex flex-row justify-content-start mb-4">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-        <div
-          class="p-3 ms-3"
-          style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)"
-        >
-          <p class="small mb-0">
-            Hello and thank you for visiting MDBootstrap. Please click the video below.
-          </p>
-        </div>
-      </div>
-      <div class="d-flex flex-row justify-content-start mb-4">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-        <div
-          class="p-3 ms-3"
-          style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)"
-        >
-          <p class="small mb-0">
-            Hello and thank you for visiting MDBootstrap. Please click the video below.
-          </p>
-        </div>
-      </div>
-
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
-
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
-
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
-
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
-
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
-      <div class="d-flex flex-row justify-content-end mb-4">
-        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb">
-          <p class="small mb-0">Thank you, I really like your product.</p>
-        </div>
-        <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-          alt="avatar 1"
-          style="width: 45px; height: 100%"
-        />
-      </div>
+      <div v-html="chatMessages"></div>
+      <input type="text" v-model="inputMessage" placeholder="Message" />
+      <button @click="sendMessage">Send Message</button>
     </div>
   </div>
 </template>
-
-<style>
-/* .col-fixed {
-    display: flex;
-    flex-direction: column;
-    height: 300px;
-}
-
-.card-bottom {
-    margin-top: auto;
-} */
-</style>
