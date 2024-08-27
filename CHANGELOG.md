@@ -1,3 +1,20 @@
+## [0.4.2](https://github.com/LetsStreamIt/frontend-service/compare/v0.4.1...v0.4.2) (2024-08-27)
+
+### Bug Fixes
+
+* imports ([31762b0](https://github.com/LetsStreamIt/frontend-service/commit/31762b015fb600cf0482ca3f23eea62e5b702e02))
+
+### General maintenance
+
+* del already copied controller ([cdf1989](https://github.com/LetsStreamIt/frontend-service/commit/cdf198913c0e34bcfe94b01552da1851111ece27))
+* style notification message ([43f7bf9](https://github.com/LetsStreamIt/frontend-service/commit/43f7bf9551f472765d563941d02752b4624b0cea))
+
+### Refactoring
+
+* chat components code ([b4ff9c0](https://github.com/LetsStreamIt/frontend-service/commit/b4ff9c0da9d86800b5c47d18531983eed2967c49))
+* directory structure ([e690ee4](https://github.com/LetsStreamIt/frontend-service/commit/e690ee494c365fcba0df2d3115d40fcd12000eea))
+* refactor SessionChat variables, add disconnection onUnmounted ([dd5fb91](https://github.com/LetsStreamIt/frontend-service/commit/dd5fb919474661896e743b10a2008b27636d2c22))
+
 ## [0.4.1](https://github.com/LetsStreamIt/frontend-service/compare/v0.4.0...v0.4.1) (2024-08-27)
 
 ### Dependency updates
