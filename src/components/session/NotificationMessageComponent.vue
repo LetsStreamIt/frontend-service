@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { toRefs } from 'vue'
-import { TextMessage } from './model/message'
+import { NotificationMessage, Notification } from './model/message'
 
 const props = defineProps({
   message: {
-    type: TextMessage,
+    type: NotificationMessage,
     required: true
   }
 })
 
 const { message } = toRefs(props)
+
+function messageBody(notification: Notification): string {
+  return notification == Notification.JOINROOM ? 'Joined the room' : 'Left the room'
+}
 </script>
 
 <template>
@@ -22,7 +26,7 @@ const { message } = toRefs(props)
     <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)">
       <p class="small mb-0">
         {{ message.getSender.value.getX }} {{ message.getSender.value.getY }}:
-        {{ message.getContent }}
+        {{ messageBody(message.getContent) }}
       </p>
     </div>
   </div>

@@ -1,78 +1,59 @@
-<script>
-import TextMessageComponent from '@/components/session/TextMessageComponent.vue'
-import { socket } from '@/socket'
-import { connectToChat } from './message'
-import { Ack } from './message'
-export default {
-  components: {
-    TextMessageComponent
+<script setup lang="ts">
+import { ref, toRefs, onMounted, Ref } from 'vue'
+import { ChatController, ChatControllerImpl } from '../../controllers/chatController/chatController'
+import { NotificationMessage, TextMessage } from './model/message'
+import TextMessageComponent from './TextMessageComponent.vue'
+import NotificationMessageComponent from './NotificationMessageComponent.vue'
+
+const props = defineProps({
+  chatUrl: {
+    type: String,
+    required: true
   },
-
-  data() {
-    return {
-      chatMessages: [],
-      isHidden: false,
-      room: 'myroom',
-      inputMessage: ''
-    }
-  },
-
-  computed: {
-    cardClass() {
-      return {
-        'overflow-scroll': true,
-        card: true,
-        'd-none': this.isHidden
-      }
-    },
-    toggleChatChar() {
-      return this.isHidden ? '▲' : '▼'
-    }
-  },
-
-  methods: {
-    connect() {
-      socket.connect()
-    },
-
-    disconnect() {
-      socket.disconnect()
-    },
-
-    toggleChat() {
-      this.isHidden = !this.isHidden
-    },
-
-    sendMessage() {
-      if (this.inputMessage && this.room) {
-        socket.emit('sendMessage', { message: this.inputMessage }, (ack) => {
-          if (Ack[ack] == 'OK') {
-            console.log('SENT')
-          } else {
-            console.log('FAILURE SEND')
-          }
-        })
-        this.inputMessage = ''
-      }
-    },
-
-    joinRoom() {
-      if (this.room) {
-        socket.emit('joinRoom', { room: this.room }, (ack) => {
-          if (Ack[ack] == 'OK') {
-            console.log('JOINED')
-          } else {
-            console.log('FAILURE')
-          }
-        })
-      }
-    }
-  },
-
-  mounted() {
-    connectToChat(socket, this.chatMessages, this.joinRoom)
+  roomName: {
+    type: String,
+    required: true
   }
+})
+
+const { chatUrl, roomName } = toRefs(props)
+
+const isChatHidden: Ref<boolean> = ref(false)
+const inputMessage: Ref<string> = ref('')
+const chatMessages: Ref<any[]> = ref([])
+const toggleChatChar: Ref<string> = ref('▼')
+const chatController: Ref<ChatController> = ref(
+  new ChatControllerImpl(chatUrl.value, 'token1', roomName.value)
+)
+
+function toggleChat() {
+  isChatHidden.value = !isChatHidden.value
+  toggleChatChar.value = isChatHidden.value ? '▲' : '▼'
 }
+
+function sendMessage() {
+  chatController.value.sendMessage(inputMessage.value)
+  inputMessage.value = ''
+}
+
+const cardClass = ref({
+  'overflow-scroll': true,
+  card: true,
+  'd-none': isChatHidden
+})
+
+function messageCallback(message: TextMessage) {
+  console.log('message', message)
+  chatMessages.value.push(message)
+}
+
+function notificationCallback(message: NotificationMessage) {
+  chatMessages.value.push(message)
+}
+
+onMounted(async () => {
+  await chatController.value.connectToChat(messageCallback, notificationCallback)
+})
 </script>
 
 <template>
@@ -89,15 +70,17 @@ export default {
     </div>
 
     <div :class="cardClass" style="max-height: 500px">
-      <div v-for="message in chatMessages" :key="`${message.mame}-${message.surname}`">
-        <TextMessageComponent
-          :text="message.text"
-          :name="message.name"
-          :surname="message.surname"
+      <!-- <h1>{{ chatMessages }}</h1> -->
+      <!-- </dynamic :template="chatMessages"></dynamic> -->
+      <div v-for="(message, index) in chatMessages" :key="index">
+        <NotificationMessageComponent
+          v-if="message.type === 'notificationMessage'"
+          :message="message"
         />
+        <TextMessageComponent v-if="message.type === 'textMessage'" :message="message" />
       </div>
-
-      <input type="text" v-model="inputMessage" placeholder="Message" @keyup.enter="sendMessage" />
+      <div v-html="chatMessages"></div>
+      <input type="text" v-model="inputMessage" placeholder="Message" />
       <button @click="sendMessage">Send Message</button>
     </div>
   </div>
