@@ -3,5 +3,6 @@ import { Message } from '../../components/session/model/message'
 
 export interface ChatController {
   connectToChat(recvMessageCallback: (message: Message<MessageContent>) => void): Promise<void>
-  sendMessage(message: string): void
+  sendMessage(message: string): Promise<void>
+  disconnectToChat(): Promise<void>
 }

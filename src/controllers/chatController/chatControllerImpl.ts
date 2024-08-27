@@ -1,5 +1,6 @@
 import { io, Socket } from 'socket.io-client'
 import {
+  Ack,
   Message,
   MessageContent,
   NotificationMessage,
@@ -46,8 +47,19 @@ export class ChatControllerImpl implements ChatController {
     })
   }
 
-  sendMessage(message: string): void {
-    this.socket.emit('sendMessage', { message: message }, () => {})
+  sendMessage(message: string): Promise<void> {
+    return new Promise((resolve) => {
+      this.socket.emit('sendMessage', { message: message }, () => {
+        resolve()
+      })
+    })
+  }
+
+  disconnectToChat(): Promise<void> {
+    return new Promise((resolve) => {
+      this.socket.emit('leaveRoom')
+      resolve()
+    })
   }
 
   private async connection(): Promise<void> {
