@@ -2,8 +2,8 @@
 import { ref, toRefs, onMounted, onUnmounted, computed } from 'vue'
 import { ChatController } from '../../../controllers/session/chat/chatController'
 import { Message, MessageContent } from '../model/message'
-import TextMessageComponent from './chat/message/TextMessageComponent.vue'
-import NotificationMessageComponent from './chat/message/NotificationMessageComponent.vue'
+import TextMessageComponent from './message/TextMessageComponent.vue'
+import NotificationMessageComponent from './message/NotificationMessageComponent.vue'
 import { ChatControllerImpl } from '../../../controllers/session/chat/chatControllerImpl'
 
 const props = defineProps({
