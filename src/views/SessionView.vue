@@ -1,6 +1,6 @@
-<script setup>
-import SessionChat from '@/components/session/SessionChat.vue'
-import SessionFrame from '@/components/session/SessionFrame.vue'
+<script setup lang="ts">
+import SessionChat from '../components/session/chat/SessionChat.vue'
+import SessionFrame from '../components/session/chat/SessionFrame.vue'
 </script>
 
 <template>
