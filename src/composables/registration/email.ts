@@ -1,7 +1,7 @@
-import { ref, watch, Ref } from 'vue'
+import { ref, watch } from 'vue'
 export function useEmailValidator() {
   const email = ref('')
-  const emailError: Ref<string[]> = ref([])
+  const emailError = ref<string[]>([])
   const isValidEmail = ref(false)
 
   const validateEmail = () => {
@@ -16,7 +16,6 @@ export function useEmailValidator() {
     } else {
       emailError.value = []
     }
-    console.log('emailError', emailError.value)
   })
   return { email, emailError, isValidEmail }
 }
