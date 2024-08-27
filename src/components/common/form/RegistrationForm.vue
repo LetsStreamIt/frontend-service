@@ -18,13 +18,14 @@
                 required
               />
             </div>
-            <div class="form-group col-lg-6 mb-4">
+            <div :class="`form-group col-lg-6 ${emailError.length == 0 && 'mb-4'}`">
               <InputField
                 id="email"
                 label="Email"
                 type="email"
-                v-model="form.email"
+                v-model="email"
                 placeholder="Email"
+                :errors="emailError"
                 required
               />
             </div>
@@ -78,21 +79,22 @@ import { ref } from 'vue'
 import InputField from './InputField.vue'
 import axios, { AxiosError } from 'axios'
 import { useRouter } from 'vue-router'
+import { useEmailValidator } from '@/composables/registration/email'
 
 const router = useRouter()
 
 interface FormState {
   username: string
-  email: string
   password: string
   confirmPassword: string
   profilePicture: File | null
   error: string
 }
 
+const { email, emailError, isValidEmail } = useEmailValidator()
+
 const form = ref<FormState>({
   username: '',
-  email: '',
   password: '',
   confirmPassword: '',
   profilePicture: null,
@@ -113,13 +115,16 @@ function submitForm() {
     form.value.error = 'Passwords do not match'
     return
   }
-
+  if (!isValidEmail.value) {
+    form.value.error = 'Please enter a valid email address'
+    return
+  }
   const authUrl = import.meta.env.AUTH_URL || 'http://localhost:3000'
   const registerUrl = `${authUrl}/api/auth/register`
 
   const formData = new FormData()
   formData.append('username', form.value.username)
-  formData.append('email', form.value.email)
+  formData.append('email', email.value)
   formData.append('password', form.value.password)
   if (form.value.profilePicture) {
     formData.append('profilePicture', form.value.profilePicture)
