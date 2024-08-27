@@ -10,7 +10,7 @@
     :class="['form-control', { 'is-invalid': hasErrors }]"
   />
   <div v-if="hasErrors" class="invalid-feedback">
-    <ul class="mb-2 text-start">
+    <ul class="mb-2 no-bullets text-start">
       <li v-for="error in errors" :key="error">{{ error }}</li>
     </ul>
   </div>
@@ -64,3 +64,11 @@ function onInput(event: Event) {
 
 const hasErrors = computed(() => props.errors.length > 0)
 </script>
+
+<style scoped lang="scss">
+ul.no-bullets {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+</style>

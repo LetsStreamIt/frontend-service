@@ -31,13 +31,14 @@
             </div>
           </div>
           <div class="row">
-            <div class="form-group col-lg-6 mb-4">
+            <div :class="`form-group col-lg-6 ${passwordErrors.length == 0 && 'mb-4'}`">
               <InputField
                 id="password"
                 label="Password"
                 type="password"
-                v-model="form.password"
+                v-model="password"
                 placeholder="Password"
+                :errors="passwordErrors"
                 required
               />
             </div>
@@ -46,8 +47,9 @@
                 id="confirmPassword"
                 label="Confirm Password"
                 type="password"
-                v-model="form.confirmPassword"
+                v-model="confirmPassword"
                 placeholder="Confirm Password"
+                :errors="confirmPasswordError"
                 required
               />
             </div>
@@ -80,23 +82,29 @@ import InputField from './InputField.vue'
 import axios, { AxiosError } from 'axios'
 import { useRouter } from 'vue-router'
 import { useEmailValidator } from '@/composables/registration/email'
+import { usePasswordValidator } from '@/composables/registration/password'
 
 const router = useRouter()
 
 interface FormState {
   username: string
-  password: string
-  confirmPassword: string
   profilePicture: File | null
   error: string
 }
 
 const { email, emailError, isValidEmail } = useEmailValidator()
 
+const {
+  password,
+  confirmPassword,
+  passwordErrors,
+  confirmPasswordError,
+  isValidPassword,
+  isMatch
+} = usePasswordValidator()
+
 const form = ref<FormState>({
   username: '',
-  password: '',
-  confirmPassword: '',
   profilePicture: null,
   error: ''
 })
@@ -111,7 +119,11 @@ function handleFileUpload(event: Event) {
 
 function submitForm() {
   form.value.error = ''
-  if (form.value.password !== form.value.confirmPassword) {
+  if (!isValidPassword) {
+    form.value.error = 'Invalid password'
+    return
+  }
+  if (!isMatch) {
     form.value.error = 'Passwords do not match'
     return
   }
@@ -122,20 +134,14 @@ function submitForm() {
   const authUrl = import.meta.env.AUTH_URL || 'http://localhost:3000'
   const registerUrl = `${authUrl}/api/auth/register`
 
-  const formData = new FormData()
-  formData.append('username', form.value.username)
-  formData.append('email', email.value)
-  formData.append('password', form.value.password)
-  if (form.value.profilePicture) {
-    formData.append('profilePicture', form.value.profilePicture)
+  const formData = {
+    username: form.value.username,
+    email: email.value,
+    password: password.value
   }
 
   axios
-    .post(registerUrl, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    .post(registerUrl, formData)
     .then(() => {
       router.push('/login')
     })
