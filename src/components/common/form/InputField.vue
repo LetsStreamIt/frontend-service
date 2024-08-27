@@ -7,11 +7,10 @@
     :autofocus="autofocus"
     :required="required"
     @input="onInput"
-    @blur="onBlur"
     :class="['form-control', { 'is-invalid': hasErrors }]"
   />
   <div v-if="hasErrors" class="invalid-feedback">
-    <ul class="my-1">
+    <ul class="mb-2 text-start">
       <li v-for="error in errors" :key="error">{{ error }}</li>
     </ul>
   </div>
@@ -61,10 +60,6 @@ const { modelValue } = toRefs(props)
 
 function onInput(event: Event) {
   emit('update:modelValue', (event.target as HTMLInputElement).value)
-}
-
-function onBlur() {
-  emit('update:modelValue', modelValue.value) // Triggers reactivity in parent
 }
 
 const hasErrors = computed(() => props.errors.length > 0)
