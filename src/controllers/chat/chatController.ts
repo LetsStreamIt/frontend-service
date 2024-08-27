@@ -1,5 +1,5 @@
-import { MessageContent } from '../../components/session/model/message'
-import { Message } from '../../components/session/model/message'
+import { MessageContent } from '../../../components/session/model/message'
+import { Message } from '../../../components/session/model/message'
 
 export interface ChatController {
   connectToChat(recvMessageCallback: (message: Message<MessageContent>) => void): Promise<void>

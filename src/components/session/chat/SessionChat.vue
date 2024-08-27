@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, toRefs, onMounted, Ref, reactive, onUnmounted, computed } from 'vue'
-import { ChatController } from '../../controllers/chatController/chatController'
-import { Message, MessageContent } from './model/message'
-import TextMessageComponent from './TextMessageComponent.vue'
-import NotificationMessageComponent from './NotificationMessageComponent.vue'
-import { ChatControllerImpl } from '../../controllers/chatController/chatControllerImpl'
+import { ref, toRefs, onMounted, onUnmounted, computed } from 'vue'
+import { ChatController } from '../../../controllers/session/chat/chatController'
+import { Message, MessageContent } from '../model/message'
+import TextMessageComponent from './chat/message/TextMessageComponent.vue'
+import NotificationMessageComponent from './chat/message/NotificationMessageComponent.vue'
+import { ChatControllerImpl } from '../../../controllers/session/chat/chatControllerImpl'
 
 const props = defineProps({
   chatUrl: {
