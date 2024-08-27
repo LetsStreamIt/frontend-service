@@ -1,3 +1,15 @@
+## [0.4.1](https://github.com/LetsStreamIt/frontend-service/compare/v0.4.0...v0.4.1) (2024-08-27)
+
+### Dependency updates
+
+* **deps:** update dependency @eslint/js to v9.9.1 ([45b960a](https://github.com/LetsStreamIt/frontend-service/commit/45b960a14c77afe2038a9f297b33d2e128dfedbc))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.101 ([262bdf0](https://github.com/LetsStreamIt/frontend-service/commit/262bdf01a5f13bf4dda153d76c3d4924dd983073))
+* **deps:** update vuepress monorepo ([60c076f](https://github.com/LetsStreamIt/frontend-service/commit/60c076f7cc6abd11f099faa1d03ec9dd30784686))
+
+### Bug Fixes
+
+* add shared model ([e879ae4](https://github.com/LetsStreamIt/frontend-service/commit/e879ae4f70d0747d124bf7b4ed1fc25a535d2b53))
+
 ## [0.4.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.3.0...v0.4.0) (2024-08-24)
 
 ### Features

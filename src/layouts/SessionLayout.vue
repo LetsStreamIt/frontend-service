@@ -11,9 +11,15 @@ export default {
 </script>
 
 <template>
-  <SessionNavbar />
-  <router-view />
-  <FooterComponent />
+  <div class="row">
+    <SessionNavbar />
+  </div>
+  <div class="row vh-100">
+    <router-view />
+  </div>
+  <div class="row">
+    <FooterComponent />
+  </div>
 </template>
 
 <style></style>
