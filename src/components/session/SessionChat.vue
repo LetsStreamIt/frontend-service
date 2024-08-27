@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, toRefs, onMounted, Ref } from 'vue'
-import { ChatController, ChatControllerImpl } from '../../controllers/chatController/chatController'
-import { NotificationMessage, TextMessage } from './model/message'
+import { ChatController } from '../../controllers/chatController/chatController'
+import { Message, MessageContent } from './model/message'
 import TextMessageComponent from './TextMessageComponent.vue'
 import NotificationMessageComponent from './NotificationMessageComponent.vue'
+import { ChatControllerImpl } from '../../controllers/chatController/chatControllerImpl'
 
 const props = defineProps({
   chatUrl: {
@@ -42,17 +43,13 @@ const cardClass = ref({
   'd-none': isChatHidden
 })
 
-function messageCallback(message: TextMessage) {
+function recvMessageCallback(message: Message<MessageContent>) {
   console.log('message', message)
   chatMessages.value.push(message)
 }
 
-function notificationCallback(message: NotificationMessage) {
-  chatMessages.value.push(message)
-}
-
 onMounted(async () => {
-  await chatController.value.connectToChat(messageCallback, notificationCallback)
+  await chatController.value.connectToChat(recvMessageCallback)
 })
 </script>
 
@@ -70,8 +67,6 @@ onMounted(async () => {
     </div>
 
     <div :class="cardClass" style="max-height: 500px">
-      <!-- <h1>{{ chatMessages }}</h1> -->
-      <!-- </dynamic :template="chatMessages"></dynamic> -->
       <div v-for="(message, index) in chatMessages" :key="index">
         <NotificationMessageComponent
           v-if="message.type === 'notificationMessage'"
