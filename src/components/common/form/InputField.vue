@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs } from 'vue'
+import { toRefs, computed } from 'vue'
 
 const props = defineProps({
   id: {
@@ -67,5 +67,5 @@ function onBlur() {
   emit('update:modelValue', modelValue.value) // Triggers reactivity in parent
 }
 
-const hasErrors = props.errors.length > 0
+const hasErrors = computed(() => props.errors.length > 0)
 </script>
