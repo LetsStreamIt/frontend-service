@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, onMounted, Ref } from 'vue'
+import { ref, toRefs, onMounted, Ref, reactive, onUnmounted, computed } from 'vue'
 import { ChatController } from '../../controllers/chatController/chatController'
 import { Message, MessageContent } from './model/message'
 import TextMessageComponent from './TextMessageComponent.vue'
@@ -19,37 +19,48 @@ const props = defineProps({
 
 const { chatUrl, roomName } = toRefs(props)
 
-const isChatHidden: Ref<boolean> = ref(false)
-const inputMessage: Ref<string> = ref('')
-const chatMessages: Ref<any[]> = ref([])
-const toggleChatChar: Ref<string> = ref('▼')
-const chatController: Ref<ChatController> = ref(
-  new ChatControllerImpl(chatUrl.value, 'token1', roomName.value)
-)
+// Style attributes
+const chatStyleAttr = ref({
+  isChatHidden: false,
+  toggleChatChar: '▼'
+})
+
+// Variables used to manage chat contents
+const chatContent = ref({
+  inputMessage: '',
+  chatMessages: [] as any[],
+  chatController: new ChatControllerImpl(chatUrl.value, 'token', roomName.value) as ChatController
+})
+
+const cardClass = computed(() => {
+  return {
+    'overflow-scroll': true,
+    card: true,
+    'd-none': chatStyleAttr.value.isChatHidden
+  }
+})
 
 function toggleChat() {
-  isChatHidden.value = !isChatHidden.value
-  toggleChatChar.value = isChatHidden.value ? '▲' : '▼'
+  chatStyleAttr.value.isChatHidden = !chatStyleAttr.value.isChatHidden
+  chatStyleAttr.value.toggleChatChar = chatStyleAttr.value.toggleChatChar === '▼' ? '▲' : '▼'
 }
 
 function sendMessage() {
-  chatController.value.sendMessage(inputMessage.value)
-  inputMessage.value = ''
+  chatContent.value.chatController.sendMessage(chatContent.value.inputMessage)
+  chatContent.value.inputMessage = ''
 }
 
-const cardClass = ref({
-  'overflow-scroll': true,
-  card: true,
-  'd-none': isChatHidden
-})
-
 function recvMessageCallback(message: Message<MessageContent>) {
-  console.log('message', message)
-  chatMessages.value.push(message)
+  chatContent.value.chatMessages.push(message)
 }
 
 onMounted(async () => {
-  await chatController.value.connectToChat(recvMessageCallback)
+  // Connect to the chat whenever is mounted
+  await chatContent.value.chatController.connectToChat(recvMessageCallback)
+})
+
+onUnmounted(async () => {
+  await chatContent.value.chatController.disconnectToChat()
 })
 </script>
 
@@ -62,20 +73,20 @@ onMounted(async () => {
       <i class="fas fa-angle-left"></i>
       <p class="mb-0 fw-bold">Live chat</p>
       <button @click="toggleChat" type="button" class="btn text-white fw-bold fs-5">
-        {{ toggleChatChar }}
+        {{ chatStyleAttr.toggleChatChar }}
       </button>
     </div>
 
     <div :class="cardClass" style="max-height: 500px">
-      <div v-for="(message, index) in chatMessages" :key="index">
+      <div v-for="(message, index) in chatContent.chatMessages" :key="index">
         <NotificationMessageComponent
           v-if="message.type === 'notificationMessage'"
           :message="message"
         />
         <TextMessageComponent v-if="message.type === 'textMessage'" :message="message" />
       </div>
-      <div v-html="chatMessages"></div>
-      <input type="text" v-model="inputMessage" placeholder="Message" />
+      <div v-html="chatContent.chatMessages"></div>
+      <input type="text" v-model="chatContent.inputMessage" placeholder="Message" />
       <button @click="sendMessage">Send Message</button>
     </div>
   </div>
