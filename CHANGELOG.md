@@ -1,3 +1,13 @@
+## [0.5.1](https://github.com/LetsStreamIt/frontend-service/compare/v0.5.0...v0.5.1) (2024-08-28)
+
+### Bug Fixes
+
+* fixed auth check on page access ([ad8613a](https://github.com/LetsStreamIt/frontend-service/commit/ad8613a91dedb69c936bb38e94ec2a46d73a90ec))
+
+### General maintenance
+
+* remove auth check were not needed ([6ed42ed](https://github.com/LetsStreamIt/frontend-service/commit/6ed42ed5c65e37ddac164a119ff47d4255efa2c3))
+
 ## [0.5.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.4.2...v0.5.0) (2024-08-28)
 
 ### Features
