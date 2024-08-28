@@ -7,18 +7,17 @@
     :autofocus="autofocus"
     :required="required"
     @input="onInput"
-    @blur="onBlur"
     :class="['form-control', { 'is-invalid': hasErrors }]"
   />
   <div v-if="hasErrors" class="invalid-feedback">
-    <ul class="my-1">
+    <ul class="mb-2 no-bullets text-start">
       <li v-for="error in errors" :key="error">{{ error }}</li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, toRefs } from 'vue'
+import { toRefs, computed } from 'vue'
 
 const props = defineProps({
   id: {
@@ -55,7 +54,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'change'])
 
 const { modelValue } = toRefs(props)
 
@@ -63,9 +62,13 @@ function onInput(event: Event) {
   emit('update:modelValue', (event.target as HTMLInputElement).value)
 }
 
-function onBlur() {
-  emit('update:modelValue', modelValue.value) // Triggers reactivity in parent
-}
-
-const hasErrors = props.errors.length > 0
+const hasErrors = computed(() => props.errors.length > 0)
 </script>
+
+<style scoped lang="scss">
+ul.no-bullets {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+</style>

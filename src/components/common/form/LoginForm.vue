@@ -31,7 +31,7 @@
           <button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
         </div>
         <div class="text-center mt-3">
-          <p>Not a member? <a href="#!">Create an account</a></p>
+          <p>Not a member? <RouterLink to="/register">Create an account</RouterLink></p>
         </div>
       </form>
     </div>

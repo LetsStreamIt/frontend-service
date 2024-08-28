@@ -4,8 +4,9 @@ import AboutView from '../views/AboutView.vue'
 import HomeView from '../views/HomeView.vue'
 import DefaultLayout from '../layouts/DefaultLayout.vue'
 import SessionLayout from '../layouts/SessionLayout.vue'
-import LoginLayout from '../layouts/LoginLayout.vue'
+import AuthLayout from '../layouts/AuthLayout.vue'
 import LoginView from '../views/LoginView.vue'
+import RegistrationView from '../views/RegistrationView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,12 +40,23 @@ const router = createRouter({
     },
     {
       path: '/login',
-      component: LoginLayout,
+      component: AuthLayout,
       children: [
         {
           path: '',
           name: 'login',
           component: LoginView
+        }
+      ]
+    },
+    {
+      path: '/register',
+      component: AuthLayout,
+      children: [
+        {
+          path: '',
+          name: 'register',
+          component: RegistrationView
         }
       ]
     }
