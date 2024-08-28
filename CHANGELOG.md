@@ -1,3 +1,13 @@
+## [0.5.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.4.2...v0.5.0) (2024-08-28)
+
+### Features
+
+* added auth routes checking ([9624422](https://github.com/LetsStreamIt/frontend-service/commit/9624422f839764fbb2ea702e431ffef22eeb1228))
+
+### General maintenance
+
+* refine chat style, remove image on messages ([ec3d61d](https://github.com/LetsStreamIt/frontend-service/commit/ec3d61d08bb306565ba94408d6cc98f0ccd480e7))
+
 ## [0.4.2](https://github.com/LetsStreamIt/frontend-service/compare/v0.4.1...v0.4.2) (2024-08-27)
 
 ### Bug Fixes
