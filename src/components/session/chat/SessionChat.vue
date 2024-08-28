@@ -46,8 +46,10 @@ function toggleChat() {
 }
 
 function sendMessage() {
-  chatContent.value.chatController.sendMessage(chatContent.value.inputMessage)
-  chatContent.value.inputMessage = ''
+  if (chatContent.value.inputMessage !== '') {
+    chatContent.value.chatController.sendMessage(chatContent.value.inputMessage)
+    chatContent.value.inputMessage = ''
+  }
 }
 
 function recvMessageCallback(message: Message<MessageContent>) {
@@ -85,9 +87,10 @@ onUnmounted(async () => {
         />
         <TextMessageComponent v-if="message.type === 'textMessage'" :message="message" />
       </div>
-      <div v-html="chatContent.chatMessages"></div>
-      <input type="text" v-model="chatContent.inputMessage" placeholder="Message" />
-      <button @click="sendMessage">Send Message</button>
     </div>
+    <form @submit.prevent="sendMessage" class="form-group">
+      <input type="text" class="w-100" v-model="chatContent.inputMessage" placeholder="Message" />
+      <button type="submit" class="btn btn-primary w-100">Send Message</button>
+    </form>
   </div>
 </template>
