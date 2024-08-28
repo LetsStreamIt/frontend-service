@@ -15,22 +15,31 @@ export const useAuthStore = defineStore('auth', {
     return {
       id: '',
       email: '',
-      accessToken: '',
-      refreshToken: ''
+      accessToken: localStorage.getItem('accessToken') || '',
+      refreshToken: localStorage.getItem('refreshToken') || ''
     }
   },
   actions: {
+    setAccessToken(accessToken: string) {
+      this.accessToken = accessToken
+      localStorage.setItem('accessToken', accessToken)
+    },
+    setRefreshToken(refreshToken: string) {
+      this.refreshToken = refreshToken
+      localStorage.setItem('refreshToken', refreshToken)
+    },
     login(id: string, email: string, accessToken: string, refreshToken: string) {
       this.id = id
       this.email = email
       this.accessToken = accessToken
-      this.refreshToken = refreshToken
+      this.setAccessToken(accessToken)
+      this.setRefreshToken(refreshToken)
     },
     logout() {
       this.id = ''
       this.email = ''
-      this.accessToken = ''
-      this.refreshToken = ''
+      this.setAccessToken('')
+      this.setRefreshToken('')
     },
     async refreshToken() {
       try {
@@ -41,7 +50,7 @@ export const useAuthStore = defineStore('auth', {
         )
         const refreshedToken = data.accessToken
         if (refreshedToken) {
-          this.accessToken = refreshedToken
+          this.setAccessToken(refreshedToken)
           return true
         }
       } catch (refreshError) {
@@ -52,14 +61,16 @@ export const useAuthStore = defineStore('auth', {
       try {
         await axios.post(
           `${authUrl}/api/auth/validate`,
+          {},
           {
             headers: {
-              Authorization: `Bearer ${this.token || ''}`
+              Authorization: `Bearer ${this.accessToken || ''}`
             }
-          },
-          { withCredentials: true }
+          }
         )
+        return true
       } catch (error) {
+        console.error('Error validating token', error)
         if (error.response && error.response.status === 401) {
           if (await this.refreshToken()) {
             return true
