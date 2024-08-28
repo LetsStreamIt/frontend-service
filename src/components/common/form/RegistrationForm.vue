@@ -5,7 +5,7 @@
       <img class="mb-5 logo" src="https://via.placeholder.com/300x150" alt="Logo" />
       <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
       <form @submit.prevent="submitForm" novalidate>
-        <div class="py-3">
+        <div class="pt-3">
           <div class="row">
             <div class="form-group col-lg-6 mb-4">
               <InputField
@@ -42,7 +42,7 @@
                 required
               />
             </div>
-            <div class="form-group col-lg-6 mb-4">
+            <div :class="`form-group col-lg-6 ${confirmPasswordError.length == 0 && 'mb-4'}`">
               <InputField
                 id="confirmPassword"
                 label="Confirm Password"
@@ -54,18 +54,23 @@
               />
             </div>
           </div>
-          <InputField
-            id="profilePicture"
-            label="Profile Picture"
-            type="file"
-            @change="handleFileUpload"
-            required
-          />
+          <div class="form-group mb-4">
+            <InputField
+              id="profilePicture"
+              label="Profile Picture"
+              type="file"
+              @change="handleFileUpload"
+              required
+            />
+          </div>
+          <div v-if="form.success" class="alert alert-success mt-3" role="alert">
+            Account created successfully. You will be redirected to the login page.
+          </div>
           <div v-if="form.error" class="alert alert-danger mt-3" role="alert">
             {{ form.error }}
           </div>
         </div>
-        <div class="text-center my-2">
+        <div class="text-center mt-4">
           <button type="submit" class="btn btn-primary btn-lg btn-block">Sign Up</button>
         </div>
         <div class="text-center mt-3">
@@ -83,13 +88,15 @@ import axios, { AxiosError } from 'axios'
 import { useRouter } from 'vue-router'
 import { useEmailValidator } from '@/composables/registration/email'
 import { usePasswordValidator } from '@/composables/registration/password'
+import { IRegistrationData } from '@/controllers/authController/registrationController'
 
 const router = useRouter()
 
 interface FormState {
   username: string
-  profilePicture: File | null
+  profilePicture?: File
   error: string
+  success: boolean
 }
 
 const { email, emailError, isValidEmail } = useEmailValidator()
@@ -105,8 +112,9 @@ const {
 
 const form = ref<FormState>({
   username: '',
-  profilePicture: null,
-  error: ''
+  profilePicture: undefined,
+  error: '',
+  success: false
 })
 
 function handleFileUpload(event: Event) {
@@ -119,11 +127,15 @@ function handleFileUpload(event: Event) {
 
 function submitForm() {
   form.value.error = ''
-  if (!isValidPassword) {
+  if (!form.value.username) {
+    form.value.error = 'Please enter a username'
+    return
+  }
+  if (!isValidPassword.value) {
     form.value.error = 'Invalid password'
     return
   }
-  if (!isMatch) {
+  if (!isMatch.value) {
     form.value.error = 'Passwords do not match'
     return
   }
@@ -134,16 +146,20 @@ function submitForm() {
   const authUrl = import.meta.env.AUTH_URL || 'http://localhost:3000'
   const registerUrl = `${authUrl}/api/auth/register`
 
-  const formData = {
+  const formData: IRegistrationData = {
     username: form.value.username,
     email: email.value,
-    password: password.value
+    password: password.value,
+    profilePicture: form.value.profilePicture
   }
 
   axios
     .post(registerUrl, formData)
     .then(() => {
-      router.push('/login')
+      form.value.success = true
+      setTimeout(() => {
+        router.push('/login')
+      }, 3000)
     })
     .catch((error) => {
       if (error instanceof AxiosError && error.response) {
