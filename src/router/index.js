@@ -7,6 +7,7 @@ import SessionLayout from '../layouts/SessionLayout.vue'
 import AuthLayout from '../layouts/AuthLayout.vue'
 import LoginView from '../views/LoginView.vue'
 import RegistrationView from '../views/RegistrationView.vue'
+import { useAuthStore } from '../stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,7 @@ const router = createRouter({
     {
       path: '/session',
       component: SessionLayout,
+      meta: { requiresAuth: true },
       children: [
         {
           path: '',
@@ -61,6 +63,15 @@ const router = createRouter({
       ]
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 export default router
