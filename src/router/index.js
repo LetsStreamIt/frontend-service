@@ -19,7 +19,8 @@ const router = createRouter({
         {
           path: '',
           name: 'home',
-          component: HomeView
+          component: HomeView,
+          meta: { requiresAuth: true }
         },
         {
           path: 'about',
@@ -54,6 +55,7 @@ const router = createRouter({
     {
       path: '/register',
       component: AuthLayout,
+      meta: { requiresAuth: true },
       children: [
         {
           path: '',
@@ -67,11 +69,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
-  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-    next('/login')
-  } else {
-    next()
+  if (to.meta.requiresAuth) {
+    const isAuthenticated = authStore.isLoggedIn()
+    if (!isAuthenticated) {
+      return next('/login')
+    }
   }
+  next()
 })
 
 export default router
