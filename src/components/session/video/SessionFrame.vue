@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import { usePlayer, PlayerState } from '@vue-youtube/core'
-import { ref } from 'vue'
+import { onMounted } from 'vue'
 
-const player = ref()
+function initializePlayer() {
+  player = new YT.Player('player', {
+    videoId: 'M7lc1UVf-VE',
+    events: {
+      onReady: onPlayerReady,
+      onStateChange: onPlayerStateChange
+    }
+  })
+}
 
-const { onReady, onStateChange, instance } = usePlayer('dQw4w9WgXcQ', player, {
-  playerVars: {
-    autoplay: 1,
-    mute: 1
-  }
-})
+function onPlayerReady(event) {
+  console.log('YouTube Player is ready.', event)
+}
 
-onReady((event) => {
-  // Send Message to Session Service to get the current timestamp
-  console.log('ready', event)
-})
+function onPlayerStateChange(event) {
+  console.log('Player state changed to:', event.data)
+}
 
-onStateChange((event) => {
-  switch (event.data) {
-    case PlayerState.PLAYING:
-      // Send Message to Session Service to Play the video from the current timestamp
-      console.log('Playing from', instance.value?.getCurrentTime())
-      break
-    case PlayerState.PAUSED:
-      // Send Message to Session Service to Stop the video
-      console.log('Paused at', instance.value?.getCurrentTime())
-      break
-    default:
-      break
+onMounted(() => {
+  if (!window.YT) {
+    const tag = document.createElement('script')
+    tag.src = 'https://www.youtube.com/iframe_api'
+    const firstScriptTag = document.getElementsByTagName('script')[0]
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    window.onYouTubeIframeAPIReady = initializePlayer
+  } else {
+    initializePlayer()
   }
 })
 </script>
 
 <template>
-  <div class="responsive-iframe" ref="player" />
+  <div class="responsive-iframe" id="player"></div>
 </template>
 
 <style>
