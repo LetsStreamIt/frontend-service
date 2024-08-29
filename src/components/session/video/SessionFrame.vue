@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import { PlayerState } from './PlayerState.ts'
+
+const player = ref<YT.Player | null>(null)
 
 function initializePlayer() {
-  player = new YT.Player('player', {
+  player.value = new YT.Player('player', {
     videoId: 'M7lc1UVf-VE',
     events: {
       onReady: onPlayerReady,
@@ -16,7 +19,16 @@ function onPlayerReady(event) {
 }
 
 function onPlayerStateChange(event) {
-  console.log('Player state changed to:', event.data)
+  switch (event.data) {
+    case PlayerState.PLAYING:
+      console.log('Playing', player.value.getCurrentTime())
+      break
+    case PlayerState.PAUSED:
+      console.log('Paused', player.value.getCurrentTime())
+      break
+    default:
+      break
+  }
 }
 
 onMounted(() => {
