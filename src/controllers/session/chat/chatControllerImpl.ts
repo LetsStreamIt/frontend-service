@@ -18,7 +18,7 @@ export class ChatControllerImpl implements ChatController {
   room: string
 
   constructor(sessionServiceUrl: string, token: string, room: string) {
-    this.socket = io(`${sessionServiceUrl}/chat`, {
+    this.socket = io(`${sessionServiceUrl}`, {
       withCredentials: true,
       extraHeaders: {
         'my-custom-header': 'abcd'
@@ -97,14 +97,10 @@ export class ChatControllerImpl implements ChatController {
   private async listenToChatEvents(
     recvMessageCallback: (message: Message<MessageContent>) => void
   ): Promise<void> {
-    this.socket.on('textMessage', (data) => {
-      const message: TextMessage = new TextMessageDeserializer().deserialize(JSON.parse(data))
-      recvMessageCallback(message)
-    })
-
-    this.socket.on('chatUpdate', (data) => {
-      JSON.parse(data).forEach((element) => {
-        const message: TextMessage = new TextMessageDeserializer().deserialize(element)
+    this.socket.on('textMessage', (data, ack) => {
+      data = JSON.parse(data)
+      data.forEach((textMessage) => {
+        const message: TextMessage = new TextMessageDeserializer().deserialize(textMessage)
         recvMessageCallback(message)
       })
     })

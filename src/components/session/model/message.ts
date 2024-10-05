@@ -65,6 +65,6 @@ export class ChatUpdate {
 }
 
 export enum Ack {
-  OK,
-  FAILURE
+  OK = 0,
+  FAILURE = 1
 }
