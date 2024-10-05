@@ -65,7 +65,7 @@ function submitForm() {
   const authUrl = import.meta.env.AUTH_URL || 'http://localhost:3000'
   const loginUrl = `${authUrl}/api/auth/login`
   axios
-    .post(loginUrl, form.value)
+    .post(loginUrl, form.value, { withCredentials: true })
     .then((response) => {
       const { _id, email, accessToken, refreshToken } = response.data
       authStore.login(_id, email, accessToken, refreshToken)
