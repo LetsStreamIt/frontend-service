@@ -1,21 +1,19 @@
 import { io, Socket } from 'socket.io-client'
-import {
-  Ack,
-  Message,
-  MessageContent,
-  NotificationMessage,
-  TextMessage
-} from '../../../components/session/model/message'
-import {
-  NotificationMessageDeserializer,
-  TextMessageDeserializer
-} from '../../../components/session/model/presentation/deserialization/messageDeserializer'
+import { Ack } from '../../components/session/model/message'
 import { ChatController } from './chatController'
+import { ChatControllerImpl } from './chatController'
 
-export class ChatControllerImpl implements ChatController {
+export interface SessionController {
+  connectToSession(): Promise<void>
+  disconnectFromSession(): Promise<void>
+  get getChatController(): ChatController
+}
+
+export class SessionControllerImpl implements SessionController {
   socket: Socket
   token: string
   room: string
+  chatController: ChatController
 
   constructor(sessionServiceUrl: string, token: string, room: string) {
     this.socket = io(`${sessionServiceUrl}`, {
@@ -26,20 +24,23 @@ export class ChatControllerImpl implements ChatController {
     })
     this.token = token
     this.room = room
+    this.chatController = new ChatControllerImpl(this.socket)
   }
 
-  async connectToChat(
-    recvMessageCallback: (message: Message<MessageContent>) => void
-  ): Promise<void> {
+  // async connectToChat(
+  //     recvMessageCallback: (message: Message<MessageContent>) => void
+
+  async connectToSession(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.connection()
         .then(() => {
           this.joinRoom()
             .then(() => {
               this.listenToClientEvents()
-              this.listenToChatEvents(recvMessageCallback)
-                .then(() => resolve())
-                .catch(() => reject())
+              resolve()
+              // this.listenToChatEvents(recvMessageCallback)
+              //     .then(() => resolve())
+              //     .catch(() => reject())
             })
             .catch(() => reject())
         })
@@ -47,15 +48,7 @@ export class ChatControllerImpl implements ChatController {
     })
   }
 
-  sendMessage(message: string): Promise<void> {
-    return new Promise((resolve) => {
-      this.socket.emit('sendMessage', { message: message }, () => {
-        resolve()
-      })
-    })
-  }
-
-  disconnectToChat(): Promise<void> {
+  disconnectFromSession(): Promise<void> {
     return new Promise((resolve) => {
       this.socket.emit('leaveRoom')
       resolve()
@@ -94,21 +87,7 @@ export class ChatControllerImpl implements ChatController {
     })
   }
 
-  private async listenToChatEvents(
-    recvMessageCallback: (message: Message<MessageContent>) => void
-  ): Promise<void> {
-    this.socket.on('textMessage', (data, ack) => {
-      data = JSON.parse(data)
-      data.forEach((textMessage) => {
-        const message: TextMessage = new TextMessageDeserializer().deserialize(textMessage)
-        recvMessageCallback(message)
-      })
-    })
-
-    this.socket.on('notificationMessage', (data) => {
-      const notificationMessage: NotificationMessage =
-        new NotificationMessageDeserializer().deserialize(JSON.parse(data))
-      recvMessageCallback(notificationMessage)
-    })
+  get getChatController(): ChatController {
+    return this.chatController
   }
 }

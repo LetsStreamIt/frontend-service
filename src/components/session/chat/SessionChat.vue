@@ -1,23 +1,15 @@
 <script setup lang="ts">
-import { ref, toRefs, onMounted, onUnmounted, computed } from 'vue'
-import { ChatController } from '../../../controllers/session/chat/chatController'
+import { ref, toRefs, onMounted, computed } from 'vue'
+import { ChatController } from '../../../controllers/session/chatController'
 import { Message, MessageContent } from '../model/message'
 import TextMessageComponent from './message/TextMessageComponent.vue'
 import NotificationMessageComponent from './message/NotificationMessageComponent.vue'
-import { ChatControllerImpl } from '../../../controllers/session/chat/chatControllerImpl'
 
-const props = defineProps({
-  chatUrl: {
-    type: String,
-    required: true
-  },
-  roomName: {
-    type: String,
-    required: true
-  }
-})
+const props = defineProps<{
+  chatController: ChatController
+}>()
 
-const { chatUrl, roomName } = toRefs(props)
+const { chatController } = toRefs(props)
 
 // Style attributes
 const chatStyleAttr = ref({
@@ -28,8 +20,7 @@ const chatStyleAttr = ref({
 // Variables used to manage chat contents
 const chatContent = ref({
   inputMessage: '',
-  chatMessages: [] as any[],
-  chatController: new ChatControllerImpl(chatUrl.value, 'token', roomName.value) as ChatController
+  chatMessages: [] as any[]
 })
 
 const cardClass = computed(() => {
@@ -47,7 +38,7 @@ function toggleChat() {
 
 function sendMessage() {
   if (chatContent.value.inputMessage !== '') {
-    chatContent.value.chatController.sendMessage(chatContent.value.inputMessage)
+    chatController.value.sendMessage(chatContent.value.inputMessage)
     chatContent.value.inputMessage = ''
   }
 }
@@ -58,11 +49,8 @@ function recvMessageCallback(message: Message<MessageContent>) {
 
 onMounted(async () => {
   // Connect to the chat whenever is mounted
-  await chatContent.value.chatController.connectToChat(recvMessageCallback)
-})
-
-onUnmounted(async () => {
-  await chatContent.value.chatController.disconnectToChat()
+  await chatController.value.listenToChatEvents(recvMessageCallback)
+  console.log('listening')
 })
 </script>
 
