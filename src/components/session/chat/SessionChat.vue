@@ -11,6 +11,9 @@ const props = defineProps<{
 
 const { chatController } = toRefs(props)
 
+const emit = defineEmits<{
+  chatMounted: []
+}>()
 // Style attributes
 const chatStyleAttr = ref({
   isChatHidden: false,
@@ -51,6 +54,8 @@ onMounted(async () => {
   // Connect to the chat whenever is mounted
   await chatController.value.listenToChatEvents(recvMessageCallback)
   console.log('listening')
+  console.log('CHAT MOUNTED')
+  emit('chatMounted')
 })
 </script>
 
