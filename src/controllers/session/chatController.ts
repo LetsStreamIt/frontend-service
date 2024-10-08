@@ -24,7 +24,6 @@ export class ChatControllerImpl implements ChatController {
   }
 
   async sendMessage(message: string): Promise<void> {
-    console.log('sending msg')
     return new Promise((resolve) => {
       this.socket.emit('sendMessage', { message: message }, () => {
         resolve()
