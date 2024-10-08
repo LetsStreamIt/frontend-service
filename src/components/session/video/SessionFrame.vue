@@ -1,8 +1,21 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, toRefs } from 'vue'
 import { PlayerState } from './PlayerState.ts'
+import { VideoController } from '../../../controllers/session/videoController.ts'
+import { PlayState, VideoState } from '../model/video.ts'
+
+const props = defineProps<{
+  videoController: VideoController
+}>()
+
+const emit = defineEmits<{
+  frameMounted: []
+}>()
+
+const { videoController } = toRefs(props)
 
 const player = ref<YT.Player | null>(null)
+const isProgrammaticChange = ref<boolean>(false)
 
 function initializePlayer() {
   player.value = new YT.Player('player', {
@@ -15,16 +28,45 @@ function initializePlayer() {
 }
 
 function onPlayerReady(event) {
-  console.log('YouTube Player is ready.', event)
+  videoController.value.listenToVideoEvents(
+    () => {
+      const state: PlayState =
+        player.value.getPlayerState() == PlayerState.PLAYING ? PlayState.PLAYING : PlayState.PAUSED
+      return { state: state, timestamp: player.value.getCurrentTime() }
+    },
+    (videoState: VideoState) => {
+      console.log('seeking')
+      isProgrammaticChange.value = true
+      videoState.state == PlayState.PLAYING ? player.value.playVideo() : player.value.pauseVideo()
+      isProgrammaticChange.value = true
+      player.value.seekTo(videoState.timestamp, false)
+    }
+  )
+  emit('frameMounted')
 }
 
 function onPlayerStateChange(event) {
+  console.log('event', event)
   switch (event.data) {
     case PlayerState.PLAYING:
-      console.log('Playing', player.value.getCurrentTime())
+      if (isProgrammaticChange.value) {
+        isProgrammaticChange.value = false
+      } else {
+        console.log('SENDING PLAY')
+        videoController.value.playVideo(player.value.getCurrentTime())
+        isProgrammaticChange.value = true
+        player.value.pauseVideo()
+      }
       break
     case PlayerState.PAUSED:
-      console.log('Paused', player.value.getCurrentTime())
+      if (isProgrammaticChange.value) {
+        isProgrammaticChange.value = false
+      } else {
+        console.log('SENDING STOP')
+        videoController.value.stopVideo(player.value.getCurrentTime())
+        isProgrammaticChange.value = true
+        player.value.playVideo()
+      }
       break
     default:
       break
