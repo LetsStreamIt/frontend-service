@@ -15,7 +15,8 @@ const emit = defineEmits<{
 const { videoController } = toRefs(props)
 
 const player = ref<YT.Player | null>(null)
-const isProgrammaticChange = ref<boolean>(false)
+const backendChange = ref<boolean>(false)
+const frontendChange = ref<boolean>(false)
 
 function initializePlayer() {
   player.value = new YT.Player('player', {
@@ -35,37 +36,56 @@ function onPlayerReady(event) {
       return { state: state, timestamp: player.value.getCurrentTime() }
     },
     (videoState: VideoState) => {
-      console.log('seeking')
-      isProgrammaticChange.value = true
+      console.log('seeking', videoState.timestamp, videoState.state)
+      player.value.seekTo(videoState.timestamp, true)
+      backendChange.value = true
       videoState.state == PlayState.PLAYING ? player.value.playVideo() : player.value.pauseVideo()
-      isProgrammaticChange.value = true
-      player.value.seekTo(videoState.timestamp, false)
     }
   )
   emit('frameMounted')
 }
 
 function onPlayerStateChange(event) {
-  console.log('event', event)
+  console.log(
+    'event',
+    event,
+    backendChange.value,
+    frontendChange.value,
+    player.value.getCurrentTime()
+  )
   switch (event.data) {
     case PlayerState.PLAYING:
-      if (isProgrammaticChange.value) {
-        isProgrammaticChange.value = false
+      if (backendChange.value) {
+        console.log('backend change detected: playing')
+        backendChange.value = false
       } else {
-        console.log('SENDING PLAY')
-        videoController.value.playVideo(player.value.getCurrentTime())
-        isProgrammaticChange.value = true
-        player.value.pauseVideo()
+        if (frontendChange.value) {
+          console.log('frontend change detected: playing')
+          frontendChange.value = false
+        } else {
+          console.log('User pressed Play')
+          videoController.value.playVideo(player.value.getCurrentTime())
+
+          frontendChange.value = true
+          player.value.pauseVideo()
+        }
       }
       break
     case PlayerState.PAUSED:
-      if (isProgrammaticChange.value) {
-        isProgrammaticChange.value = false
+      if (backendChange.value) {
+        console.log('backend change detected: paused')
+        backendChange.value = false
       } else {
-        console.log('SENDING STOP')
-        videoController.value.stopVideo(player.value.getCurrentTime())
-        isProgrammaticChange.value = true
-        player.value.playVideo()
+        if (frontendChange.value) {
+          console.log('frontend change detected: paused')
+          frontendChange.value = false
+        } else {
+          console.log('User pressed Pause')
+          videoController.value.stopVideo(player.value.getCurrentTime())
+
+          // frontendChange.value = true
+          player.value.playVideo()
+        }
       }
       break
     default:
