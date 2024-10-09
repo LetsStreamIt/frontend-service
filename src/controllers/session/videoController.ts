@@ -44,6 +44,7 @@ export class VideoControllerImpl implements VideoController {
     this.socket.on('videoState', (callback) => {
       callback(new SerializerImpl().serialize(getVideoStateCallback()))
     })
+    console.log('ready!!!!')
   }
 
   playVideo(timestamp: number): Promise<void> {
