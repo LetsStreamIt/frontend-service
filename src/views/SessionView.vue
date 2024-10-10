@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SessionChat from '../components/session/chat/SessionChat.vue'
 import SessionFrame from '../components/session/video/SessionFrame.vue'
-import { ref, toRefs, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import {
   ConnectionStatus,
   SessionController,
@@ -10,13 +10,7 @@ import {
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-
-const chatData = ref({
-  chatUrl: 'http://localhost:3000',
-  roomName: 'room'
-})
-
-const { chatUrl, roomName } = chatData.value
+const sessionServiceUrl = ref('http://localhost:3000')
 
 const connected = ref(false)
 const connectionErrorMessage = ref('')
@@ -81,7 +75,7 @@ function joinRoom() {
 }
 
 const sessionController: SessionController = new SessionControllerImpl(
-  chatUrl,
+  sessionServiceUrl.value,
   'token',
   route.params.sessionId
 )
