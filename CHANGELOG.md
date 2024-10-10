@@ -1,3 +1,13 @@
+## [0.7.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.6.0...v0.7.0) (2024-10-10)
+
+### Features
+
+* synchronized video play and stop across users connected to a room ([9406f17](https://github.com/LetsStreamIt/frontend-service/commit/9406f176b55e5912774358b4d70a75556e9599d1))
+
+### Refactoring
+
+* add function to minimize repetitions, remove logs ([4b8c59e](https://github.com/LetsStreamIt/frontend-service/commit/4b8c59eafb1af1c298df1c6efc75f823e88aa8e4))
+
 ## [0.6.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.5.1...v0.6.0) (2024-10-09)
 
 ### Features
