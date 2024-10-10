@@ -1,16 +1,16 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import Popup from '../components/session/Popup.vue'
+import JoinSessionPopup from '../components/session/JoinSessionPopup.vue'
 
 const joinSessionModal = ref(null)
 
-function showPopup() {
+function showJoinRoomPopup() {
   if (joinSessionModal.value) {
     joinSessionModal.value.show()
   }
 }
 
-function closePopup() {
+function closeJoinRoomPopup() {
   if (joinSessionModal.value) {
     joinSessionModal.value.hide()
   }
@@ -23,8 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Popup @closeJoinSessionPopup="closePopup"></Popup>
-  <!-- <div id="myModal"></div> -->
+  <JoinSessionPopup @joiningSession="closeJoinRoomPopup"></JoinSessionPopup>
 
   <div class="cover-container d-flex p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
@@ -34,14 +33,13 @@ onMounted(() => {
       </p>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-6">
-            <a href="#" class="btn btn-lg btn-secondary" style="width: 100%">Create a Session</a>
-          </div>
-          <div class="col-6">
-            <a href="#" class="btn btn-lg btn-secondary" style="width: 100%" @click="showPopup"
-              >Join a Session</a
-            >
-          </div>
+          <a
+            href="#"
+            class="btn btn-lg btn-secondary"
+            style="width: 100%"
+            @click="showJoinRoomPopup"
+            >Join a Session</a
+          >
         </div>
       </div>
       <p class="lead"></p>
