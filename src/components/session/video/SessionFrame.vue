@@ -17,6 +17,9 @@ const { videoController } = toRefs(props)
 const player = ref<YT.Player | null>(null)
 const backendChange = ref<boolean>(false)
 const frontendChange = ref<boolean>(false)
+const flag = ref<boolean>(false)
+
+const prevStableState = ref<PlayState>(PlayState.PAUSED)
 
 function initializePlayer() {
   player.value = new YT.Player('player', {
@@ -36,7 +39,7 @@ function onPlayerReady(event) {
       return { state: state, timestamp: player.value.getCurrentTime() }
     },
     (videoState: VideoState) => {
-      console.log('seeking', videoState.timestamp, videoState.state)
+      console.log('SEEKING', videoState.timestamp, videoState.state)
       player.value.seekTo(videoState.timestamp, true)
       backendChange.value = true
       videoState.state == PlayState.PLAYING ? player.value.playVideo() : player.value.pauseVideo()
@@ -45,46 +48,61 @@ function onPlayerReady(event) {
   emit('frameMounted')
 }
 
+function playVideoo(event) {
+  event.target.playVideo()
+}
+
 function onPlayerStateChange(event) {
+  //console.log(event.target)
   console.log(
     'event',
     event,
     backendChange.value,
     frontendChange.value,
-    player.value.getCurrentTime()
+    //player.value.getCurrentTime(),
+    prevStableState.value
   )
   switch (event.data) {
     case PlayerState.PLAYING:
-      if (backendChange.value) {
-        console.log('backend change detected: playing')
-        backendChange.value = false
-      } else {
-        if (frontendChange.value) {
-          console.log('frontend change detected: playing')
-          frontendChange.value = false
-        } else {
-          console.log('User pressed Play')
-          videoController.value.playVideo(player.value.getCurrentTime())
+      if (prevStableState.value == PlayState.PAUSED) {
+        prevStableState.value = PlayState.PLAYING
 
-          frontendChange.value = true
-          player.value.pauseVideo()
+        if (backendChange.value) {
+          console.log('PLAYING: API back CHANGE')
+          backendChange.value = false
+        } else {
+          if (frontendChange.value) {
+            console.log('PLAYING: API frond CHANGE')
+            frontendChange.value = false
+          } else {
+            console.log('PLAYING: USER CHANGE')
+            frontendChange.value = true
+            event.target.pauseVideo()
+            videoController.value.playVideo(event.target.getCurrentTime())
+          }
         }
       }
-      break
-    case PlayerState.PAUSED:
-      if (backendChange.value) {
-        console.log('backend change detected: paused')
-        backendChange.value = false
-      } else {
-        if (frontendChange.value) {
-          console.log('frontend change detected: paused')
-          frontendChange.value = false
-        } else {
-          console.log('User pressed Pause')
-          videoController.value.stopVideo(player.value.getCurrentTime())
 
-          // frontendChange.value = true
-          player.value.playVideo()
+      break
+
+    case PlayerState.PAUSED:
+      if (prevStableState.value == PlayState.PLAYING || flag.value) {
+        flag.value = false
+        prevStableState.value = PlayState.PAUSED
+        if (backendChange.value) {
+          console.log('PAUSED: API back CHANGE')
+          backendChange.value = false
+        } else {
+          if (frontendChange.value) {
+            console.log('PAUSED: API front CHANGE')
+            frontendChange.value = false
+          } else {
+            console.log('PAUSED: USER CHANGE')
+            flag.value = true
+            videoController.value.stopVideo(event.target.getCurrentTime())
+            event.target.playVideo()
+            // setTimeout(() => videoController.value.stopVideo(player.value.getCurrentTime()), 1000)
+          }
         }
       }
       break
