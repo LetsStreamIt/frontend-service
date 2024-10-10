@@ -1,8 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-const inputValue = ref('')
-const joinSession = ref(false)
+const sessionId = ref('')
+const router = useRouter()
+
+const emit = defineEmits<{
+  joiningSession: []
+}>()
+
+const joinSession = () => {
+  if (sessionId.value) {
+    // Programmatically navigate to the session route
+    router.push(`/session/${sessionId.value}`)
+    emit('joiningSession')
+  }
+}
 </script>
 
 <template>
@@ -19,23 +32,22 @@ const joinSession = ref(false)
           ></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form @submit.prevent="joinSession">
             <div class="form-group">
-              <label for="exampleInputEmail1">Session ID:</label>
+              <label for="sessionIdInput">Session ID:</label>
 
               <input
-                type="email"
                 class="form-control mt-2"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
+                id="sessionIdInput"
                 placeholder="Enter Session ID"
-                v-model="inputValue"
+                v-model="sessionId"
               />
             </div>
 
             <div class="d-flex flex-row-reverse mt-2">
               <button type="submit" class="btn btn-primary justify-content-end">
-                <RouterLink :to="`/session/${inputValue}`" class="nav-link">Session</RouterLink>
+                Join Session
+                <!-- <RouterLink :to="`/session/${sessionId}`" class="nav-link">Join Session</RouterLink> -->
               </button>
             </div>
           </form>
