@@ -1,11 +1,8 @@
 <script setup lang="ts">
-const emit = defineEmits<{
-  closeJoinSessionPopup: []
-}>()
+import { ref } from 'vue'
 
-function closePopup() {
-  emit('closeJoinSessionPopup')
-}
+const inputValue = ref('')
+const joinSession = ref(false)
 </script>
 
 <template>
@@ -32,20 +29,17 @@ function closePopup() {
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 placeholder="Enter Session ID"
+                v-model="inputValue"
               />
             </div>
+
             <div class="d-flex flex-row-reverse mt-2">
               <button type="submit" class="btn btn-primary justify-content-end">
-                Join Session
+                <RouterLink :to="`/session/${inputValue}`" class="nav-link">Session</RouterLink>
               </button>
             </div>
           </form>
         </div>
-        <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        @click="closePopup">Close</button>
-                    <button type="button" class="btn btn-secondary">Save changes</button>
-                </div> -->
       </div>
     </div>
   </div>

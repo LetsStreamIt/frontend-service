@@ -7,19 +7,9 @@ import {
   SessionController,
   SessionControllerImpl
 } from '../controllers/session/sessionController'
+import { useRoute } from 'vue-router'
 
-// const props = defineProps({
-//   chatUrl: {
-//     type: String,
-//     required: true
-//   },
-//   roomName: {
-//     type: String,
-//     required: true
-//   }
-// })
-
-// const { chatUrl, roomName } = toRefs(props)
+const route = useRoute()
 
 const chatData = ref({
   chatUrl: 'http://localhost:3000',
@@ -82,7 +72,6 @@ function joinRoom() {
   sessionController
     .joinRoom()
     .then(() => {
-      console.log('JOIN ROOM')
       connected.value = true
     })
     .catch((error) => {
@@ -91,25 +80,19 @@ function joinRoom() {
     })
 }
 
-const sessionController: SessionController = new SessionControllerImpl(chatUrl, 'token', roomName)
+const sessionController: SessionController = new SessionControllerImpl(
+  chatUrl,
+  'token',
+  route.params.sessionId
+)
 
 onMounted(() => {
   connectToSession()
-  console.log('SESSION MOUNTED')
 })
 
 onUnmounted(async () => {
   await sessionController.disconnectFromSession()
 })
-
-// watch([frameMounted, chatMounted], ([frameMountedValue, chatMountedValue]) => {
-//   console.log("oooooo", frameMountedValue, chatMountedValue)
-//   if (frameMountedValue && chatMountedValue) {
-//     // Both components are mounted; execute your action here
-//     console.log('Both SessionFrame and SessionChat are mounted');
-//     // Call any other actions or methods here
-//   }
-// });
 </script>
 
 <template>
