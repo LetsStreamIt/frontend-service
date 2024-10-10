@@ -1,3 +1,23 @@
+## [0.8.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.7.0...v0.8.0) (2024-10-10)
+
+### Features
+
+* join existing room popup ([80abbcf](https://github.com/LetsStreamIt/frontend-service/commit/80abbcfce93133ad9c46362fcf1fe20694deedb3))
+* join room from popup window ([0aea3b4](https://github.com/LetsStreamIt/frontend-service/commit/0aea3b4864069fc273a8e6781e71d26b793f8b3b))
+
+### Dependency updates
+
+* **deps:** update dependency typescript-eslint to v8.8.1 ([b332edf](https://github.com/LetsStreamIt/frontend-service/commit/b332edfdf18e87af4555673f216b4044e563491f))
+
+### General maintenance
+
+* add session id param ([9e67227](https://github.com/LetsStreamIt/frontend-service/commit/9e6722780a223350f657b057d69c7aa38fe9f893))
+* emit message from session popup when user joins to close the modal ([3903bba](https://github.com/LetsStreamIt/frontend-service/commit/3903bbacf5c9b8f0126d1ec35c77d957321062aa))
+
+### Refactoring
+
+* remove comment and useless socket file ([5319b70](https://github.com/LetsStreamIt/frontend-service/commit/5319b70aa61118b3aa81490249037398f0f752bd))
+
 ## [0.7.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.6.0...v0.7.0) (2024-10-10)
 
 ### Features
