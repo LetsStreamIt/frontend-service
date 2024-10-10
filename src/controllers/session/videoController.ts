@@ -1,15 +1,4 @@
-import {
-  MessageContent,
-  NotificationMessage,
-  TextMessage,
-  Ack
-} from '../../components/session/model/message'
-import { Message } from '../../components/session/model/message'
-import { io, Socket } from 'socket.io-client'
-import {
-  NotificationMessageDeserializer,
-  TextMessageDeserializer
-} from '../../components/session/model/presentation/deserialization/messageDeserializer'
+import { Socket } from 'socket.io-client'
 import { VideoState } from '../../components/session/model/video'
 import { VideoStateDeserializer } from '../../components/session/model/presentation/deserialization/videoStateDeserializer'
 import { SerializerImpl } from '../../components/session/model/presentation/serialization/messageSerializer'
@@ -44,7 +33,6 @@ export class VideoControllerImpl implements VideoController {
     this.socket.on('videoState', (callback) => {
       callback(new SerializerImpl().serialize(getVideoStateCallback()))
     })
-    console.log('ready!!!!')
   }
 
   playVideo(timestamp: number): Promise<void> {
