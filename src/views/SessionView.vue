@@ -49,7 +49,6 @@ function setErrorMessage(error) {
 }
 
 function connectToSession() {
-  // Connect to the chat whenever is mounted
   sessionController
     .connectToSession()
     .then(() => {
@@ -62,9 +61,8 @@ function connectToSession() {
 }
 
 function joinRoom() {
-  // Connect to the chat whenever is mounted
   sessionController
-    .joinRoom()
+    .joinRoom(route.params.sessionId)
     .then(() => {
       connected.value = true
     })
@@ -77,7 +75,6 @@ function joinRoom() {
 const sessionController: SessionController = new SessionControllerImpl(
   sessionServiceUrl.value,
   'token',
-  route.params.sessionId
 )
 
 onMounted(() => {
