@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client'
-import { Ack } from '../../components/session/model/message'
+import { Ack, CreateRoomAck } from '../../components/session/model/message'
 import { ChatController } from './chatController'
 import { ChatControllerImpl } from './chatController'
 import { VideoController, VideoControllerImpl } from './videoController'
@@ -8,12 +8,14 @@ export enum ConnectionStatus {
   SUCCESS,
   CONNECTION_ERROR,
   JOIN_ERROR,
-  INVALID_TOKEN
+  INVALID_TOKEN,
+  INVALID_VIDEO_ID
 }
 
 export interface SessionController {
   connectToSession(): Promise<ConnectionStatus>
-  joinRoom(): Promise<ConnectionStatus>
+  createRoom(room: string): Promise<string>
+  joinRoom(room: string): Promise<ConnectionStatus>
   disconnectFromSession(): Promise<void>
   get getChatController(): ChatController
   get getVideoController(): VideoController
@@ -22,11 +24,10 @@ export interface SessionController {
 export class SessionControllerImpl implements SessionController {
   socket: Socket
   token: string
-  room: string
   chatController: ChatController
   videoController: VideoController
 
-  constructor(sessionServiceUrl: string, token: string, room: string) {
+  constructor(sessionServiceUrl: string, token: string) {
     this.socket = io(`${sessionServiceUrl}`, {
       withCredentials: true,
       extraHeaders: {
@@ -35,13 +36,10 @@ export class SessionControllerImpl implements SessionController {
     })
 
     this.token = token
-    this.room = room
     this.chatController = new ChatControllerImpl(this.socket)
     this.videoController = new VideoControllerImpl(this.socket)
   }
 
-  // async connectToChat(
-  //     recvMessageCallback: (message: Message<MessageContent>) => void
   promise(promise: Promise<void>, f: () => void, g: () => void): void {
     promise.then(f).catch(g)
   }
@@ -61,15 +59,26 @@ export class SessionControllerImpl implements SessionController {
     })
   }
 
-  async joinRoom(): Promise<ConnectionStatus> {
+  async createRoom(room: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        this.sendCreateRoomMessage(room)
+        .then((roomName) => resolve(roomName))
+        .catch(() => reject())
+    })
+  }
+
+  async joinRoom(room: string): Promise<ConnectionStatus> {
     return new Promise((resolve, reject) => {
       this.promise(
-        this.sendJoinRoomMessage(),
+        this.sendJoinRoomMessage(room),
         () => {
           this.listenToClientEvents()
           resolve(ConnectionStatus.SUCCESS)
         },
-        () => reject(ConnectionStatus.JOIN_ERROR)
+        () => {
+          console.log("ERRORRRR")
+          reject(ConnectionStatus.JOIN_ERROR)
+        }
       )
     })
   }
@@ -101,10 +110,20 @@ export class SessionControllerImpl implements SessionController {
     })
   }
 
-  private async sendJoinRoomMessage(): Promise<void> {
+  private async sendJoinRoomMessage(room: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.socket.emit('joinRoom', { room: this.room }, (ack) => {
-        ack === Ack.OK ? resolve() : reject()
+      this.socket.emit('joinRoom', { room: room }, (ack) => {
+        console.log("ACKKKKK", ack)
+        ack == Ack.OK ? resolve() : reject()
+      })
+    })
+  }
+
+
+  private async sendCreateRoomMessage(room: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.socket.emit('createRoom', { room: room }, (createRoomAck) => {
+          createRoomAck.ack == Ack.OK ? resolve(createRoomAck.roomName) : reject()
       })
     })
   }
