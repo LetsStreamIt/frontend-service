@@ -1,3 +1,17 @@
+## [0.9.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.8.0...v0.9.0) (2024-10-12)
+
+### Features
+
+* link join session popup to session page ([b926045](https://github.com/LetsStreamIt/frontend-service/commit/b926045ff9151d2314b6d5d2cf3facbc8996a9e9))
+
+### Dependency updates
+
+* **deps:** update dependency typescript to v5.6.3 ([35b4c11](https://github.com/LetsStreamIt/frontend-service/commit/35b4c11af07e27944385d17afeef5b19aaf2b8fa))
+
+### Refactoring
+
+* rename Join Session Popup to Create Session ([ab65274](https://github.com/LetsStreamIt/frontend-service/commit/ab652743303dc40cd364a5d407b53717cb402e32))
+
 ## [0.8.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.7.0...v0.8.0) (2024-10-10)
 
 ### Features
