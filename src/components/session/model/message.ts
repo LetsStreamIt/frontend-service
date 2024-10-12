@@ -73,4 +73,3 @@ export interface CreateRoomAck {
   roomName: string
   ack: Ack
 }
-

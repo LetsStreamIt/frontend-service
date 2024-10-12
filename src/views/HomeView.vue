@@ -1,29 +1,29 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import JoinSessionPopup from '../components/session/JoinSessionPopup.vue'
+import CreateSessionPopup from '../components/session/CreateSessionPopup.vue'
 
-const joinSessionModal = ref(null)
+const createSessionModal = ref(null)
 
-function showJoinRoomPopup() {
-  if (joinSessionModal.value) {
-    joinSessionModal.value.show()
+function showCreateSessionPopup() {
+  if (createSessionModal.value) {
+    createSessionModal.value.show()
   }
 }
 
-function closeJoinRoomPopup() {
-  if (joinSessionModal.value) {
-    joinSessionModal.value.hide()
+function hideCreateSessionPopup() {
+  if (createSessionModal.value) {
+    createSessionModal.value.hide()
   }
 }
 
 onMounted(() => {
-  joinSessionModal.value = new bootstrap.Modal('#joinSessionPopup')
-  joinSessionModal.value.hide()
+  createSessionModal.value = new bootstrap.Modal('#createSessionPopup')
+  createSessionModal.value.hide()
 })
 </script>
 
 <template>
-  <JoinSessionPopup @joiningSession="closeJoinRoomPopup"></JoinSessionPopup>
+  <CreateSessionPopup @createSession="hideCreateSessionPopup"></CreateSessionPopup>
 
   <div class="cover-container d-flex p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
@@ -37,8 +37,8 @@ onMounted(() => {
             href="#"
             class="btn btn-lg btn-secondary"
             style="width: 100%"
-            @click="showJoinRoomPopup"
-            >Join a Session</a
+            @click="showCreateSessionPopup"
+            >Create a Streaming Session</a
           >
         </div>
       </div>
