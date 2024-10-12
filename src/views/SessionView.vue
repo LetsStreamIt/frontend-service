@@ -74,7 +74,7 @@ function joinRoom() {
 
 const sessionController: SessionController = new SessionControllerImpl(
   sessionServiceUrl.value,
-  'token',
+  'token'
 )
 
 onMounted(() => {

@@ -61,7 +61,7 @@ export class SessionControllerImpl implements SessionController {
 
   async createRoom(room: string): Promise<string> {
     return new Promise((resolve, reject) => {
-        this.sendCreateRoomMessage(room)
+      this.sendCreateRoomMessage(room)
         .then((roomName) => resolve(roomName))
         .catch(() => reject())
     })
@@ -76,7 +76,7 @@ export class SessionControllerImpl implements SessionController {
           resolve(ConnectionStatus.SUCCESS)
         },
         () => {
-          console.log("ERRORRRR")
+          console.log('ERRORRRR')
           reject(ConnectionStatus.JOIN_ERROR)
         }
       )
@@ -113,17 +113,16 @@ export class SessionControllerImpl implements SessionController {
   private async sendJoinRoomMessage(room: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.socket.emit('joinRoom', { room: room }, (ack) => {
-        console.log("ACKKKKK", ack)
+        console.log('ACKKKKK', ack)
         ack == Ack.OK ? resolve() : reject()
       })
     })
   }
 
-
   private async sendCreateRoomMessage(room: string): Promise<string> {
     return new Promise((resolve, reject) => {
       this.socket.emit('createRoom', { room: room }, (createRoomAck) => {
-          createRoomAck.ack == Ack.OK ? resolve(createRoomAck.roomName) : reject()
+        createRoomAck.ack == Ack.OK ? resolve(createRoomAck.roomName) : reject()
       })
     })
   }

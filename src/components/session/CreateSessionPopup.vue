@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { ConnectionStatus, SessionController, SessionControllerImpl } from '../../controllers/session/sessionController';
+import {
+  ConnectionStatus,
+  SessionController,
+  SessionControllerImpl
+} from '../../controllers/session/sessionController'
 
 const videoId = ref('')
 const router = useRouter()
 
 const emit = defineEmits<{
-  joiningSession: []
+  createSession: []
 }>()
 
 const sessionServiceUrl = ref('http://localhost:3000')
 const connected = ref(false)
 const connectionErrorMessage = ref('')
-
 
 function setErrorMessage(error) {
   switch (error) {
@@ -44,13 +47,12 @@ function connectToSession() {
 
 const sessionController: SessionController = new SessionControllerImpl(
   sessionServiceUrl.value,
-  'token',
+  'token'
 )
 
 onMounted(() => {
   connectToSession()
 })
-
 
 onUnmounted(async () => {
   await sessionController.disconnectFromSession()
@@ -64,35 +66,45 @@ function createSession() {
         connected.value = true
         sessionController.disconnectFromSession()
         router.push(`/session/${roomName}`)
-        emit('joiningSession')
+        emit('createSession')
       })
       .catch(() => {
         setErrorMessage(ConnectionStatus.INVALID_VIDEO_ID)
         connected.value = false
       })
-    }
+  }
 }
 </script>
 
 <template>
-  <div class="modal" id="joinSessionPopup" tabindex="-1" aria-hidden="true">
+  <div class="modal" id="createSessionPopup" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content text-dark" aria-hidden="true">
         <div class="modal-header">
-          <h5 class="modal-title">Join an existing Session</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title">Create a new Session</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <form @submit.prevent="createSession">
             <div class="form-group">
-              <label for="sessionIdInput">Session ID:</label>
+              <label for="youtubeVideoUrl">Youtube Video URL:</label>
 
-              <input class="form-control mt-2" id="sessionIdInput" placeholder="Enter Session ID" v-model="videoId" />
+              <input
+                class="form-control mt-2"
+                id="youtubeVideoUrl"
+                placeholder="Enter Youtube Video URL"
+                v-model="videoId"
+              />
             </div>
 
             <div class="d-flex flex-row-reverse mt-2">
               <button type="submit" class="btn btn-primary justify-content-end">
-                Join Session
+                Create Session
               </button>
             </div>
           </form>
