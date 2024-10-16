@@ -3,6 +3,7 @@ import { Ack, CreateRoomAck } from '../../components/session/model/message'
 import { ChatController } from './chatController'
 import { ChatControllerImpl } from './chatController'
 import { VideoController, VideoControllerImpl } from './videoController'
+import { CreateSessionAck, JoinSessionAck, LeaveSessionAck, UserTokenAck } from './ack'
 
 export enum ConnectionStatus {
   SUCCESS,
@@ -13,10 +14,11 @@ export enum ConnectionStatus {
 }
 
 export interface SessionController {
-  connectToSession(): Promise<ConnectionStatus>
-  createRoom(room: string): Promise<string>
-  joinRoom(room: string): Promise<ConnectionStatus>
-  disconnectFromSession(): Promise<void>
+  connect(): Promise<UserTokenAck>
+  createSession(videoId: string): Promise<CreateSessionAck>
+  joinSession(sessionName: string): Promise<JoinSessionAck>
+  disconnectFromSession(): Promise<LeaveSessionAck>
+
   get getChatController(): ChatController
   get getVideoController(): VideoController
 }
@@ -40,53 +42,51 @@ export class SessionControllerImpl implements SessionController {
     this.videoController = new VideoControllerImpl(this.socket)
   }
 
-  promise(promise: Promise<void>, f: () => void, g: () => void): void {
+  promise<X>(promise: Promise<X>, f: (commandAck: X) => void, g: () => void): void {
     promise.then(f).catch(g)
   }
 
-  async connectToSession(): Promise<ConnectionStatus> {
+  async connect(): Promise<UserTokenAck> {
     return new Promise((resolve, reject) => {
       this.promise(
         this.connection(),
         () =>
           this.promise(
             this.sendUserToken(),
-            () => resolve(ConnectionStatus.SUCCESS),
-            () => reject(ConnectionStatus.INVALID_TOKEN)
+            (userTokenAck: UserTokenAck) => resolve(userTokenAck),
+            () => reject()
           ),
-        () => reject(ConnectionStatus.CONNECTION_ERROR)
+        () => reject()
       )
     })
   }
 
-  async createRoom(room: string): Promise<string> {
+  async createSession(videoId: string): Promise<CreateSessionAck> {
     return new Promise((resolve, reject) => {
-      this.sendCreateRoomMessage(room)
-        .then((roomName) => resolve(roomName))
+      this.sendCreateSessionMessage(videoId)
+        .then((createSessionAck: CreateSessionAck) => resolve(createSessionAck))
         .catch(() => reject())
     })
   }
 
-  async joinRoom(room: string): Promise<ConnectionStatus> {
+  async joinSession(sessionName: string): Promise<JoinSessionAck> {
     return new Promise((resolve, reject) => {
       this.promise(
-        this.sendJoinRoomMessage(room),
-        () => {
+        this.sendJoinSessionMessage(sessionName),
+        (joinSessionAck: JoinSessionAck) => {
           this.listenToClientEvents()
-          resolve(ConnectionStatus.SUCCESS)
+          resolve(joinSessionAck)
         },
-        () => {
-          console.log('ERRORRRR')
-          reject(ConnectionStatus.JOIN_ERROR)
-        }
+        () => reject()
       )
     })
   }
 
-  disconnectFromSession(): Promise<void> {
+  disconnectFromSession(): Promise<LeaveSessionAck> {
     return new Promise((resolve) => {
-      this.socket.emit('leaveRoom')
-      resolve()
+      this.socket.emit('leaveRoom', null, (leaveSessionAck: LeaveSessionAck) => {
+        resolve(leaveSessionAck)
+      })
     })
   }
 
@@ -102,27 +102,26 @@ export class SessionControllerImpl implements SessionController {
     })
   }
 
-  private async sendUserToken(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.socket.emit('userToken', { token: this.token }, (success) => {
-        success == Ack.OK ? resolve() : reject()
+  private async sendUserToken(): Promise<UserTokenAck> {
+    return new Promise((resolve) => {
+      this.socket.emit('userToken', { token: this.token }, (userTokenAck: UserTokenAck) => {
+        resolve(userTokenAck)
       })
     })
   }
 
-  private async sendJoinRoomMessage(room: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.socket.emit('joinRoom', { room: room }, (ack) => {
-        console.log('ACKKKKK', ack)
-        ack == Ack.OK ? resolve() : reject()
+  private async sendJoinSessionMessage(room: string): Promise<JoinSessionAck> {
+    return new Promise((resolve) => {
+      this.socket.emit('joinRoom', { room: room }, (joinSessionAck: JoinSessionAck) => {
+        resolve(joinSessionAck)
       })
     })
   }
 
-  private async sendCreateRoomMessage(room: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.socket.emit('createRoom', { room: room }, (createRoomAck) => {
-        createRoomAck.ack == Ack.OK ? resolve(createRoomAck.roomName) : reject()
+  private async sendCreateSessionMessage(videoId: string): Promise<CreateSessionAck> {
+    return new Promise((resolve) => {
+      this.socket.emit('createRoom', { room: videoId }, (createSessionAck: CreateSessionAck) => {
+        resolve(createSessionAck)
       })
     })
   }

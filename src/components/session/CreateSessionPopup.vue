@@ -35,7 +35,7 @@ function setErrorMessage(error) {
 
 function connectToSession() {
   sessionController
-    .connectToSession()
+    .connect()
     .then(() => {
       connected.value = true
     })
@@ -61,11 +61,11 @@ onUnmounted(async () => {
 function createSession() {
   if (videoId.value) {
     sessionController
-      .createRoom(videoId.value)
-      .then((roomName) => {
+      .createSession(videoId.value)
+      .then((ack) => {
         connected.value = true
         sessionController.disconnectFromSession()
-        router.push(`/session/${roomName}`)
+        router.push(`/session/${ack.content.sessionName}`)
         emit('createSession')
       })
       .catch(() => {

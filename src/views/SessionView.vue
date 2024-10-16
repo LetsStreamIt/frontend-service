@@ -50,7 +50,7 @@ function setErrorMessage(error) {
 
 function connectToSession() {
   sessionController
-    .connectToSession()
+    .connect()
     .then(() => {
       connected.value = true
     })
@@ -62,7 +62,7 @@ function connectToSession() {
 
 function joinRoom() {
   sessionController
-    .joinRoom(route.params.sessionId)
+    .joinSession(route.params.sessionId)
     .then(() => {
       connected.value = true
     })
