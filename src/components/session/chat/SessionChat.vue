@@ -52,9 +52,7 @@ function recvMessageCallback(message: Message<MessageContent>) {
 
 onMounted(async () => {
   // Connect to the chat whenever is mounted
-  await chatController.value.listenToChatEvents(recvMessageCallback)
-  console.log('listening')
-  console.log('CHAT MOUNTED')
+  await chatController.value.handleChatMessages(recvMessageCallback)
   emit('chatMounted')
 })
 </script>

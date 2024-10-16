@@ -10,10 +10,11 @@ import {
   NotificationMessageDeserializer,
   TextMessageDeserializer
 } from '../../components/session/model/presentation/deserialization/messageDeserializer'
+import { SendMessageAck } from './ack'
 
 export interface ChatController {
-  listenToChatEvents(recvMessageCallback: (message: Message<MessageContent>) => void): Promise<void>
-  sendMessage(message: string): Promise<void>
+  handleChatMessages(recvMessageCallback: (message: Message<MessageContent>) => void): Promise<void>
+  sendMessage(message: string): Promise<SendMessageAck>
 }
 
 export class ChatControllerImpl implements ChatController {
@@ -23,15 +24,15 @@ export class ChatControllerImpl implements ChatController {
     this.socket = socket
   }
 
-  async sendMessage(message: string): Promise<void> {
+  async sendMessage(message: string): Promise<SendMessageAck> {
     return new Promise((resolve) => {
-      this.socket.emit('sendMessage', { message: message }, () => {
-        resolve()
+      this.socket.emit('sendMessage', { message: message }, (sendMessageAck: SendMessageAck) => {
+        resolve(sendMessageAck)
       })
     })
   }
 
-  async listenToChatEvents(
+  async handleChatMessages(
     recvMessageCallback: (message: Message<MessageContent>) => void
   ): Promise<void> {
     this.socket.on('textMessage', (data) => {
