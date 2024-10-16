@@ -33,7 +33,7 @@ function initializePlayer() {
 }
 
 function onPlayerReady(event) {
-  videoController.value.listenToVideoEvents(
+  videoController.value.handleVideoNotifications(
     () => {
       const state: PlayState =
         player.value.getPlayerState() == PlayerState.PLAYING ? PlayState.PLAYING : PlayState.PAUSED
