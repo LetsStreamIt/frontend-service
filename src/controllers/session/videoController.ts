@@ -40,17 +40,25 @@ export class VideoControllerImpl implements VideoController {
 
   playVideo(timestamp: number): Promise<PlayVideoResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('playVideo', { timestamp: timestamp }, (PlayVideoResponse: PlayVideoResponse) => {
-        resolve(PlayVideoResponse)
-      })
+      this.socket.emit(
+        'playVideo',
+        { timestamp: timestamp },
+        (PlayVideoResponse: PlayVideoResponse) => {
+          resolve(PlayVideoResponse)
+        }
+      )
     })
   }
 
   stopVideo(timestamp: number): Promise<StopVideoResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('stopVideo', { timestamp: timestamp }, (StopVideoResponse: StopVideoResponse) => {
-        resolve(StopVideoResponse)
-      })
+      this.socket.emit(
+        'stopVideo',
+        { timestamp: timestamp },
+        (StopVideoResponse: StopVideoResponse) => {
+          resolve(StopVideoResponse)
+        }
+      )
     })
   }
 }

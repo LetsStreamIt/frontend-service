@@ -32,8 +32,8 @@ export enum JoinSessionResponseType {
 }
 
 export enum TokenStatus {
-    TOKEN_VALID = 0,
-    TOKEN_INVALID = 1
+  TOKEN_VALID = 0,
+  TOKEN_INVALID = 1
 }
 
 class CreateSessionResponseContent {
@@ -47,23 +47,23 @@ class CreateSessionResponseContent {
 }
 
 class UserTokenResponseContent {
-    status: ResponseStatus
-    tokenStatus: TokenStatus
+  status: ResponseStatus
+  tokenStatus: TokenStatus
 
-    constructor(status: ResponseStatus, tokenStatus: TokenStatus) {
-        this.status = status
-        this.tokenStatus = tokenStatus
-    }
+  constructor(status: ResponseStatus, tokenStatus: TokenStatus) {
+    this.status = status
+    this.tokenStatus = tokenStatus
+  }
 }
 
 export class JoinSessionResponseContent {
-    responseType: JoinSessionResponseType
-    videoId: string
+  responseType: JoinSessionResponseType
+  videoId: string
 
-    constructor(responseType: JoinSessionResponseType, videoId: string) {
-        this.responseType = responseType
-        this.videoId = videoId
-    }
+  constructor(responseType: JoinSessionResponseType, videoId: string) {
+    this.responseType = responseType
+    this.videoId = videoId
+  }
 }
 
 export class JoinSessionResponse implements Response<JoinSessionResponseContent> {

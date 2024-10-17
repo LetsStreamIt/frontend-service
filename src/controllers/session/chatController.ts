@@ -1,7 +1,8 @@
 import {
   MessageContent,
   NotificationMessage,
-  TextMessage} from '../../components/session/model/message'
+  TextMessage
+} from '../../components/session/model/message'
 import { Message } from '../../components/session/model/message'
 import { Socket } from 'socket.io-client'
 import {
@@ -24,9 +25,13 @@ export class ChatControllerImpl implements ChatController {
 
   async sendMessage(message: string): Promise<SendMessageResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('sendMessage', { message: message }, (SendMessageResponse: SendMessageResponse) => {
-        resolve(SendMessageResponse)
-      })
+      this.socket.emit(
+        'sendMessage',
+        { message: message },
+        (SendMessageResponse: SendMessageResponse) => {
+          resolve(SendMessageResponse)
+        }
+      )
     })
   }
 
