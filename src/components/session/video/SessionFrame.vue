@@ -15,7 +15,6 @@ const emit = defineEmits<{
 
 const { videoController, videoId } = toRefs(props)
 const player = ref<YT.Player | null>(null)
-
 const videoActions = ref<((player: YT.Player) => void)[]>([])
 
 const commUtils = reactive({
@@ -26,13 +25,13 @@ const commUtils = reactive({
 })
 
 watch(
-  () => props.videoId,
-  (newValue, oldValue) => initializePlayer()
+  () => videoId.value,
+  () => initializePlayer()
 )
 
 function initializePlayer() {
   new YT.Player('player', {
-    videoId: props.videoId,
+    videoId: videoId.value,
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange
@@ -40,22 +39,23 @@ function initializePlayer() {
   })
 }
 
-function popAllValues() {
-  videoActions.value.forEach((f: (player: YT.Player) => void) => {
-    f(player.value)
+function handleVideoNotifications() {
+  videoActions.value.forEach((callback: (player: YT.Player) => void) => {
+    if (player.value) {
+      callback(player.value)
+    }
   })
 }
 
 function onPlayerReady(event) {
   player.value = event.target
 
-  popAllValues()
+  handleVideoNotifications()
   watch(
     () => videoActions.value,
-    (newValue, oldValue) => {
-      if (newValue.length > 0) {
-        console.log('Array before popping:', newValue)
-        popAllValues()
+    (notifications) => {
+      if (notifications.length > 0) {
+        handleVideoNotifications()
       }
     },
     { deep: true }
@@ -68,7 +68,7 @@ function registerVideoHandlers() {
       return new Promise((resolve) => {
         videoActions.value.push((player: YT.Player) => {
           const state: PlayState =
-            player.getPlayerState() == PlayerState.PLAYING ? PlayState.PLAYING : PlayState.PAUSED
+            player.getPlayerState() == YT.PlayerState.PLAYING ? PlayState.PLAYING : PlayState.PAUSED
           resolve({ state: state, timestamp: player.getCurrentTime() })
         })
       })
@@ -132,11 +132,12 @@ function onPlayerStateChange(event) {
 }
 
 onMounted(() => {
+
   if (!window.YT) {
     const tag = document.createElement('script')
     tag.src = 'https://www.youtube.com/iframe_api'
     const firstScriptTag = document.getElementsByTagName('script')[0]
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag)
     window.onYouTubeIframeAPIReady = registerVideoHandlers
   } else {
     registerVideoHandlers()

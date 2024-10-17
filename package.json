@@ -19,6 +19,7 @@
     "@vuelidate/validators": "^2.0.4",
     "axios": "^1.7.5",
     "pinia": "^2.2.2",
+    "sass": "^1.80.1",
     "socket.io-client": "^4.7.5",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
@@ -28,6 +29,7 @@
     "@commitlint/config-conventional": "^19.2.2",
     "@eslint/js": "^9.9.0",
     "@rushstack/eslint-patch": "^1.8.0",
+    "@types/youtube": "^0.1.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/eslint-config-prettier": "^10.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
