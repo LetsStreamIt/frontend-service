@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
-import { PlayerState } from './PlayerState.ts'
 import { VideoController } from '../../../controllers/session/videoController.ts'
 import { PlayState, VideoState } from '../model/video.ts'
 
@@ -15,7 +14,7 @@ const emit = defineEmits<{
 
 const { videoController, videoId } = toRefs(props)
 const player = ref<YT.Player | null>(null)
-const videoActions = ref<((player: YT.Player) => void)[]>([])
+const playerActions = ref<((player: YT.Player) => void)[]>([])
 
 const commUtils = reactive({
   backendChange: false,
@@ -39,23 +38,26 @@ function initializePlayer() {
   })
 }
 
-function handleVideoNotifications() {
-  videoActions.value.forEach((callback: (player: YT.Player) => void) => {
-    if (player.value) {
-      callback(player.value)
+function handlePlayerActions() {
+  while (playerActions.value.length > 0) {
+    const playerActionCallback: ((player: YT.Player) => void) | undefined =
+      playerActions.value.shift()
+    if (playerActionCallback && player.value) {
+      playerActionCallback(player.value)
     }
-  })
+  }
 }
 
 function onPlayerReady(event) {
   player.value = event.target
 
-  handleVideoNotifications()
+  handlePlayerActions()
   watch(
-    () => videoActions.value,
+    () => playerActions.value,
     (notifications) => {
       if (notifications.length > 0) {
-        handleVideoNotifications()
+        console.log('NOTTTTTTT', notifications.length)
+        handlePlayerActions()
       }
     },
     { deep: true }
@@ -66,7 +68,7 @@ function registerVideoHandlers() {
   videoController.value.handleVideoNotifications(
     () => {
       return new Promise((resolve) => {
-        videoActions.value.push((player: YT.Player) => {
+        playerActions.value.push((player: YT.Player) => {
           const state: PlayState =
             player.getPlayerState() == YT.PlayerState.PLAYING ? PlayState.PLAYING : PlayState.PAUSED
           resolve({ state: state, timestamp: player.getCurrentTime() })
@@ -76,7 +78,7 @@ function registerVideoHandlers() {
 
     (videoState: VideoState) => {
       return new Promise((resolve) => {
-        videoActions.value.push((player: YT.Player) => {
+        playerActions.value.push((player: YT.Player) => {
           player.seekTo(videoState.timestamp, true)
           commUtils.backendChange = true
           videoState.state == PlayState.PLAYING ? player.playVideo() : player.pauseVideo()
@@ -102,7 +104,7 @@ function stateChangeActionBySource(f: () => void) {
 
 function onPlayerStateChange(event) {
   switch (event.data) {
-    case PlayerState.PLAYING:
+    case YT.PlayerState.PLAYING:
       if (commUtils.prevStableState == PlayState.PAUSED) {
         commUtils.prevStableState = PlayState.PLAYING
 
@@ -114,7 +116,7 @@ function onPlayerStateChange(event) {
       }
       break
 
-    case PlayerState.PAUSED:
+    case YT.PlayerState.PAUSED:
       if (commUtils.prevStableState == PlayState.PLAYING || commUtils.alreadyPaused) {
         commUtils.alreadyPaused = false
         commUtils.prevStableState = PlayState.PAUSED
