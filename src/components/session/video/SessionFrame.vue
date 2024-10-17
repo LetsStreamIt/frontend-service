@@ -5,7 +5,7 @@ import { VideoController } from '../../../controllers/session/videoController.ts
 import { PlayState, VideoState } from '../model/video.ts'
 
 const props = defineProps<{
-  videoController: VideoController,
+  videoController: VideoController
   videoId: string
 }>()
 
@@ -18,7 +18,6 @@ const player = ref<YT.Player | null>(null)
 
 const videoActions = ref<((player: YT.Player) => void)[]>([])
 
-
 const commUtils = reactive({
   backendChange: false,
   frontendChange: false,
@@ -29,7 +28,7 @@ const commUtils = reactive({
 watch(
   () => props.videoId,
   (newValue, oldValue) => initializePlayer()
-);
+)
 
 function initializePlayer() {
   new YT.Player('player', {
@@ -55,35 +54,34 @@ function onPlayerReady(event) {
     () => videoActions.value,
     (newValue, oldValue) => {
       if (newValue.length > 0) {
-        console.log('Array before popping:', newValue);
-        popAllValues();
+        console.log('Array before popping:', newValue)
+        popAllValues()
       }
     },
     { deep: true }
-  );
+  )
 }
 
 function registerVideoHandlers() {
-
   videoController.value.handleVideoNotifications(
     () => {
       return new Promise((resolve) => {
-        videoActions.value.push(((player: YT.Player) => {
+        videoActions.value.push((player: YT.Player) => {
           const state: PlayState =
             player.getPlayerState() == PlayerState.PLAYING ? PlayState.PLAYING : PlayState.PAUSED
           resolve({ state: state, timestamp: player.getCurrentTime() })
-        }))
+        })
       })
     },
 
     (videoState: VideoState) => {
       return new Promise((resolve) => {
-        videoActions.value.push(((player: YT.Player) => {
+        videoActions.value.push((player: YT.Player) => {
           player.seekTo(videoState.timestamp, true)
           commUtils.backendChange = true
           videoState.state == PlayState.PLAYING ? player.playVideo() : player.pauseVideo()
           resolve()
-        }))
+        })
       })
     }
   )

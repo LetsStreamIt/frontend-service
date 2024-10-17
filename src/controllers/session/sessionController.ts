@@ -2,7 +2,12 @@ import { io, Socket } from 'socket.io-client'
 import { ChatController } from './chatController'
 import { ChatControllerImpl } from './chatController'
 import { VideoController, VideoControllerImpl } from './videoController'
-import { CreateSessionResponse, JoinSessionResponse, LeaveSessionResponse, UserTokenResponse } from './ack'
+import {
+  CreateSessionResponse,
+  JoinSessionResponse,
+  LeaveSessionResponse,
+  UserTokenResponse
+} from './ack'
 
 export enum ConnectionStatus {
   SUCCESS,
@@ -104,10 +109,14 @@ export class SessionControllerImpl implements SessionController {
 
   private async sendUserToken(): Promise<UserTokenResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('userToken', { token: this.token }, (UserTokenResponse: UserTokenResponse) => {
-        console.log("TOJENNNNNNN", UserTokenResponse)
-        resolve(UserTokenResponse)
-      })
+      this.socket.emit(
+        'userToken',
+        { token: this.token },
+        (UserTokenResponse: UserTokenResponse) => {
+          console.log('TOJENNNNNNN', UserTokenResponse)
+          resolve(UserTokenResponse)
+        }
+      )
     })
   }
 
@@ -121,9 +130,13 @@ export class SessionControllerImpl implements SessionController {
 
   private async sendCreateSessionMessage(videoId: string): Promise<CreateSessionResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('createRoom', { room: videoId }, (CreateSessionResponse: CreateSessionResponse) => {
-        resolve(CreateSessionResponse)
-      })
+      this.socket.emit(
+        'createRoom',
+        { room: videoId },
+        (CreateSessionResponse: CreateSessionResponse) => {
+          resolve(CreateSessionResponse)
+        }
+      )
     })
   }
 
