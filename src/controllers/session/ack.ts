@@ -15,97 +15,122 @@ export interface SessionCommand {
   token: string
 }
 
-export interface CommandAck<X> {
+export interface Response<X> {
   command: CommandType
   content: X
 }
 
-export enum Ack {
+export enum ResponseStatus {
   SUCCESS = 0,
   FAILURE = 1
 }
 
-export enum JoinSessionAckContent {
+export enum JoinSessionResponseType {
   SUCCESS = 0,
   USER_ALREADY_JOINED = 1,
   SESSION_NOT_FOUND = 2
 }
 
-class CreateSessionContent {
-  ack: Ack
+export enum TokenStatus {
+    TOKEN_VALID = 0,
+    TOKEN_INVALID = 1
+}
+
+class CreateSessionResponseContent {
+  status: ResponseStatus
   sessionName: string
 
-  constructor(ack: Ack, sessionName: string) {
-    this.ack = ack
+  constructor(status: ResponseStatus, sessionName: string) {
+    this.status = status
     this.sessionName = sessionName
   }
 }
 
-export class JoinSessionAck implements CommandAck<JoinSessionAckContent> {
-  command: CommandType
-  content: JoinSessionAckContent
+class UserTokenResponseContent {
+    status: ResponseStatus
+    tokenStatus: TokenStatus
 
-  constructor(content: JoinSessionAckContent) {
+    constructor(status: ResponseStatus, tokenStatus: TokenStatus) {
+        this.status = status
+        this.tokenStatus = tokenStatus
+    }
+}
+
+export class JoinSessionResponseContent {
+    responseType: JoinSessionResponseType
+    videoId: string
+
+    constructor(responseType: JoinSessionResponseType, videoId: string) {
+        this.responseType = responseType
+        this.videoId = videoId
+    }
+}
+
+export class JoinSessionResponse implements Response<JoinSessionResponseContent> {
+  command: CommandType
+  content: JoinSessionResponseContent
+
+  constructor(content: JoinSessionResponseContent) {
     this.command = CommandType.JOIN_ROOM
     this.content = content
   }
 }
 
-export class CreateSessionAck implements CommandAck<CreateSessionContent> {
+export class CreateSessionResponse implements Response<CreateSessionResponseContent> {
   command: CommandType
-  content: CreateSessionContent
+  content: CreateSessionResponseContent
 
-  constructor(ack: Ack, sessionName: string) {
+  constructor(status: ResponseStatus, sessionName: string) {
     this.command = CommandType.CREATE_ROOM
-    this.content = new CreateSessionContent(ack, sessionName)
+    this.content = new CreateSessionResponseContent(status, sessionName)
   }
 }
 
-export class PlayVideoAck implements CommandAck<Ack> {
+export class PlayVideoResponse implements Response<ResponseStatus> {
   command: CommandType
-  content: Ack
+  content: ResponseStatus
 
-  constructor(content: Ack) {
+  constructor(content: ResponseStatus) {
     this.command = CommandType.PLAY_VIDEO
     this.content = content
   }
 }
 
-export class StopVideoAck implements CommandAck<Ack> {
+export class StopVideoResponse implements Response<ResponseStatus> {
   command: CommandType
-  content: Ack
+  content: ResponseStatus
 
-  constructor(content: Ack) {
+  constructor(content: ResponseStatus) {
     this.command = CommandType.STOP_VIDEO
     this.content = content
   }
 }
 
-export class SendMessageAck implements CommandAck<Ack> {
+export class SendMessageResponse implements Response<ResponseStatus> {
   command: CommandType
-  content: Ack
+  content: ResponseStatus
 
-  constructor(content: Ack) {
+  constructor(content: ResponseStatus) {
     this.command = CommandType.SEND_MSG
     this.content = content
   }
 }
 
-export class UserTokenAck implements CommandAck<Ack> {
+export class UserTokenResponse implements Response<UserTokenResponseContent> {
   command: CommandType
-  content: Ack
+  content: UserTokenResponseContent
 
-  constructor(content: Ack) {
+  constructor(content: UserTokenResponseContent) {
     this.command = CommandType.USER_TOKEN
     this.content = content
   }
 }
 
-export class LeaveSessionAck implements CommandAck<Ack> {
+export class LeaveSessionResponse implements Response<ResponseStatus> {
   command: CommandType
-  content: Ack
+  content: ResponseStatus
 
-  constructor(content: Ack) {
+  constructor(content: ResponseStatus) {
     this.command = CommandType.LEAVE_ROOM
     this.content = content
   }

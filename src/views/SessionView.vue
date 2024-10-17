@@ -8,12 +8,14 @@ import {
   SessionControllerImpl
 } from '../controllers/session/sessionController'
 import { useRoute } from 'vue-router'
+import { UserTokenResponse, ResponseStatus, JoinSessionResponseType, JoinSessionResponse } from '../controllers/session/ack'
 
 const route = useRoute()
 const sessionServiceUrl = ref('http://localhost:3000')
 
 const connected = ref(false)
 const connectionErrorMessage = ref('')
+const videoId = ref("")
 
 const isChatMounted = ref(false)
 const isFrameMounted = ref(false)
@@ -26,6 +28,7 @@ function chatMounted() {
 }
 
 function frameMounted() {
+  console.log("FRAME MOUNTED")
   isFrameMounted.value = true
   if (isChatMounted.value) {
     joinRoom()
@@ -38,9 +41,13 @@ function setErrorMessage(error) {
       connectionErrorMessage.value =
         'Unable to connect to the Session Service. Please try again later.'
       break
-    case ConnectionStatus.JOIN_ERROR:
+    case ConnectionStatus.USER_ALREADY_JOINED:
       connectionErrorMessage.value =
         'Unable to Join. Your account is already connected to another Session.'
+      break
+    case ConnectionStatus.SESSION_NOT_FOUND:
+      connectionErrorMessage.value =
+        'Unable to Join. Session not found.'
       break
     case ConnectionStatus.INVALID_TOKEN:
       connectionErrorMessage.value = 'Unable to Join. Invalid token provided.'
@@ -51,24 +58,37 @@ function setErrorMessage(error) {
 function connectToSession() {
   sessionController
     .connect()
-    .then(() => {
-      connected.value = true
-    })
-    .catch((error) => {
-      setErrorMessage(error)
-      connected.value = false
+    .then((userTokenResponse: UserTokenResponse) => {
+      if (userTokenResponse.content.status === ResponseStatus.SUCCESS) {
+        connected.value = true
+      } else {
+        connected.value = false
+        setErrorMessage(ConnectionStatus.INVALID_TOKEN)
+      }
     })
 }
 
 function joinRoom() {
   sessionController
     .joinSession(route.params.sessionId)
-    .then(() => {
-      connected.value = true
-    })
-    .catch((error) => {
-      setErrorMessage(error)
-      connected.value = false
+    .then((joinSessionResponse: JoinSessionResponse) => {
+      if (joinSessionResponse.content.responseType === JoinSessionResponseType.SUCCESS) {
+        videoId.value = joinSessionResponse.content.videoId
+        console.log("VIDEO IDDDD", videoId.value)
+        connected.value = true
+      } else {
+        console.log("ERRORRR")
+
+        connected.value = false
+        switch (joinSessionResponse.content.responseType) {
+          case JoinSessionResponseType.SESSION_NOT_FOUND:
+            setErrorMessage(ConnectionStatus.SESSION_NOT_FOUND)
+            break
+          case JoinSessionResponseType.USER_ALREADY_JOINED:
+            setErrorMessage(ConnectionStatus.USER_ALREADY_JOINED)
+            break
+        }
+      }
     })
 }
 
@@ -89,16 +109,10 @@ onUnmounted(async () => {
 <template>
   <div v-if="connected" class="row h-100 py-5">
     <div class="col-md-8 col-12 py-5">
-      <SessionFrame
-        :videoController="sessionController.getVideoController"
-        @frameMounted="frameMounted"
-      />
+      <SessionFrame :videoController="sessionController.getVideoController" :videoId="videoId" @frameMounted="frameMounted"/>
     </div>
     <div class="col-md-4 col-12 d-flex align-items-end py-5">
-      <SessionChat
-        :chatController="sessionController.getChatController"
-        @chatMounted="chatMounted"
-      />
+      <SessionChat :chatController="sessionController.getChatController" @chatMounted="chatMounted" />
     </div>
   </div>
   <div v-else class="d-flex justify-content-center align-items-center h-100 py-5">

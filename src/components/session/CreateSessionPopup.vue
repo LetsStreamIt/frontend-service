@@ -6,6 +6,7 @@ import {
   SessionController,
   SessionControllerImpl
 } from '../../controllers/session/sessionController'
+import { ResponseStatus, TokenStatus, UserTokenResponse } from '../../controllers/session/ack';
 
 const videoId = ref('')
 const router = useRouter()
@@ -24,11 +25,16 @@ function setErrorMessage(error) {
       connectionErrorMessage.value =
         'Unable to connect to the Session Service. Please try again later.'
       break
+    case ConnectionStatus.USER_ALREADY_JOINED:
+      connectionErrorMessage.value =
+        'Unable to Join. Your account is already connected to another Session.'
+      break
+    case ConnectionStatus.SESSION_NOT_FOUND:
+      connectionErrorMessage.value =
+        'Unable to Join. Session not found.'
+      break
     case ConnectionStatus.INVALID_TOKEN:
       connectionErrorMessage.value = 'Unable to Join. Invalid token provided.'
-      break
-    case ConnectionStatus.INVALID_VIDEO_ID:
-      connectionErrorMessage.value = 'Unable to Create the Session. Invalid Video URL provided.'
       break
   }
 }
@@ -36,12 +42,13 @@ function setErrorMessage(error) {
 function connectToSession() {
   sessionController
     .connect()
-    .then(() => {
-      connected.value = true
-    })
-    .catch((error) => {
-      setErrorMessage(error)
-      connected.value = false
+    .then((userTokenResponse: UserTokenResponse) => {
+      if (userTokenResponse.content.status === ResponseStatus.SUCCESS) {
+        connected.value = true
+      } else {
+        connected.value = false
+        setErrorMessage(ConnectionStatus.INVALID_TOKEN)
+      }
     })
 }
 
