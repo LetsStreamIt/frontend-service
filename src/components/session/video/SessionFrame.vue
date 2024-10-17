@@ -1,19 +1,23 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { PlayerState } from './PlayerState.ts'
 import { VideoController } from '../../../controllers/session/videoController.ts'
 import { PlayState, VideoState } from '../model/video.ts'
 
 const props = defineProps<{
-  videoController: VideoController
+  videoController: VideoController,
+  videoId: string
 }>()
 
 const emit = defineEmits<{
   frameMounted: []
 }>()
 
-const { videoController } = toRefs(props)
+const { videoController, videoId } = toRefs(props)
 const player = ref<YT.Player | null>(null)
+
+const videoActions = ref<((player: YT.Player) => void)[]>([])
+
 
 const commUtils = reactive({
   backendChange: false,
@@ -22,9 +26,14 @@ const commUtils = reactive({
   prevStableState: PlayState.PAUSED
 })
 
+watch(
+  () => props.videoId,
+  (newValue, oldValue) => initializePlayer()
+);
+
 function initializePlayer() {
-  player.value = new YT.Player('player', {
-    videoId: 'M7lc1UVf-VE',
+  new YT.Player('player', {
+    videoId: props.videoId,
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange
@@ -32,17 +41,50 @@ function initializePlayer() {
   })
 }
 
+function popAllValues() {
+  videoActions.value.forEach((f: (player: YT.Player) => void) => {
+    f(player.value)
+  })
+}
+
 function onPlayerReady(event) {
+  player.value = event.target
+
+  popAllValues()
+  watch(
+    () => videoActions.value,
+    (newValue, oldValue) => {
+      if (newValue.length > 0) {
+        console.log('Array before popping:', newValue);
+        popAllValues();
+      }
+    },
+    { deep: true }
+  );
+}
+
+function registerVideoHandlers() {
+
   videoController.value.handleVideoNotifications(
     () => {
-      const state: PlayState =
-        player.value.getPlayerState() == PlayerState.PLAYING ? PlayState.PLAYING : PlayState.PAUSED
-      return { state: state, timestamp: player.value.getCurrentTime() }
+      return new Promise((resolve) => {
+        videoActions.value.push(((player: YT.Player) => {
+          const state: PlayState =
+            player.getPlayerState() == PlayerState.PLAYING ? PlayState.PLAYING : PlayState.PAUSED
+          resolve({ state: state, timestamp: player.getCurrentTime() })
+        }))
+      })
     },
+
     (videoState: VideoState) => {
-      player.value.seekTo(videoState.timestamp, true)
-      commUtils.backendChange = true
-      videoState.state == PlayState.PLAYING ? player.value.playVideo() : player.value.pauseVideo()
+      return new Promise((resolve) => {
+        videoActions.value.push(((player: YT.Player) => {
+          player.seekTo(videoState.timestamp, true)
+          commUtils.backendChange = true
+          videoState.state == PlayState.PLAYING ? player.playVideo() : player.pauseVideo()
+          resolve()
+        }))
+      })
     }
   )
   emit('frameMounted')
@@ -97,9 +139,9 @@ onMounted(() => {
     tag.src = 'https://www.youtube.com/iframe_api'
     const firstScriptTag = document.getElementsByTagName('script')[0]
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
-    window.onYouTubeIframeAPIReady = initializePlayer
+    window.onYouTubeIframeAPIReady = registerVideoHandlers
   } else {
-    initializePlayer()
+    registerVideoHandlers()
   }
 })
 </script>

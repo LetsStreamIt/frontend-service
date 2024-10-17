@@ -2,15 +2,15 @@ import { Socket } from 'socket.io-client'
 import { VideoState } from '../../components/session/model/video'
 import { VideoStateDeserializer } from '../../components/session/model/presentation/deserialization/videoStateDeserializer'
 import { SerializerImpl } from '../../components/session/model/presentation/serialization/messageSerializer'
-import { PlayVideoAck, StopVideoAck } from './ack'
+import { PlayVideoResponse, StopVideoResponse } from './ack'
 
 export interface VideoController {
   handleVideoNotifications(
-    getVideoStateCallback: () => VideoState,
-    synchVideoCallback: (videoState: VideoState) => void
+    getVideoStateCallback: () => Promise<VideoState>,
+    synchVideoCallback: (videoState: VideoState) => Promise<void>
   ): void
-  playVideo(timestamp: number): Promise<PlayVideoAck>
-  stopVideo(timestamp: number): Promise<StopVideoAck>
+  playVideo(timestamp: number): Promise<PlayVideoResponse>
+  stopVideo(timestamp: number): Promise<StopVideoResponse>
 }
 
 export class VideoControllerImpl implements VideoController {
@@ -21,7 +21,7 @@ export class VideoControllerImpl implements VideoController {
   }
 
   handleVideoNotifications(
-    getVideoStateCallback: () => VideoState,
+    getVideoStateCallback: () => Promise<VideoState>,
     synchVideoCallback: (videoState: VideoState) => void
   ): void {
     // Get synchronization messages
@@ -32,22 +32,24 @@ export class VideoControllerImpl implements VideoController {
 
     // Send video state, at request
     this.socket.on('videoState', (callback) => {
-      callback(new SerializerImpl().serialize(getVideoStateCallback()))
-    })
-  }
-
-  playVideo(timestamp: number): Promise<PlayVideoAck> {
-    return new Promise((resolve) => {
-      this.socket.emit('playVideo', { timestamp: timestamp }, (playVideoAck: PlayVideoAck) => {
-        resolve(playVideoAck)
+      getVideoStateCallback().then((videoState: VideoState) => {
+        callback(new SerializerImpl().serialize(videoState))
       })
     })
   }
 
-  stopVideo(timestamp: number): Promise<StopVideoAck> {
+  playVideo(timestamp: number): Promise<PlayVideoResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('stopVideo', { timestamp: timestamp }, (stopVideoAck: StopVideoAck) => {
-        resolve(stopVideoAck)
+      this.socket.emit('playVideo', { timestamp: timestamp }, (PlayVideoResponse: PlayVideoResponse) => {
+        resolve(PlayVideoResponse)
+      })
+    })
+  }
+
+  stopVideo(timestamp: number): Promise<StopVideoResponse> {
+    return new Promise((resolve) => {
+      this.socket.emit('stopVideo', { timestamp: timestamp }, (StopVideoResponse: StopVideoResponse) => {
+        resolve(StopVideoResponse)
       })
     })
   }

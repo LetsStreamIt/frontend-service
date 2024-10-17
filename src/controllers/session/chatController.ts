@@ -1,20 +1,18 @@
 import {
   MessageContent,
   NotificationMessage,
-  TextMessage,
-  Ack
-} from '../../components/session/model/message'
+  TextMessage} from '../../components/session/model/message'
 import { Message } from '../../components/session/model/message'
-import { io, Socket } from 'socket.io-client'
+import { Socket } from 'socket.io-client'
 import {
   NotificationMessageDeserializer,
   TextMessageDeserializer
 } from '../../components/session/model/presentation/deserialization/messageDeserializer'
-import { SendMessageAck } from './ack'
+import { SendMessageResponse } from './ack'
 
 export interface ChatController {
   handleChatMessages(recvMessageCallback: (message: Message<MessageContent>) => void): Promise<void>
-  sendMessage(message: string): Promise<SendMessageAck>
+  sendMessage(message: string): Promise<SendMessageResponse>
 }
 
 export class ChatControllerImpl implements ChatController {
@@ -24,10 +22,10 @@ export class ChatControllerImpl implements ChatController {
     this.socket = socket
   }
 
-  async sendMessage(message: string): Promise<SendMessageAck> {
+  async sendMessage(message: string): Promise<SendMessageResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('sendMessage', { message: message }, (sendMessageAck: SendMessageAck) => {
-        resolve(sendMessageAck)
+      this.socket.emit('sendMessage', { message: message }, (SendMessageResponse: SendMessageResponse) => {
+        resolve(SendMessageResponse)
       })
     })
   }
