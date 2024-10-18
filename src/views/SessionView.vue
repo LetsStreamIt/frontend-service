@@ -28,14 +28,14 @@ const isFrameMounted = ref(false)
 function chatMounted() {
   isChatMounted.value = true
   if (isFrameMounted.value) {
-    joinRoom()
+    joinSession()
   }
 }
 
 function frameMounted() {
   isFrameMounted.value = true
   if (isChatMounted.value) {
-    joinRoom()
+    joinSession()
   }
 }
 
@@ -69,7 +69,7 @@ function connectToSession() {
   })
 }
 
-function joinRoom() {
+function joinSession() {
   sessionController
     .joinSession(route.params.sessionName)
     .then((joinSessionResponse: JoinSessionResponse) => {
@@ -100,7 +100,7 @@ onMounted(() => {
 })
 
 onUnmounted(async () => {
-  await sessionController.disconnectFromSession()
+  await sessionController.leaveSession()
 })
 </script>
 

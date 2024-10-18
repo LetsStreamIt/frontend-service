@@ -3,6 +3,8 @@ import { SerializerImpl } from '../../model/presentation/serialization/messageSe
 import { VideoStateDeserializer } from '../../model/presentation/deserialization/videoStateDeserializer'
 import { PlayVideoResponse, StopVideoResponse } from '../../model/command/response'
 import { VideoState } from '../../model/video'
+import { VideoNotificationType } from '../../model/notification/notification'
+import { CommandType } from '../../model/command/command'
 
 export interface VideoController {
   handleVideoNotifications(
@@ -25,13 +27,13 @@ export class VideoControllerImpl implements VideoController {
     synchVideoCallback: (videoState: VideoState) => void
   ): void {
     // Get synchronization messages
-    this.socket.on('synchronize', (data) => {
+    this.socket.on(VideoNotificationType.SYNCHRONIZE, (data) => {
       const videoState: VideoState = new VideoStateDeserializer().deserialize(JSON.parse(data))
       synchVideoCallback(videoState)
     })
 
     // Send video state, at request
-    this.socket.on('videoState', (callback) => {
+    this.socket.on(VideoNotificationType.VIDEO_STATE, (callback) => {
       getVideoStateCallback().then((videoState: VideoState) => {
         callback(new SerializerImpl().serialize(videoState))
       })
@@ -41,7 +43,7 @@ export class VideoControllerImpl implements VideoController {
   playVideo(timestamp: number): Promise<PlayVideoResponse> {
     return new Promise((resolve) => {
       this.socket.emit(
-        'playVideo',
+        CommandType.PLAY_VIDEO,
         { timestamp: timestamp },
         (PlayVideoResponse: PlayVideoResponse) => {
           resolve(PlayVideoResponse)
@@ -53,7 +55,7 @@ export class VideoControllerImpl implements VideoController {
   stopVideo(timestamp: number): Promise<StopVideoResponse> {
     return new Promise((resolve) => {
       this.socket.emit(
-        'stopVideo',
+        CommandType.STOP_VIDEO,
         { timestamp: timestamp },
         (StopVideoResponse: StopVideoResponse) => {
           resolve(StopVideoResponse)
