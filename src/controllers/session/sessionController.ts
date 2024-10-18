@@ -98,6 +98,7 @@ export class SessionControllerImpl implements SessionController {
           resolve(leaveSessionResponse)
         }
       )
+      this.socket.disconnect()
     })
   }
 
@@ -115,6 +116,7 @@ export class SessionControllerImpl implements SessionController {
 
   private async sendUserToken(): Promise<UserTokenResponse> {
     return new Promise((resolve) => {
+      console.log('SENDING USER TOKEN')
       this.socket.emit(
         CommandType.USER_TOKEN,
         { token: this.token },
@@ -151,7 +153,9 @@ export class SessionControllerImpl implements SessionController {
 
   private listenToClientEvents() {
     window.addEventListener('beforeunload', () => {
+      console.log('DISCONNECTING')
       this.leaveSession()
+      // this.socket.disconnect()
     })
   }
 

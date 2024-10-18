@@ -29,9 +29,6 @@ import { RouterLink } from 'vue-router'
           <li class="nav-item">
             <RouterLink to="/" class="nav-link">Profile</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink to="/session" class="nav-link">Session</RouterLink>
-          </li>
         </ul>
       </div>
     </div>
