@@ -1,4 +1,3 @@
-import { User, UserId } from '../../user'
 import { PlayState, VideoState } from '../../video'
 import { AbstractDeserializer } from './deserializer'
 

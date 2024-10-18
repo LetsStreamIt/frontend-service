@@ -6,7 +6,7 @@ import {
   SessionController,
   SessionControllerImpl
 } from '../../controllers/session/sessionController'
-import { connectToSession, watchConnectionErrors } from '../../composables/session/connection'
+import { connectToSession, connectionErrors } from '../../composables/session/connection'
 import { CreateSessionResponse, ResponseStatus } from '../../model/command/response'
 
 const videoUrl = ref('')
@@ -19,7 +19,7 @@ const emit = defineEmits<{
 const sessionServiceUrl = ref<string>('http://localhost:3000')
 
 const sessionCreated = ref<boolean>(false)
-const { connectionStatus, connectionErrorMessage } = watchConnectionErrors()
+const { connectionStatus, connectionErrorMessage } = connectionErrors()
 
 const sessionController: SessionController = new SessionControllerImpl(
   sessionServiceUrl.value,
