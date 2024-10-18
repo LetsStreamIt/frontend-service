@@ -7,7 +7,7 @@ import {
   JoinSessionResponse,
   LeaveSessionResponse,
   UserTokenResponse
-} from './ack'
+} from '../../model/command/response'
 
 export enum ConnectionStatus {
   SUCCESS,
@@ -15,7 +15,8 @@ export enum ConnectionStatus {
   SESSION_NOT_FOUND,
   USER_ALREADY_JOINED,
   INVALID_TOKEN,
-  INVALID_VIDEO_ID
+  INVALID_VIDEO_ID,
+  DISCONNECTED
 }
 
 export interface SessionController {
@@ -58,7 +59,7 @@ export class SessionControllerImpl implements SessionController {
         () =>
           this.promise(
             this.sendUserToken(),
-            (UserTokenResponse: UserTokenResponse) => resolve(UserTokenResponse),
+            (userTokenResponse: UserTokenResponse) => resolve(userTokenResponse),
             () => reject()
           ),
         () => reject()
@@ -69,7 +70,7 @@ export class SessionControllerImpl implements SessionController {
   async createSession(videoId: string): Promise<CreateSessionResponse> {
     return new Promise((resolve, reject) => {
       this.sendCreateSessionMessage(videoId)
-        .then((CreateSessionResponse: CreateSessionResponse) => resolve(CreateSessionResponse))
+        .then((createSessionResponse: CreateSessionResponse) => resolve(createSessionResponse))
         .catch(() => reject())
     })
   }
@@ -78,9 +79,9 @@ export class SessionControllerImpl implements SessionController {
     return new Promise((resolve, reject) => {
       this.promise(
         this.sendJoinSessionMessage(sessionName),
-        (JoinSessionResponse: JoinSessionResponse) => {
+        (joinSessionResponse: JoinSessionResponse) => {
           this.listenToClientEvents()
-          resolve(JoinSessionResponse)
+          resolve(joinSessionResponse)
         },
         () => reject()
       )
@@ -89,8 +90,8 @@ export class SessionControllerImpl implements SessionController {
 
   disconnectFromSession(): Promise<LeaveSessionResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('leaveRoom', null, (LeaveSessionResponse: LeaveSessionResponse) => {
-        resolve(LeaveSessionResponse)
+      this.socket.emit('leaveRoom', null, (leaveSessionResponse: LeaveSessionResponse) => {
+        resolve(leaveSessionResponse)
       })
     })
   }
@@ -112,9 +113,9 @@ export class SessionControllerImpl implements SessionController {
       this.socket.emit(
         'userToken',
         { token: this.token },
-        (UserTokenResponse: UserTokenResponse) => {
-          console.log('TOJENNNNNNN', UserTokenResponse)
-          resolve(UserTokenResponse)
+        (userTokenResponse: UserTokenResponse) => {
+          console.log('TOJENNNNNNN', userTokenResponse)
+          resolve(userTokenResponse)
         }
       )
     })
@@ -122,8 +123,8 @@ export class SessionControllerImpl implements SessionController {
 
   private async sendJoinSessionMessage(room: string): Promise<JoinSessionResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('joinRoom', { room: room }, (JoinSessionResponse: JoinSessionResponse) => {
-        resolve(JoinSessionResponse)
+      this.socket.emit('joinRoom', { room: room }, (joinSessionResponse: JoinSessionResponse) => {
+        resolve(joinSessionResponse)
       })
     })
   }
@@ -133,8 +134,8 @@ export class SessionControllerImpl implements SessionController {
       this.socket.emit(
         'createRoom',
         { room: videoId },
-        (CreateSessionResponse: CreateSessionResponse) => {
-          resolve(CreateSessionResponse)
+        (createSessionResponse: CreateSessionResponse) => {
+          resolve(createSessionResponse)
         }
       )
     })

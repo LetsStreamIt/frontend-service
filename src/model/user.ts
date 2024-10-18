@@ -1,5 +1,22 @@
 import { Entity, Repository } from './entity'
-import { Pair } from './room'
+
+export class Pair<X, Y> {
+  private readonly x: X
+  private readonly y: Y
+
+  constructor(x: X, y: Y) {
+    this.x = x
+    this.y = y
+  }
+
+  get getX(): X {
+    return this.x
+  }
+
+  get getY(): Y {
+    return this.y
+  }
+}
 
 export class User implements Entity<UserId, Pair<string, string>> {
   id: UserId

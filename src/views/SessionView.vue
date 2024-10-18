@@ -13,7 +13,7 @@ import {
   ResponseStatus,
   JoinSessionResponseType,
   JoinSessionResponse
-} from '../controllers/session/ack'
+} from '../model/command/response'
 
 const route = useRoute()
 const sessionServiceUrl = ref('http://localhost:3000')
@@ -33,7 +33,6 @@ function chatMounted() {
 }
 
 function frameMounted() {
-  console.log('FRAME MOUNTED')
   isFrameMounted.value = true
   if (isChatMounted.value) {
     joinRoom()
@@ -72,15 +71,12 @@ function connectToSession() {
 
 function joinRoom() {
   sessionController
-    .joinSession(route.params.sessionId)
+    .joinSession(route.params.sessionName)
     .then((joinSessionResponse: JoinSessionResponse) => {
       if (joinSessionResponse.content.responseType === JoinSessionResponseType.SUCCESS) {
         videoId.value = joinSessionResponse.content.videoId
-        console.log('VIDEO IDDDD', videoId.value)
         connected.value = true
       } else {
-        console.log('ERRORRR')
-
         connected.value = false
         switch (joinSessionResponse.content.responseType) {
           case JoinSessionResponseType.SESSION_NOT_FOUND:

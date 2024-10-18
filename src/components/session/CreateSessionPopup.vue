@@ -1,81 +1,54 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   ConnectionStatus,
   SessionController,
   SessionControllerImpl
 } from '../../controllers/session/sessionController'
-import { ResponseStatus, TokenStatus, UserTokenResponse } from '../../controllers/session/ack'
+import { connectToSession, watchConnectionErrors } from '../../composables/session/connection'
+import { CreateSessionResponse, ResponseStatus } from '../../model/command/response'
 
-const videoId = ref('')
+const videoUrl = ref('')
 const router = useRouter()
 
 const emit = defineEmits<{
   createSession: []
 }>()
 
-const sessionServiceUrl = ref('http://localhost:3000')
-const connected = ref(false)
-const connectionErrorMessage = ref('')
+const sessionServiceUrl = ref<string>('http://localhost:3000')
 
-function setErrorMessage(error) {
-  switch (error) {
-    case ConnectionStatus.CONNECTION_ERROR:
-      connectionErrorMessage.value =
-        'Unable to connect to the Session Service. Please try again later.'
-      break
-    case ConnectionStatus.USER_ALREADY_JOINED:
-      connectionErrorMessage.value =
-        'Unable to Join. Your account is already connected to another Session.'
-      break
-    case ConnectionStatus.SESSION_NOT_FOUND:
-      connectionErrorMessage.value = 'Unable to Join. Session not found.'
-      break
-    case ConnectionStatus.INVALID_TOKEN:
-      connectionErrorMessage.value = 'Unable to Join. Invalid token provided.'
-      break
-  }
-}
-
-function connectToSession() {
-  sessionController.connect().then((userTokenResponse: UserTokenResponse) => {
-    if (userTokenResponse.content.status === ResponseStatus.SUCCESS) {
-      connected.value = true
-    } else {
-      connected.value = false
-      setErrorMessage(ConnectionStatus.INVALID_TOKEN)
-    }
-  })
-}
+const sessionCreated = ref<boolean>(false)
+const { connectionStatus, connectionErrorMessage } = watchConnectionErrors()
 
 const sessionController: SessionController = new SessionControllerImpl(
   sessionServiceUrl.value,
   'token'
 )
 
-onMounted(() => {
-  connectToSession()
-})
+const connected = connectToSession(sessionController, connectionStatus)
 
-onUnmounted(async () => {
-  await sessionController.disconnectFromSession()
+onUnmounted(() => {
+  sessionController.disconnectFromSession()
 })
 
 function createSession() {
-  if (videoId.value) {
-    sessionController
-      .createSession(videoId.value)
-      .then((ack) => {
-        connected.value = true
-        sessionController.disconnectFromSession()
-        router.push(`/session/${ack.content.sessionName}`)
-        emit('createSession')
-      })
-      .catch(() => {
-        setErrorMessage(ConnectionStatus.INVALID_VIDEO_ID)
-        connected.value = false
-      })
+  if (connected.value) {
+    if (videoUrl.value) {
+      sessionController
+        .createSession(videoUrl.value)
+        .then((createSessionResponse: CreateSessionResponse) => {
+          console.log(createSessionResponse)
+          if (createSessionResponse.content.status === ResponseStatus.SUCCESS) {
+            sessionCreated.value = true
+            router.push(`/session/${createSessionResponse.content.sessionName}`)
+            emit('createSession')
+          } else {
+            sessionCreated.value = false
+            connectionStatus.value = ConnectionStatus.INVALID_VIDEO_ID
+          }
+        })
+    }
   }
 }
 </script>
@@ -97,12 +70,11 @@ function createSession() {
           <form @submit.prevent="createSession">
             <div class="form-group">
               <label for="youtubeVideoUrl">Youtube Video URL:</label>
-
               <input
                 class="form-control mt-2"
                 id="youtubeVideoUrl"
                 placeholder="Enter Youtube Video URL"
-                v-model="videoId"
+                v-model="videoUrl"
               />
             </div>
 
@@ -112,6 +84,9 @@ function createSession() {
               </button>
             </div>
           </form>
+          <div v-if="!connected || !sessionCreated" class="text-danger">
+            {{ connectionErrorMessage }}
+          </div>
         </div>
       </div>
     </div>

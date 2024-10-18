@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, toRefs, onMounted, computed } from 'vue'
 import { ChatController } from '../../../controllers/session/chatController'
-import { Message, MessageContent } from '../model/message'
 import TextMessageComponent from './message/TextMessageComponent.vue'
 import NotificationMessageComponent from './message/NotificationMessageComponent.vue'
+import { Message, MessageContent } from '../../../model/message'
 
 const props = defineProps<{
   chatController: ChatController
