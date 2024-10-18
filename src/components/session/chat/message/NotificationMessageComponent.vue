@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
-import { NotificationMessage, Notification } from '../../model/message'
+import { NotificationMessage, Notification } from '../../../../model/message'
 
 const props = defineProps({
   message: {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { VideoController } from '../../../controllers/session/videoController.ts'
-import { PlayState, VideoState } from '../model/video.ts'
+import { PlayState, VideoState } from '../../../model/video.ts'
 
 const props = defineProps<{
   videoController: VideoController
@@ -56,7 +56,6 @@ function onPlayerReady(event) {
     () => playerActions.value,
     (notifications) => {
       if (notifications.length > 0) {
-        console.log('NOTTTTTTT', notifications.length)
         handlePlayerActions()
       }
     },

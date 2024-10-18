@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toRefs } from 'vue'
-import { TextMessage } from '../../model/message'
+import { TextMessage } from '../../../../model/message'
 
 const props = defineProps({
   message: {

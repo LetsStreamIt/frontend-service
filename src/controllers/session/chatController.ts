@@ -1,15 +1,10 @@
-import {
-  MessageContent,
-  NotificationMessage,
-  TextMessage
-} from '../../components/session/model/message'
-import { Message } from '../../components/session/model/message'
 import { Socket } from 'socket.io-client'
+import { SendMessageResponse } from '../../model/command/response'
+import { Message, MessageContent, TextMessage, NotificationMessage } from '../../model/message'
 import {
-  NotificationMessageDeserializer,
-  TextMessageDeserializer
-} from '../../components/session/model/presentation/deserialization/messageDeserializer'
-import { SendMessageResponse } from './ack'
+  TextMessageDeserializer,
+  NotificationMessageDeserializer
+} from '../../model/presentation/deserialization/messageDeserializer'
 
 export interface ChatController {
   handleChatMessages(recvMessageCallback: (message: Message<MessageContent>) => void): Promise<void>

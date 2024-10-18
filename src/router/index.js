@@ -29,7 +29,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/session/:sessionId',
+      path: '/session/:sessionName',
       component: SessionLayout,
       meta: { requiresAuth: true },
       children: [
