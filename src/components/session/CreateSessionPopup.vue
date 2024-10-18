@@ -29,7 +29,7 @@ const sessionController: SessionController = new SessionControllerImpl(
 const connected = connectToSession(sessionController, connectionStatus)
 
 onUnmounted(() => {
-  sessionController.disconnectFromSession()
+  sessionController.leaveSession()
 })
 
 function createSession() {

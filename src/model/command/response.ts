@@ -1,5 +1,10 @@
 import { CommandType } from './command'
 
+export interface SessionCommand {
+  type: CommandType
+  token: string
+}
+
 export interface Response<X> {
   command: CommandType
   content: X
@@ -31,7 +36,7 @@ class CreateSessionResponseContent {
   }
 }
 
-class UserTokenResponseContent {
+export class UserTokenResponseContent {
   status: ResponseStatus
   tokenStatus: TokenStatus
 
@@ -56,7 +61,7 @@ export class JoinSessionResponse implements Response<JoinSessionResponseContent>
   content: JoinSessionResponseContent
 
   constructor(content: JoinSessionResponseContent) {
-    this.command = CommandType.JOIN_ROOM
+    this.command = CommandType.JOIN_SESSION
     this.content = content
   }
 }
@@ -66,7 +71,7 @@ export class CreateSessionResponse implements Response<CreateSessionResponseCont
   content: CreateSessionResponseContent
 
   constructor(status: ResponseStatus, sessionName: string) {
-    this.command = CommandType.CREATE_ROOM
+    this.command = CommandType.CREATE_SESSION
     this.content = new CreateSessionResponseContent(status, sessionName)
   }
 }
@@ -116,7 +121,7 @@ export class LeaveSessionResponse implements Response<ResponseStatus> {
   content: ResponseStatus
 
   constructor(content: ResponseStatus) {
-    this.command = CommandType.LEAVE_ROOM
+    this.command = CommandType.LEAVE_SESSION
     this.content = content
   }
 }

@@ -8,6 +8,7 @@ import {
   LeaveSessionResponse,
   UserTokenResponse
 } from '../../model/command/response'
+import { CommandType } from '../../model/command/command'
 
 export enum ConnectionStatus {
   SUCCESS,
@@ -23,7 +24,7 @@ export interface SessionController {
   connect(): Promise<UserTokenResponse>
   createSession(videoId: string): Promise<CreateSessionResponse>
   joinSession(sessionName: string): Promise<JoinSessionResponse>
-  disconnectFromSession(): Promise<LeaveSessionResponse>
+  leaveSession(): Promise<LeaveSessionResponse>
 
   get getChatController(): ChatController
   get getVideoController(): VideoController
@@ -88,11 +89,15 @@ export class SessionControllerImpl implements SessionController {
     })
   }
 
-  disconnectFromSession(): Promise<LeaveSessionResponse> {
+  leaveSession(): Promise<LeaveSessionResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('leaveRoom', null, (leaveSessionResponse: LeaveSessionResponse) => {
-        resolve(leaveSessionResponse)
-      })
+      this.socket.emit(
+        CommandType.LEAVE_SESSION,
+        null,
+        (leaveSessionResponse: LeaveSessionResponse) => {
+          resolve(leaveSessionResponse)
+        }
+      )
     })
   }
 
@@ -111,29 +116,32 @@ export class SessionControllerImpl implements SessionController {
   private async sendUserToken(): Promise<UserTokenResponse> {
     return new Promise((resolve) => {
       this.socket.emit(
-        'userToken',
+        CommandType.USER_TOKEN,
         { token: this.token },
         (userTokenResponse: UserTokenResponse) => {
-          console.log('TOJENNNNNNN', userTokenResponse)
           resolve(userTokenResponse)
         }
       )
     })
   }
 
-  private async sendJoinSessionMessage(room: string): Promise<JoinSessionResponse> {
+  private async sendJoinSessionMessage(sessionName: string): Promise<JoinSessionResponse> {
     return new Promise((resolve) => {
-      this.socket.emit('joinRoom', { room: room }, (joinSessionResponse: JoinSessionResponse) => {
-        resolve(joinSessionResponse)
-      })
+      this.socket.emit(
+        CommandType.JOIN_SESSION,
+        { sessionName: sessionName },
+        (joinSessionResponse: JoinSessionResponse) => {
+          resolve(joinSessionResponse)
+        }
+      )
     })
   }
 
-  private async sendCreateSessionMessage(videoId: string): Promise<CreateSessionResponse> {
+  private async sendCreateSessionMessage(videoUrl: string): Promise<CreateSessionResponse> {
     return new Promise((resolve) => {
       this.socket.emit(
-        'createRoom',
-        { room: videoId },
+        CommandType.CREATE_SESSION,
+        { videoUrl: videoUrl },
         (createSessionResponse: CreateSessionResponse) => {
           resolve(createSessionResponse)
         }
@@ -143,7 +151,7 @@ export class SessionControllerImpl implements SessionController {
 
   private listenToClientEvents() {
     window.addEventListener('beforeunload', () => {
-      this.socket.emit('leaveRoom')
+      this.leaveSession()
     })
   }
 
