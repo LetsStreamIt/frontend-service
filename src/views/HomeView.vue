@@ -1,15 +1,25 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CreateSessionPopup from '../components/session/CreateSessionPopup.vue'
+import { useAuthStore } from '../stores/auth.ts'
+import { useRouter } from 'vue-router'
 
 const popupHidden = ref<boolean>(true)
+const authStore = useAuthStore()
+const router = useRouter()
 
 function closePopup() {
   popupHidden.value = true
 }
 
 function showPopup() {
-  popupHidden.value = false
+  authStore.isLoggedIn().then((logged: boolean) => {
+    if (logged) {
+      popupHidden.value = false
+    } else {
+      router.push('/login')
+    }
+  })
 }
 </script>
 
@@ -26,7 +36,7 @@ function showPopup() {
       </p>
       <div class="container-fluid">
         <div class="row">
-          <a href="#" class="btn btn-lg btn-secondary" style="width: 100%" @click="showPopup"
+          <a class="btn btn-lg btn-secondary" style="width: 100%" @click="showPopup"
             >Create a Streaming Session</a
           >
         </div>
