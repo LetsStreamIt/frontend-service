@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, toRefs, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Router, useRouter } from 'vue-router'
 import {
   ConnectionStatus,
@@ -40,7 +40,6 @@ function hideCreateSessionPopup() {
 
 onMounted(() => {
   createSessionModal.value = new bootstrap.Modal('#createSessionPopup')
-
   createSessionModal.value.show()
   sessionController.value = new SessionControllerImpl(
     sessionServiceUrl.value,
