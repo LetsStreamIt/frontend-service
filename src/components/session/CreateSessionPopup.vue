@@ -17,14 +17,16 @@ const emit = defineEmits<{
 const videoUrl = ref<string>('')
 const router: Router = useRouter()
 
-const connected = ref<boolean>(false)
-const createSessionModal = ref<bootstrap.Modal | undefined>(undefined)
-const sessionController = ref<SessionController | undefined>(undefined)
-
 const sessionServiceUrl = ref<string>('http://localhost:4000')
 const authStore = useAuthStore()
 
+const createSessionModal = ref<bootstrap.Modal>(new bootstrap.Modal('#createSessionPopup'))
+const sessionController = ref<SessionController>(
+  new SessionControllerImpl(sessionServiceUrl.value, authStore.accessToken)
+)
+
 const { connectionStatus, connectionErrorMessage } = connectionErrors()
+const { connected } = connectToSession(sessionController.value, connectionStatus)
 
 function closePopup() {
   hideCreateSessionPopup()
@@ -32,40 +34,30 @@ function closePopup() {
 }
 
 function hideCreateSessionPopup() {
-  if (createSessionModal.value && sessionController.value) {
-    createSessionModal.value.hide()
-    sessionController.value.disconnect()
+  createSessionModal.value.hide()
+  sessionController.value.disconnect()
+}
+
+function createSession() {
+  if (connected.value && videoUrl.value) {
+    sessionController.value
+      .createSession(videoUrl.value)
+      .then((createSessionResponse: CreateSessionResponse) => {
+        if (createSessionResponse.content.status === ResponseStatus.SUCCESS) {
+          connected.value = true
+          router.push(`/session/${createSessionResponse.content.sessionName}`)
+          closePopup()
+        } else {
+          connected.value = false
+          connectionStatus.value = ConnectionStatus.INVALID_VIDEO_ID
+        }
+      })
   }
 }
 
 onMounted(() => {
-  createSessionModal.value = new bootstrap.Modal('#createSessionPopup')
-  createSessionModal.value.show()
-  sessionController.value = new SessionControllerImpl(
-    sessionServiceUrl.value,
-    authStore.accessToken
-  )
-  connectToSession(sessionController.value, connectionStatus, connected)
+  createSessionModal.value = createSessionModal.value.show()
 })
-
-function createSession() {
-  if (connected.value) {
-    if (videoUrl.value) {
-      sessionController.value
-        .createSession(videoUrl.value)
-        .then((createSessionResponse: CreateSessionResponse) => {
-          if (createSessionResponse.content.status === ResponseStatus.SUCCESS) {
-            connected.value = true
-            router.push(`/session/${createSessionResponse.content.sessionName}`)
-            closePopup()
-          } else {
-            connected.value = false
-            connectionStatus.value = ConnectionStatus.INVALID_VIDEO_ID
-          }
-        })
-    }
-  }
-}
 </script>
 
 <template>
