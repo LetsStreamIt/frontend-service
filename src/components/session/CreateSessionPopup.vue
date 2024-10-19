@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, toRefs, watch } from 'vue'
+import { onMounted, ref, toRefs, watch } from 'vue'
 import { Router, useRouter } from 'vue-router'
 import {
   ConnectionStatus,
@@ -10,60 +10,55 @@ import { connectToSession, connectionErrors } from '../../composables/session/co
 import { CreateSessionResponse, ResponseStatus } from '../../model/command/response'
 import { useAuthStore } from '../../stores/auth'
 
-const props = defineProps<{
-  popupHidden: boolean
+const emit = defineEmits<{
+  closePopup: []
 }>()
-
-const { popupHidden } = toRefs(props)
 
 const videoUrl = ref<string>('')
 const router: Router = useRouter()
 
 const connected = ref<boolean>(false)
 const createSessionModal = ref<bootstrap.Modal | undefined>(undefined)
+const sessionController = ref<SessionController | undefined>(undefined)
 
 const sessionServiceUrl = ref<string>('http://localhost:4000')
 const authStore = useAuthStore()
 
 const { connectionStatus, connectionErrorMessage } = connectionErrors()
 
-const sessionController: SessionController = new SessionControllerImpl(
-  sessionServiceUrl.value,
-  authStore.accessToken
-)
-
-function showCreateSessionPopup() {
-  if (createSessionModal.value) {
-    createSessionModal.value.show()
-    connectToSession(sessionController, connectionStatus, connected)
-  }
+function closePopup() {
+  hideCreateSessionPopup()
+  emit('closePopup')
 }
 
 function hideCreateSessionPopup() {
-  if (createSessionModal.value) {
+  if (createSessionModal.value && sessionController.value) {
     createSessionModal.value.hide()
-    sessionController.disconnect()
+    sessionController.value.disconnect()
   }
 }
 
-watch(popupHidden, () => (popupHidden.value ? hideCreateSessionPopup() : showCreateSessionPopup()))
-
 onMounted(() => {
   createSessionModal.value = new bootstrap.Modal('#createSessionPopup')
-  // createSessionModal.value.hide()
+
+  createSessionModal.value.show()
+  sessionController.value = new SessionControllerImpl(
+    sessionServiceUrl.value,
+    authStore.accessToken
+  )
+  connectToSession(sessionController.value, connectionStatus, connected)
 })
 
 function createSession() {
   if (connected.value) {
     if (videoUrl.value) {
-      sessionController
+      sessionController.value
         .createSession(videoUrl.value)
         .then((createSessionResponse: CreateSessionResponse) => {
-          console.log(createSessionResponse)
           if (createSessionResponse.content.status === ResponseStatus.SUCCESS) {
             connected.value = true
-            hideCreateSessionPopup()
             router.push(`/session/${createSessionResponse.content.sessionName}`)
+            closePopup()
           } else {
             connected.value = false
             connectionStatus.value = ConnectionStatus.INVALID_VIDEO_ID
@@ -81,6 +76,7 @@ function createSession() {
         <div class="modal-header">
           <h5 class="modal-title">Create a new Session</h5>
           <button
+            @click="closePopup()"
             type="button"
             class="btn-close"
             data-bs-dismiss="modal"
@@ -105,7 +101,6 @@ function createSession() {
               </button>
             </div>
           </form>
-          TOKEN {{ authStore.accessToken }}
           <div v-if="!connected" class="text-danger">
             {{ connectionErrorMessage }}
           </div>

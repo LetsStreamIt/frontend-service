@@ -70,6 +70,7 @@ export class SessionControllerImpl implements SessionController {
   }
 
   disconnect(): void {
+    console.log('disconnecting')
     this.socket.disconnect()
   }
 

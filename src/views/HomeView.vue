@@ -4,13 +4,19 @@ import CreateSessionPopup from '../components/session/CreateSessionPopup.vue'
 
 const popupHidden = ref<boolean>(true)
 
-function togglePopupHiding() {
-  popupHidden.value = !popupHidden.value
+function closePopup() {
+  popupHidden.value = true
+}
+
+function showPopup() {
+  popupHidden.value = false
 }
 </script>
 
 <template>
-  <CreateSessionPopup :popupHidden="popupHidden"></CreateSessionPopup>
+  <div v-if="!popupHidden">
+    <CreateSessionPopup @closePopup="closePopup"></CreateSessionPopup>
+  </div>
 
   <div class="cover-container d-flex p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
@@ -20,11 +26,7 @@ function togglePopupHiding() {
       </p>
       <div class="container-fluid">
         <div class="row">
-          <a
-            href="#"
-            class="btn btn-lg btn-secondary"
-            style="width: 100%"
-            @click="togglePopupHiding"
+          <a href="#" class="btn btn-lg btn-secondary" style="width: 100%" @click="showPopup"
             >Create a Streaming Session</a
           >
         </div>
