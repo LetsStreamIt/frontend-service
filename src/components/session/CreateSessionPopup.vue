@@ -20,7 +20,7 @@ const router: Router = useRouter()
 const sessionServiceUrl = ref<string>('http://localhost:4000')
 const authStore = useAuthStore()
 
-const createSessionModal = ref<bootstrap.Modal>(new bootstrap.Modal('#createSessionPopup'))
+const createSessionModal = ref<bootstrap.Modal | undefined>(undefined)
 const sessionController = ref<SessionController>(
   new SessionControllerImpl(sessionServiceUrl.value, authStore.accessToken)
 )
@@ -34,8 +34,10 @@ function closePopup() {
 }
 
 function hideCreateSessionPopup() {
-  createSessionModal.value.hide()
-  sessionController.value.disconnect()
+  if (createSessionModal.value) {
+    createSessionModal.value.hide()
+    sessionController.value.disconnect()
+  }
 }
 
 function createSession() {
@@ -56,7 +58,8 @@ function createSession() {
 }
 
 onMounted(() => {
-  createSessionModal.value = createSessionModal.value.show()
+  createSessionModal.value = new bootstrap.Modal('#createSessionPopup')
+  createSessionModal.value.show()
 })
 </script>
 
