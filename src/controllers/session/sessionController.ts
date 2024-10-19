@@ -69,6 +69,10 @@ export class SessionControllerImpl implements SessionController {
     })
   }
 
+  disconnect(): void {
+    this.socket.disconnect()
+  }
+
   async createSession(videoId: string): Promise<CreateSessionResponse> {
     return new Promise((resolve, reject) => {
       this.sendCreateSessionMessage(videoId)
@@ -101,10 +105,6 @@ export class SessionControllerImpl implements SessionController {
         }
       )
     })
-  }
-
-  disconnect(): void {
-    this.socket.disconnect()
   }
 
   private async connection(): Promise<void> {
