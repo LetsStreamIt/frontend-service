@@ -22,6 +22,7 @@ export enum ConnectionStatus {
 
 export interface SessionController {
   connect(): Promise<UserTokenResponse>
+  disconnect(): void
   createSession(videoId: string): Promise<CreateSessionResponse>
   joinSession(sessionName: string): Promise<JoinSessionResponse>
   leaveSession(): Promise<LeaveSessionResponse>
@@ -95,11 +96,15 @@ export class SessionControllerImpl implements SessionController {
         CommandType.LEAVE_SESSION,
         null,
         (leaveSessionResponse: LeaveSessionResponse) => {
+          this.disconnect()
           resolve(leaveSessionResponse)
         }
       )
-      this.socket.disconnect()
     })
+  }
+
+  disconnect(): void {
+    this.socket.disconnect()
   }
 
   private async connection(): Promise<void> {
@@ -116,7 +121,6 @@ export class SessionControllerImpl implements SessionController {
 
   private async sendUserToken(): Promise<UserTokenResponse> {
     return new Promise((resolve) => {
-      console.log('SENDING USER TOKEN')
       this.socket.emit(
         CommandType.USER_TOKEN,
         { token: this.token },
@@ -153,9 +157,7 @@ export class SessionControllerImpl implements SessionController {
 
   private listenToClientEvents() {
     window.addEventListener('beforeunload', () => {
-      console.log('DISCONNECTING')
       this.leaveSession()
-      // this.socket.disconnect()
     })
   }
 
