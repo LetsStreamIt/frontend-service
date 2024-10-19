@@ -1,3 +1,37 @@
+## [0.9.1](https://github.com/LetsStreamIt/frontend-service/compare/v0.9.0...v0.9.1) (2024-10-19)
+
+### Dependency updates
+
+* **deps:** add youtube types ([08186bc](https://github.com/LetsStreamIt/frontend-service/commit/08186bc8750c46a8995037dc15886a0e6e1f7c63))
+* **deps:** add youtube types ([195516a](https://github.com/LetsStreamIt/frontend-service/commit/195516a3f54a93c66818bcaa9753c401bf3b0eae))
+* **deps:** update dependency @vuepress/theme-default to v2.0.0-rc.55 ([2c12901](https://github.com/LetsStreamIt/frontend-service/commit/2c12901a0b8fdf02a3b5bb1b9b3111333e8d4d36))
+* **deps:** update dependency eslint-plugin-vue to v9.29.0 ([f1ac5b3](https://github.com/LetsStreamIt/frontend-service/commit/f1ac5b35638f30c511d8437f6e86223e8691d607))
+* **deps:** update dependency typescript-eslint to v8.9.0 ([588e7d5](https://github.com/LetsStreamIt/frontend-service/commit/588e7d59a6b3560bb764b5467f7d206d53609921))
+* **deps:** update dependency vite to v5.4.9 ([08e2c37](https://github.com/LetsStreamIt/frontend-service/commit/08e2c375b3b5e112f4d5e254295bb046dee01350))
+* **deps:** update dependency vitest to v2.1.3 ([587e4ad](https://github.com/LetsStreamIt/frontend-service/commit/587e4ad065a24311409eaaf1a6d686bd297333a9))
+* **deps:** update dependency vue to v3.5.12 ([8a2e996](https://github.com/LetsStreamIt/frontend-service/commit/8a2e996db0e3653a7ad6376e506fe5331f6a2ed6))
+* **deps:** update vuepress monorepo ([17ae446](https://github.com/LetsStreamIt/frontend-service/commit/17ae4460281b71585e48b679759bf8c614bbdde8))
+
+### Bug Fixes
+
+* leave session ([49013d5](https://github.com/LetsStreamIt/frontend-service/commit/49013d51731a6a999efa6f4277f35d752c79bcae))
+
+### General maintenance
+
+* add ack to chatController method ([d16412b](https://github.com/LetsStreamIt/frontend-service/commit/d16412b28d4db3338b5c8cc646d3f9ce0a9720bc))
+* add ack to video controller ([6a87e08](https://github.com/LetsStreamIt/frontend-service/commit/6a87e0885a7580151ad7cfcf378dda4767f78c51))
+* add queue of actions to execute in session frame ([f706f86](https://github.com/LetsStreamIt/frontend-service/commit/f706f86bb670d4924a64751c35f6fd9dfd371511))
+* align model with session service, add command and notification types ([92c4017](https://github.com/LetsStreamIt/frontend-service/commit/92c401768377974d0fa94f8a1dbe8c16c0e294b7))
+* format ([1442f76](https://github.com/LetsStreamIt/frontend-service/commit/1442f766b9e620f683fbdbc803e0b9066a2bab4f))
+* model session controller return class ([4fe5799](https://github.com/LetsStreamIt/frontend-service/commit/4fe5799de9968982209f091e201a6990c511a664))
+* move model package, add reusable composable ([220c95b](https://github.com/LetsStreamIt/frontend-service/commit/220c95bfbc7cc981b1ad8ec5fa4878fd70d87706))
+* remove PlayerState, shift player actions in handler ([2971c3e](https://github.com/LetsStreamIt/frontend-service/commit/2971c3e308c79c72b1faa703587fa141ea710bc2))
+* use connectionError composable inside SessionView ([d05fade](https://github.com/LetsStreamIt/frontend-service/commit/d05fade2000326e0699be1dac644b1a9d581a9a1))
+
+### Refactoring
+
+* methods reordering ([b11715c](https://github.com/LetsStreamIt/frontend-service/commit/b11715cd8d90b6e3448bbce0cba8028f21d5beea))
+
 ## [0.9.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.8.0...v0.9.0) (2024-10-12)
 
 ### Features
