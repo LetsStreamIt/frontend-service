@@ -18,7 +18,6 @@ const sessionServiceUrl = ref<string>('http://localhost:4000')
 const videoId = ref<string>('')
 const isChatMounted = ref<boolean>(false)
 const isFrameMounted = ref<boolean>(false)
-const connected = ref<boolean>(false)
 
 const authStore = useAuthStore()
 
@@ -26,6 +25,9 @@ const sessionController: SessionController = new SessionControllerImpl(
   sessionServiceUrl.value,
   authStore.accessToken
 )
+
+const { connectionStatus, connectionErrorMessage } = connectionErrors()
+const { connected } = connectToSession(sessionController, connectionStatus)
 
 function chatMounted() {
   isChatMounted.value = true
@@ -40,8 +42,6 @@ function frameMounted() {
     joinSession()
   }
 }
-
-const { connectionStatus, connectionErrorMessage } = connectionErrors()
 
 function joinSession() {
   if (connected.value) {
@@ -67,10 +67,6 @@ function joinSession() {
       })
   }
 }
-
-onMounted(() => {
-  connectToSession(sessionController, connectionStatus, connected)
-})
 
 onUnmounted(() => {
   sessionController.leaveSession()
