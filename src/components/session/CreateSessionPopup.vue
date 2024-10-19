@@ -16,7 +16,7 @@ const emit = defineEmits<{
   createSession: []
 }>()
 
-const sessionServiceUrl = ref<string>('http://localhost:3000')
+const sessionServiceUrl = ref<string>('http://localhost:4000')
 
 const sessionCreated = ref<boolean>(false)
 const { connectionStatus, connectionErrorMessage } = connectionErrors()
@@ -29,7 +29,7 @@ const sessionController: SessionController = new SessionControllerImpl(
 const connected = connectToSession(sessionController, connectionStatus)
 
 onUnmounted(() => {
-  sessionController.leaveSession()
+  sessionController.disconnect()
 })
 
 function createSession() {
@@ -40,11 +40,11 @@ function createSession() {
         .then((createSessionResponse: CreateSessionResponse) => {
           console.log(createSessionResponse)
           if (createSessionResponse.content.status === ResponseStatus.SUCCESS) {
-            sessionCreated.value = true
+            connected.value = true
             router.push(`/session/${createSessionResponse.content.sessionName}`)
             emit('createSession')
           } else {
-            sessionCreated.value = false
+            connected.value = false
             connectionStatus.value = ConnectionStatus.INVALID_VIDEO_ID
           }
         })
@@ -84,7 +84,7 @@ function createSession() {
               </button>
             </div>
           </form>
-          <div v-if="!connected || !sessionCreated" class="text-danger">
+          <div v-if="!connected" class="text-danger">
             {{ connectionErrorMessage }}
           </div>
         </div>

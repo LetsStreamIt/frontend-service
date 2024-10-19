@@ -12,7 +12,7 @@ import { JoinSessionResponseType, JoinSessionResponse } from '../model/command/r
 import { connectToSession, connectionErrors } from '../composables/session/connection'
 
 const route = useRoute()
-const sessionServiceUrl = ref<string>('http://localhost:3000')
+const sessionServiceUrl = ref<string>('http://localhost:4000')
 
 const videoId = ref<string>('')
 const isChatMounted = ref<boolean>(false)
@@ -48,9 +48,9 @@ function joinSession() {
       .then((joinSessionResponse: JoinSessionResponse) => {
         if (joinSessionResponse.content.responseType === JoinSessionResponseType.SUCCESS) {
           videoId.value = joinSessionResponse.content.videoId
-          joined.value = true
+          connected.value = true
         } else {
-          joined.value = false
+          connected.value = false
           switch (joinSessionResponse.content.responseType) {
             case JoinSessionResponseType.SESSION_NOT_FOUND:
               connectionStatus.value = ConnectionStatus.SESSION_NOT_FOUND
@@ -66,8 +66,8 @@ function joinSession() {
   }
 }
 
-onUnmounted(async () => {
-  await sessionController.leaveSession()
+onUnmounted(() => {
+  sessionController.leaveSession()
 })
 </script>
 
