@@ -1,29 +1,16 @@
-<script setup>
-import { ref, onMounted } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 import CreateSessionPopup from '../components/session/CreateSessionPopup.vue'
 
-const createSessionModal = ref(null)
+const popupHidden = ref<boolean>(true)
 
-function showCreateSessionPopup() {
-  if (createSessionModal.value) {
-    createSessionModal.value.show()
-  }
+function togglePopupHiding() {
+  popupHidden.value = !popupHidden.value
 }
-
-function hideCreateSessionPopup() {
-  if (createSessionModal.value) {
-    createSessionModal.value.hide()
-  }
-}
-
-onMounted(() => {
-  createSessionModal.value = new bootstrap.Modal('#createSessionPopup')
-  createSessionModal.value.hide()
-})
 </script>
 
 <template>
-  <CreateSessionPopup @createSession="hideCreateSessionPopup"></CreateSessionPopup>
+  <CreateSessionPopup :popupHidden="popupHidden"></CreateSessionPopup>
 
   <div class="cover-container d-flex p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
@@ -37,7 +24,7 @@ onMounted(() => {
             href="#"
             class="btn btn-lg btn-secondary"
             style="width: 100%"
-            @click="showCreateSessionPopup"
+            @click="togglePopupHiding"
             >Create a Streaming Session</a
           >
         </div>

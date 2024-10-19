@@ -36,9 +36,9 @@ export function connectionErrors() {
 
 export function connectToSession(
   sessionController: SessionController,
-  error: Ref<ConnectionStatus>
+  error: Ref<ConnectionStatus>,
+  connected: Ref<boolean>
 ) {
-  const connected = ref<boolean>(false)
   sessionController.connect().then((userTokenResponse: UserTokenResponse) => {
     if (userTokenResponse.content.status === ResponseStatus.SUCCESS) {
       connected.value = true
@@ -47,5 +47,4 @@ export function connectToSession(
       error.value = ConnectionStatus.INVALID_TOKEN
     }
   })
-  return connected
 }

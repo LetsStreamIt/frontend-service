@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onUnmounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, onUnmounted, ref, toRefs, watch } from 'vue'
+import { Router, useRouter } from 'vue-router'
 import {
   ConnectionStatus,
   SessionController,
@@ -8,28 +8,49 @@ import {
 } from '../../controllers/session/sessionController'
 import { connectToSession, connectionErrors } from '../../composables/session/connection'
 import { CreateSessionResponse, ResponseStatus } from '../../model/command/response'
+import { useAuthStore } from '../../stores/auth'
 
-const videoUrl = ref('')
-const router = useRouter()
-
-const emit = defineEmits<{
-  createSession: []
+const props = defineProps<{
+  popupHidden: boolean
 }>()
 
-const sessionServiceUrl = ref<string>('http://localhost:4000')
+const { popupHidden } = toRefs(props)
 
-const sessionCreated = ref<boolean>(false)
+const videoUrl = ref<string>('')
+const router: Router = useRouter()
+
+const connected = ref<boolean>(false)
+const createSessionModal = ref<bootstrap.Modal | undefined>(undefined)
+
+const sessionServiceUrl = ref<string>('http://localhost:4000')
+const authStore = useAuthStore()
+
 const { connectionStatus, connectionErrorMessage } = connectionErrors()
 
 const sessionController: SessionController = new SessionControllerImpl(
   sessionServiceUrl.value,
-  'token'
+  authStore.accessToken
 )
 
-const connected = connectToSession(sessionController, connectionStatus)
+function showCreateSessionPopup() {
+  if (createSessionModal.value) {
+    createSessionModal.value.show()
+    connectToSession(sessionController, connectionStatus, connected)
+  }
+}
 
-onUnmounted(() => {
-  sessionController.disconnect()
+function hideCreateSessionPopup() {
+  if (createSessionModal.value) {
+    createSessionModal.value.hide()
+    sessionController.disconnect()
+  }
+}
+
+watch(popupHidden, () => (popupHidden.value ? hideCreateSessionPopup() : showCreateSessionPopup()))
+
+onMounted(() => {
+  createSessionModal.value = new bootstrap.Modal('#createSessionPopup')
+  // createSessionModal.value.hide()
 })
 
 function createSession() {
@@ -41,8 +62,8 @@ function createSession() {
           console.log(createSessionResponse)
           if (createSessionResponse.content.status === ResponseStatus.SUCCESS) {
             connected.value = true
+            hideCreateSessionPopup()
             router.push(`/session/${createSessionResponse.content.sessionName}`)
-            emit('createSession')
           } else {
             connected.value = false
             connectionStatus.value = ConnectionStatus.INVALID_VIDEO_ID
@@ -84,6 +105,7 @@ function createSession() {
               </button>
             </div>
           </form>
+          TOKEN {{ authStore.accessToken }}
           <div v-if="!connected" class="text-danger">
             {{ connectionErrorMessage }}
           </div>

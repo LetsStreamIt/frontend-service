@@ -10,6 +10,7 @@ import {
 import { useRoute } from 'vue-router'
 import { JoinSessionResponseType, JoinSessionResponse } from '../model/command/response'
 import { connectToSession, connectionErrors } from '../composables/session/connection'
+import { useAuthStore } from '../stores/auth'
 
 const route = useRoute()
 const sessionServiceUrl = ref<string>('http://localhost:4000')
@@ -20,7 +21,7 @@ const isFrameMounted = ref<boolean>(false)
 
 const sessionController: SessionController = new SessionControllerImpl(
   sessionServiceUrl.value,
-  'token'
+  useAuthStore.accessToken
 )
 const joined = ref<boolean>(false)
 
