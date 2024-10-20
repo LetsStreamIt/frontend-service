@@ -1,5 +1,5 @@
 <script>
-import SessionNavbar from '@/components/common/session/SessionNavbar.vue'
+import SessionNavbar from '@/components/session/SessionNavbar.vue'
 import FooterComponent from '@/components/common/FooterComponent.vue'
 
 export default {
@@ -11,15 +11,15 @@ export default {
 </script>
 
 <template>
-  <div class="row">
-    <SessionNavbar />
-  </div>
-  <div class="row vh-100">
-    <router-view />
-  </div>
-  <div class="row">
-    <FooterComponent />
+  <div class="container-fluid">
+    <div class="row">
+      <SessionNavbar />
+    </div>
+    <div class="row vh-100">
+      <router-view />
+    </div>
+    <div class="row">
+      <FooterComponent />
+    </div>
   </div>
 </template>
-
-<style></style>
