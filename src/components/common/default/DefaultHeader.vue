@@ -3,14 +3,39 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <header class="masthead mb-auto">
-    <div class="inner">
-      <h3 class="masthead-brand">LetsStreamIt</h3>
-      <nav class="nav nav-masthead justify-content-center">
-        <RouterLink to="/" class="nav-link">Home</RouterLink>
-        <RouterLink to="/about" class="nav-link">About</RouterLink>
-        <RouterLink to="/" class="nav-link">Profile</RouterLink>
-      </nav>
-    </div>
-  </header>
+  <div class="row">
+    <nav class="navbar navbar-expand-md navbar-dark">
+      <div class="container-fluid">
+        <RouterLink to="/" class="navbar-brand">LetsStreamIt</RouterLink>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navigationNavbar"
+          aria-controls="navigationNavbar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navigationNavbar">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <RouterLink to="/" class="nav-link">Home</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink to="/" class="nav-link">Profile</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink to="/about" class="nav-link">About</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink to="/Login" class="nav-link">Login</RouterLink>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
 </template>

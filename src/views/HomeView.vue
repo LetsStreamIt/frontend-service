@@ -28,7 +28,7 @@ function showPopup() {
     <CreateSessionPopup @closePopup="closePopup"></CreateSessionPopup>
   </div>
 
-  <div class="cover-container d-flex p-3 mx-auto flex-column">
+  <div class="row d-flex p-3 mx-auto align-items-center h-100">
     <main role="main" class="inner cover">
       <h1 class="cover-heading">
         Welcome to <span class="fst-italic fw-bolder">Let's Stream It!</span>

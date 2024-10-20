@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SessionChat from '../components/session/chat/SessionChat.vue'
 import SessionFrame from '../components/session/video/SessionFrame.vue'
-import { ref, onUnmounted, onMounted } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import {
   ConnectionStatus,
   SessionController,

@@ -11,8 +11,8 @@ export default {
 </script>
 
 <template>
-  <div class="container-fluid background-container h-100 w-100">
-    <div class="cover-container d-flex h-100 w-75 p-3 mx-auto flex-column">
+  <div class="col-md-12 background-container h-100">
+    <div class="cover-container col-md-8 col-12 d-flex h-100 px-3 mx-auto flex-column">
       <DefaultHeader />
       <router-view />
       <FooterComponent />
