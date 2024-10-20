@@ -1,5 +1,4 @@
 <script setup>
-import { RouterLink } from 'vue-router'
 import NavbarContainer from '../common/navbar/NavbarContainer.vue'
 import CollapsableNavbar from '../common/navbar/CollapsableNavbar.vue'
 </script>
@@ -16,10 +15,3 @@ import CollapsableNavbar from '../common/navbar/CollapsableNavbar.vue'
     </div>
   </div>
 </template>
-
-<style>
-.nav-item-collapse:hover {
-  border-radius: 8px;
-  background-color: #23262d;
-}
-</style>
