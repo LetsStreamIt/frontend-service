@@ -1,10 +1,10 @@
 <script>
-import DefaultHeader from '@/components/common/default/DefaultHeader.vue'
+import DefaultNavbar from '@/components/common/default/DefaultNavbar.vue'
 import FooterComponent from '@/components/common/FooterComponent.vue'
 
 export default {
   components: {
-    DefaultHeader,
+    DefaultNavbar,
     FooterComponent
   }
 }
@@ -13,7 +13,7 @@ export default {
 <template>
   <div class="col-md-12 background-container h-100">
     <div class="cover-container col-md-8 col-12 d-flex h-100 px-3 mx-auto flex-column">
-      <DefaultHeader />
+      <DefaultNavbar />
       <router-view />
       <FooterComponent />
     </div>
