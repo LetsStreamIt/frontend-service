@@ -11,44 +11,20 @@ export default {
 </script>
 
 <template>
-  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <DefaultHeader />
-    <router-view />
-    <FooterComponent />
+  <div class="container-fluid background-container h-100 w-100">
+    <div class="cover-container d-flex h-100 w-75 p-3 mx-auto flex-column">
+      <DefaultHeader />
+      <router-view />
+      <FooterComponent />
+    </div>
   </div>
 </template>
 
 <style>
-/*
- * Globals
- */
-
-/* Links */
-a,
-a:focus,
-a:hover {
-  color: #fff;
-}
-
-/* Custom default button */
-.btn-secondary,
-.btn-secondary:hover,
-.btn-secondary:focus {
-  color: #333;
-  text-shadow: none;
-  /* Prevent inheritance from `body` */
-  background-color: #fff;
-  border: 0.05rem solid #fff;
-}
-
-/*
- * Base structure
- */
-
 html,
 body {
   height: 100%;
-  background-color: #333;
+  background-color: #2f333c;
 }
 
 body {
@@ -64,68 +40,13 @@ body {
 }
 
 .cover-container {
-  max-width: 42em;
+  background-color: #2f333c;
 }
 
-/*
- * Header
- */
-.masthead {
-  margin-bottom: 2rem;
-}
-
-.masthead-brand {
-  margin-bottom: 0;
-}
-
-.nav-masthead .nav-link {
-  padding: 0.25rem 0;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: transparent;
-  border-bottom: 0.25rem solid transparent;
-}
-
-.nav-masthead .nav-link:hover,
-.nav-masthead .nav-link:focus {
-  border-bottom-color: rgba(255, 255, 255, 0.25);
-}
-
-.nav-masthead .nav-link + .nav-link {
-  margin-left: 1rem;
-}
-
-.nav-masthead .active {
-  color: #fff;
-  border-bottom-color: #fff;
-}
-
-@media (min-width: 48em) {
-  .masthead-brand {
-    float: left;
-  }
-
-  .nav-masthead {
-    float: right;
-  }
-}
-
-/*
- * Cover
- */
-.cover {
-  padding: 0 1.5rem;
-}
-
-.cover .btn-lg {
-  padding: 0.75rem 1.25rem;
-  font-weight: 700;
-}
-
-/*
- * Footer
- */
-.mastfoot {
-  color: rgba(255, 255, 255, 0.5);
+.background-container {
+  background-image: url('../assets/film-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 </style>

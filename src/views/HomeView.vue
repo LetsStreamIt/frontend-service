@@ -30,13 +30,15 @@ function showPopup() {
 
   <div class="cover-container d-flex p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
-      <h1 class="cover-heading">Welcome to Let's Stream It!</h1>
+      <h1 class="cover-heading">
+        Welcome to <span class="fst-italic fw-bolder">Let's Stream It!</span>
+      </h1>
       <p class="lead">
         Create or Join a Youtube session and enjoy it with your friends around the globe!
       </p>
       <div class="container-fluid">
         <div class="row">
-          <a class="btn btn-lg btn-secondary" style="width: 100%" @click="showPopup"
+          <a class="btn btn-lg fw-bolder btn-secondary" style="width: 100%" @click="showPopup"
             >Create a Streaming Session</a
           >
         </div>
