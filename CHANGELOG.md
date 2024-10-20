@@ -1,3 +1,9 @@
+## [0.10.1](https://github.com/LetsStreamIt/frontend-service/compare/v0.10.0...v0.10.1) (2024-10-20)
+
+### Bug Fixes
+
+* login redirection ([114c863](https://github.com/LetsStreamIt/frontend-service/commit/114c863d2cf9cbccce2ff94a0da718dc6ab4e926))
+
 ## [0.10.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.9.1...v0.10.0) (2024-10-20)
 
 ### Features
