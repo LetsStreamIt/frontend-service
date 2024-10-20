@@ -22,9 +22,10 @@
             <a href="https://github.com/LetsStreamIt">Let's Stream It</a>. <br />
 
             For any issues or information about the website, please feel free to contact us at our
-            university emails:
+            university emails
             <a href="mailto:luca.fabri@studio.unibo.it">luca.fabri1999@gmail.com</a>,
-            <a href="mailto:simone.ceredi@studio.unibo.it">simone.ceredi@studio.unibo.it</a>.
+            <a href="mailto:simone.ceredi@studio.unibo.it">simone.ceredi@studio.unibo.it</a> or open
+            a Pull Request.
           </p>
         </div>
       </div>
