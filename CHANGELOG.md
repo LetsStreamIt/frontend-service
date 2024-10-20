@@ -1,3 +1,22 @@
+## [0.10.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.9.1...v0.10.0) (2024-10-20)
+
+### Features
+
+* redirect to login if not logged when creating session ([a3f7271](https://github.com/LetsStreamIt/frontend-service/commit/a3f72719efed81ac4c6a228c958e169e5156657d))
+* use login auth token in create session popup ([2ff891d](https://github.com/LetsStreamIt/frontend-service/commit/2ff891d16a6d4d56a192dc0cebb6cd2e3545ab3d))
+
+### Bug Fixes
+
+* modal hiding, connection to session usage inside session view ([ceaaf3b](https://github.com/LetsStreamIt/frontend-service/commit/ceaaf3b4a64dd218094872a8682e9b9eebf56401))
+
+### General maintenance
+
+* use auth token in create session popup, reorganize code using emit ([da903f8](https://github.com/LetsStreamIt/frontend-service/commit/da903f84995b04d18e4fdbf5cb14a738928e535d))
+
+### Refactoring
+
+* minimize code in create session popup ([5da0f91](https://github.com/LetsStreamIt/frontend-service/commit/5da0f91a084a089ca5b1ad7d9c2194e3871c2a0c))
+
 ## [0.9.1](https://github.com/LetsStreamIt/frontend-service/compare/v0.9.0...v0.9.1) (2024-10-19)
 
 ### Dependency updates
