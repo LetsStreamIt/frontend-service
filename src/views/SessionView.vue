@@ -74,7 +74,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="connected" class="row h-100 mx-2 pb-5">
+  <div v-if="connected" class="row align-items-stretch h-100 mx-0 px-0 pb-5">
     <div class="col-md-8 col-12 my-5">
       <SessionFrame
         :videoController="sessionController.getVideoController"

@@ -9,16 +9,23 @@ import { RouterLink } from 'vue-router'
         <li class="nav-item nav-item-collapse px-2 active">
           <RouterLink to="/" class="nav-link">Home</RouterLink>
         </li>
-        <li class="nav-item px-2">
+        <li class="nav-item nav-item-collapse px-2">
           <RouterLink to="/" class="nav-link">Profile</RouterLink>
         </li>
-        <li class="nav-item px-2">
+        <li class="nav-item nav-item-collapse px-2">
           <RouterLink to="/about" class="nav-link">About</RouterLink>
         </li>
-        <li class="nav-item px-2">
+        <li class="nav-item nav-item-collapse px-2">
           <RouterLink to="/Login" class="nav-link">Login</RouterLink>
         </li>
       </ul>
     </div>
   </div>
 </template>
+
+<style>
+.nav-item-collapse:hover {
+  border-radius: 8px;
+  background-color: #23262d;
+}
+</style>
