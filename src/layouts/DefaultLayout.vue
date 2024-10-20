@@ -1,5 +1,5 @@
 <script>
-import DefaultNavbar from '@/components/common/default/DefaultNavbar.vue'
+import DefaultNavbar from '@/components/common/navbar/DefaultNavbar.vue'
 import FooterComponent from '@/components/common/FooterComponent.vue'
 
 export default {
