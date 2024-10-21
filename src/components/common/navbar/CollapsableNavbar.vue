@@ -1,5 +1,8 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -10,7 +13,7 @@ import { RouterLink } from 'vue-router'
           <RouterLink to="/" class="nav-link">Home</RouterLink>
         </li>
         <li class="nav-item nav-item-collapse px-2">
-          <RouterLink to="/" class="nav-link">Profile</RouterLink>
+          <RouterLink :to="`/profile/${authStore.email}`" class="nav-link">Profile</RouterLink>
         </li>
         <li class="nav-item nav-item-collapse px-2">
           <RouterLink to="/about" class="nav-link">About</RouterLink>
