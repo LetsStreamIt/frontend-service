@@ -1,10 +1,10 @@
 import { Socket } from 'socket.io-client'
-import { SerializerImpl } from '../../model/presentation/serialization/messageSerializer'
-import { VideoStateDeserializer } from '../../model/presentation/deserialization/videoStateDeserializer'
-import { PlayVideoResponse, StopVideoResponse } from '../../model/command/response'
-import { VideoState } from '../../model/video'
-import { VideoNotificationType } from '../../model/notification/notification'
-import { CommandType } from '../../model/command/command'
+import { SerializerImpl } from '@/model/presentation/serialization/messageSerializer'
+import { VideoStateDeserializer } from '@/model/presentation/deserialization/videoStateDeserializer'
+import { PlayVideoResponse, StopVideoResponse } from '@/model/command/response'
+import { VideoState } from '@/model/video'
+import { VideoNotificationType } from '@/model/notification/notification'
+import { CommandType } from '@/model/command/command'
 
 export interface VideoController {
   handleVideoNotifications(

@@ -1,14 +1,14 @@
 import { io, Socket } from 'socket.io-client'
 import { ChatController } from './chatController'
-import { ChatControllerImpl } from './chatController'
-import { VideoController, VideoControllerImpl } from './videoController'
+import { ChatControllerImpl } from '@/controllers/session/chatController'
+import { VideoController, VideoControllerImpl } from '@/controllers/session/videoController'
 import {
   CreateSessionResponse,
   JoinSessionResponse,
   LeaveSessionResponse,
   UserTokenResponse
-} from '../../model/command/response'
-import { CommandType } from '../../model/command/command'
+} from '@/model/command/response'
+import { CommandType } from '@/model/command/command'
 
 export enum ConnectionStatus {
   SUCCESS,

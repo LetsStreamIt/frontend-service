@@ -1,6 +1,6 @@
 import { Ref, ref, watch } from 'vue'
-import { ConnectionStatus, SessionController } from '../../controllers/session/sessionController'
-import { UserTokenResponse, ResponseStatus } from '../../model/command/response'
+import { ConnectionStatus, SessionController } from '@/controllers/session/sessionController'
+import { UserTokenResponse, ResponseStatus } from '@/model/command/response'
 
 export function connectionErrors() {
   const connectionStatus = ref<ConnectionStatus>(ConnectionStatus.DISCONNECTED)

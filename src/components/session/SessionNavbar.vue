@@ -1,6 +1,6 @@
 <script setup>
-import NavbarContainer from '../common/navbar/NavbarContainer.vue'
-import CollapsableNavbar from '../common/navbar/CollapsableNavbar.vue'
+import NavbarContainer from '@/components/common/navbar/NavbarContainer.vue'
+import CollapsableNavbar from '@/components/common/navbar/CollapsableNavbar.vue'
 </script>
 
 <template>

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import SessionChat from '../components/session/chat/SessionChat.vue'
-import SessionFrame from '../components/session/video/SessionFrame.vue'
+import SessionChat from '@/components/session/chat/SessionChat.vue'
+import SessionFrame from '@/components/session/video/SessionFrame.vue'
 import { ref, onUnmounted } from 'vue'
 import {
   ConnectionStatus,
   SessionController,
   SessionControllerImpl
-} from '../controllers/session/sessionController'
+} from '@/controllers/session/sessionController'
 import { useRoute } from 'vue-router'
-import { JoinSessionResponseType, JoinSessionResponse } from '../model/command/response'
-import { connectToSession, connectionErrors } from '../composables/session/connection'
-import { useAuthStore } from '../stores/auth'
+import { JoinSessionResponseType, JoinSessionResponse } from '@/model/command/response'
+import { connectToSession, connectionErrors } from '@/composables/session/connection'
+import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()
 const sessionServiceUrl = ref<string>('http://localhost:4000')
