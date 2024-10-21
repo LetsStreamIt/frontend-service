@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
   readonly AUTH_URL: string
+  readonly PROFILE_URL: string
   // more env variables...
 }
 

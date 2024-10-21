@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 
-const authStore = useAuthStore()
-
 export class RefreshError extends Error {
   constructor(message: string) {
     super(message)
@@ -17,11 +15,14 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   async (config) => {
+    const authStore = useAuthStore()
     const token = authStore.accessToken
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
+
+    console.log('Request config:', config)
 
     if (await authStore.isLoggedIn()) {
       // Token is still valid
