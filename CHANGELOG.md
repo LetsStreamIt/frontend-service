@@ -1,3 +1,34 @@
+## [0.11.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.10.1...v0.11.0) (2024-10-21)
+
+### Features
+
+* information portion of the profile page ([736c8ae](https://github.com/LetsStreamIt/frontend-service/commit/736c8aee79b9f554515b880a3ea902243eaa519f))
+
+### Dependency updates
+
+* **deps:** update dependency sass to v1.80.2 ([702aeb5](https://github.com/LetsStreamIt/frontend-service/commit/702aeb560eeb6a6d6ab999f2b749faa04314e758))
+* **deps:** update dependency typescript-eslint to v8.10.0 ([a9a311c](https://github.com/LetsStreamIt/frontend-service/commit/a9a311c01384332a4f7066d4945a4122eacdb219))
+
+### General maintenance
+
+* about page ([0da2666](https://github.com/LetsStreamIt/frontend-service/commit/0da2666407af5bcd2c91cf8b4626eb00039ffdbf))
+* add username to pinia store ([aac29e2](https://github.com/LetsStreamIt/frontend-service/commit/aac29e2e49933e721c5e398b9ff28d2d1f399921))
+* del warnings ([07951cd](https://github.com/LetsStreamIt/frontend-service/commit/07951cd26d646deabb6321a14525bb8cc07898f0))
+* refine footer, add license page ([0af57c9](https://github.com/LetsStreamIt/frontend-service/commit/0af57c9a4927e6f1c985119cb5adab6c5d8139fa))
+* small paragraph change ([7381fc6](https://github.com/LetsStreamIt/frontend-service/commit/7381fc68d8dd59dbdada2933575b0527d9f2941b))
+
+### Style improvements
+
+* edit default navbar, enable responsiveness ([e122880](https://github.com/LetsStreamIt/frontend-service/commit/e122880c945438f121a9d3431fa8702ca73e1ea8))
+* fix navbar link hover, session page margins and borders ([1161ec3](https://github.com/LetsStreamIt/frontend-service/commit/1161ec3c49999f323556b8476d3cb1f90a90e2b2))
+* refine default layout style ([d306c9a](https://github.com/LetsStreamIt/frontend-service/commit/d306c9aadcfc982ab92d06c8f6245ef031e26fdf))
+* working collapsable navbar in session page ([ac4a5a5](https://github.com/LetsStreamIt/frontend-service/commit/ac4a5a5d0ec380a9eff63e806c76a63cc4447b83))
+
+### Refactoring
+
+* imports ([65e44b0](https://github.com/LetsStreamIt/frontend-service/commit/65e44b0dc85452e6fd6424ecae8df0435a5ace24))
+* rename and move packages ([8f30dc8](https://github.com/LetsStreamIt/frontend-service/commit/8f30dc8c5538af0495bc7acbc6b04a16746623d4))
+
 ## [0.10.1](https://github.com/LetsStreamIt/frontend-service/compare/v0.10.0...v0.10.1) (2024-10-20)
 
 ### Bug Fixes
