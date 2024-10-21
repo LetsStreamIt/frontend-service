@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
+import { useProfileStore } from './profile'
 
 const authUrl = import.meta.env.AUTH_URL || 'http://localhost:3000'
 
@@ -14,7 +15,7 @@ export const useAuthStore = defineStore('auth', {
   state: (): State => {
     return {
       id: '',
-      email: '',
+      email: localStorage.getItem('email') || '',
       accessToken: localStorage.getItem('accessToken') || '',
       refreshToken: localStorage.getItem('refreshToken') || ''
     }
@@ -28,16 +29,20 @@ export const useAuthStore = defineStore('auth', {
       this.refreshToken = refreshToken
       localStorage.setItem('refreshToken', refreshToken)
     },
+    setEmail(email: string) {
+      this.email = email
+      localStorage.setItem('email', email)
+    },
     login(id: string, email: string, accessToken: string, refreshToken: string) {
       this.id = id
-      this.email = email
-      this.accessToken = accessToken
+      this.setEmail(email)
       this.setAccessToken(accessToken)
       this.setRefreshToken(refreshToken)
+      useProfileStore().getProfileInfo()
     },
     logout() {
       this.id = ''
-      this.email = ''
+      this.setEmail('')
       this.setAccessToken('')
       this.setRefreshToken('')
     },
