@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import CreateSessionPopup from '../components/session/CreateSessionPopup.vue'
-import { useAuthStore } from '../stores/auth.ts'
+import CreateSessionPopup from '@/components/session/CreateSessionPopup.vue'
+import { useAuthStore } from '@/stores/auth.ts'
 import { useRouter } from 'vue-router'
 
 const popupHidden = ref<boolean>(true)

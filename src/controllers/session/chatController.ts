@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io-client'
-import { SendMessageResponse } from '../../model/command/response'
-import { Message, MessageContent, TextMessage, NotificationMessage } from '../../model/message'
+import { SendMessageResponse } from '@/model/command/response'
+import { Message, MessageContent, TextMessage, NotificationMessage } from '@/model/message'
 import {
   TextMessageDeserializer,
   NotificationMessageDeserializer

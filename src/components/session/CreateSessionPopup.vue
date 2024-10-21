@@ -5,10 +5,10 @@ import {
   ConnectionStatus,
   SessionController,
   SessionControllerImpl
-} from '../../controllers/session/sessionController'
-import { connectToSession, connectionErrors } from '../../composables/session/connection'
-import { CreateSessionResponse, ResponseStatus } from '../../model/command/response'
-import { useAuthStore } from '../../stores/auth'
+} from '@/controllers/session/sessionController'
+import { connectToSession, connectionErrors } from '@/composables/session/connection'
+import { CreateSessionResponse, ResponseStatus } from '@/model/command/response'
+import { useAuthStore } from '@/stores/auth'
 
 const emit = defineEmits<{
   closePopup: []
