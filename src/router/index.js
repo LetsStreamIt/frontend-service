@@ -8,6 +8,7 @@ import AuthLayout from '../layouts/AuthLayout.vue'
 import LoginView from '../views/LoginView.vue'
 import RegistrationView from '../views/RegistrationView.vue'
 import { useAuthStore } from '../stores/auth'
+import LicenseView from '../views/LicenseView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +26,11 @@ const router = createRouter({
           path: 'about',
           name: 'about',
           component: AboutView
+        },
+        {
+          path: 'license',
+          name: 'license',
+          component: LicenseView
         }
       ]
     },
