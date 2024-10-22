@@ -1,10 +1,7 @@
 import { Socket } from 'socket.io-client'
 import { SendMessageResponse } from '@/model/command/response'
 import { Message, MessageContent, TextMessage, NotificationMessage } from '@/model/message'
-import {
-  TextMessageDeserializer,
-  NotificationMessageDeserializer
-} from '../../model/presentation/deserialization/messageDeserializer'
+import { User } from '../../model/user'
 
 export interface ChatController {
   handleChatMessages(recvMessageCallback: (message: Message<MessageContent>) => void): Promise<void>
@@ -33,17 +30,23 @@ export class ChatControllerImpl implements ChatController {
   async handleChatMessages(
     recvMessageCallback: (message: Message<MessageContent>) => void
   ): Promise<void> {
-    this.socket.on('textMessage', (data) => {
-      data = JSON.parse(data)
-      data.forEach((textMessage) => {
-        const message: TextMessage = new TextMessageDeserializer().deserialize(textMessage)
-        recvMessageCallback(message)
+    this.socket.on('textMessage', (chatMessages) => {
+      chatMessages.forEach((message) => {
+        const sender: User = new User(
+          message.sender.id,
+          message.sender.value.x,
+          message.sender.value.y
+        )
+        const textMessage: TextMessage = new TextMessage(sender, message.content)
+        recvMessageCallback(textMessage)
       })
     })
 
-    this.socket.on('notificationMessage', (data) => {
-      const notificationMessage: NotificationMessage =
-        new NotificationMessageDeserializer().deserialize(JSON.parse(data))
+    this.socket.on('notificationMessage', (message) => {
+      const notificationMessage: NotificationMessage = new NotificationMessage(
+        message.sender,
+        message.content
+      )
       recvMessageCallback(notificationMessage)
     })
   }
