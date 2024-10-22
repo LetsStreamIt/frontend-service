@@ -1,3 +1,9 @@
+## [0.12.1](https://github.com/LetsStreamIt/frontend-service/compare/v0.12.0...v0.12.1) (2024-10-22)
+
+### Bug Fixes
+
+* now navbar is correctly showing login/logout ([71838fd](https://github.com/LetsStreamIt/frontend-service/commit/71838fdd36206b5ba96edf5701a8fcd10a4f1f50))
+
 ## [0.12.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.11.0...v0.12.0) (2024-10-22)
 
 ### Features
