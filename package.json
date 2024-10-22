@@ -35,7 +35,7 @@
     "@types/youtube": "^0.1.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/eslint-config-prettier": "^10.0.0",
-    "@vue/eslint-config-typescript": "^13.0.0",
+    "@vue/eslint-config-typescript": "^14.0.0",
     "@vue/test-utils": "^2.4.6",
     "@vuepress/bundler-vite": "^2.0.0-rc.14",
     "@vuepress/theme-default": "^2.0.0-rc.40",
