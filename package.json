@@ -39,7 +39,7 @@
     "@vue/test-utils": "^2.4.6",
     "@vuepress/bundler-vite": "^2.0.0-rc.14",
     "@vuepress/theme-default": "^2.0.0-rc.40",
-    "eslint": "^8.57.1",
+    "eslint": "^9.0.0",
     "eslint-plugin-vue": "^9.29.1",
     "globals": "^15.11.0",
     "husky": "^9.1.4",
