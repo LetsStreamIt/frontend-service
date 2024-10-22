@@ -76,7 +76,7 @@ function registerVideoHandlers() {
     },
 
     (videoState: VideoState) => {
-      return new Promise((resolve) => {
+      return new Promise<void>((resolve) => {
         playerActions.value.push((player: YT.Player) => {
           player.seekTo(videoState.timestamp, true)
           commUtils.backendChange = true

@@ -1,6 +1,4 @@
 import { Socket } from 'socket.io-client'
-import { SerializerImpl } from '@/model/presentation/serialization/messageSerializer'
-import { VideoStateDeserializer } from '@/model/presentation/deserialization/videoStateDeserializer'
 import { PlayVideoResponse, StopVideoResponse } from '@/model/command/response'
 import { VideoState } from '@/model/video'
 import { VideoNotificationType } from '@/model/notification/notification'
@@ -27,15 +25,14 @@ export class VideoControllerImpl implements VideoController {
     synchVideoCallback: (videoState: VideoState) => void
   ): void {
     // Get synchronization messages
-    this.socket.on(VideoNotificationType.SYNCHRONIZE, (data) => {
-      const videoState: VideoState = new VideoStateDeserializer().deserialize(JSON.parse(data))
+    this.socket.on(VideoNotificationType.SYNCHRONIZE, (videoState: VideoState) => {
       synchVideoCallback(videoState)
     })
 
     // Send video state, at request
     this.socket.on(VideoNotificationType.VIDEO_STATE, (callback) => {
       getVideoStateCallback().then((videoState: VideoState) => {
-        callback(new SerializerImpl().serialize(videoState))
+        callback(videoState)
       })
     })
   }
