@@ -22,8 +22,6 @@ apiClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`
     }
 
-    console.log('Request config:', config)
-
     if (await authStore.isLoggedIn()) {
       // Token is still valid
       return config

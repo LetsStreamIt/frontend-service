@@ -12,7 +12,7 @@ export const useProfileStore = defineStore('profile', {
     return {
       email: localStorage.getItem('email') || '',
       username: localStorage.getItem('username') || '',
-      url: import.meta.env.PROFILE_URL || 'http://localhost:8080'
+      url: import.meta.env.VITE_PROFILE_URL || 'http://localhost:8080'
     }
   },
   actions: {
@@ -37,6 +37,12 @@ export const useProfileStore = defineStore('profile', {
         return true
       }
       return false
+    },
+    async addWatchedVideo(videoId: string) {
+      const response = await ApiClient.post(`${this.url}/videos`, {
+        videoId
+      })
+      return response.status === 201
     }
   },
   getters: {

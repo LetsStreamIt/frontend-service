@@ -143,7 +143,7 @@ function submitForm() {
     form.value.error = 'Please enter a valid email address'
     return
   }
-  const authUrl = import.meta.env.AUTH_URL || 'http://localhost:3000'
+  const authUrl = import.meta.env.VITE_AUTH_URL || 'http://localhost:3000'
   const registerUrl = `${authUrl}/api/auth/register`
 
   const formData: IRegistrationData = {

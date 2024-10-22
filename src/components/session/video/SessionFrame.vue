@@ -2,11 +2,14 @@
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { VideoController } from '@/controllers/session/videoController.ts'
 import { PlayState, VideoState } from '@/model/video.ts'
+import { useProfileStore } from '@/stores/profile.ts'
 
 const props = defineProps<{
   videoController: VideoController
   videoId: string
 }>()
+
+const profileStore = useProfileStore()
 
 const emit = defineEmits<{
   frameMounted: []
@@ -26,6 +29,20 @@ const commUtils = reactive({
 watch(
   () => videoId.value,
   () => initializePlayer()
+)
+
+watch(
+  () => videoId.value,
+  async () => {
+    try {
+      const response = await profileStore.addWatchedVideo(videoId.value)
+      if (response) {
+        console.log('Video added to watched videos')
+      }
+    } catch {
+      console.log('Error adding video to watched videos')
+    }
+  }
 )
 
 function initializePlayer() {

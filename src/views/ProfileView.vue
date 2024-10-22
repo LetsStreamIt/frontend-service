@@ -1,29 +1,31 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, Ref, ref } from 'vue'
 import ApiClient from '@/middlewares/apiClient'
-import ProfileInformationsComponent from '@/components/profile/ProfileInformationsComponent.vue'
+import ProfileInformations from '@/components/profile/ProfileInformations.vue'
+import WatchedVideos from '@/components/profile/WatchedVideos.vue'
 import { useRouter } from 'vue-router'
 
 const props = defineProps<{
   email: string
 }>()
 
-const profileUrl = import.meta.env.PROFILE_URL || 'http://localhost:8080'
+const profileUrl = import.meta.env.VITE_PROFILE_URL || 'http://localhost:8080'
 
 const router = useRouter()
 
 const email = ref(props.email)
 const username = ref('')
 const bio = ref('')
+const videos: Ref<string[]> = ref([])
 
 const fetchProfile = async () => {
   try {
     const response = await ApiClient.get(`${profileUrl}/users/${email.value}`)
     if (response.status === 200) {
-      console.log(response.data)
       const data = response.data
       username.value = data.username
       bio.value = data.bio
+      videos.value = data.videos.reverse()
     }
   } catch {
     console.log('User not found')
@@ -38,6 +40,7 @@ onMounted(async () => {
 
 <template>
   <div class="profile-page">
-    <ProfileInformationsComponent :email="email" :username="username" :bio="bio" />
+    <ProfileInformations :email="email" :username="username" :bio="bio" />
+    <WatchedVideos :videos="videos" />
   </div>
 </template>

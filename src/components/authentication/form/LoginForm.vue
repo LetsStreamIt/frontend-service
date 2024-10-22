@@ -62,7 +62,7 @@ const form = ref<FormState>({
 const authStore = useAuthStore()
 
 function submitForm() {
-  const authUrl = import.meta.env.AUTH_URL || 'http://localhost:3000'
+  const authUrl = import.meta.env.VITE_AUTH_URL || 'http://localhost:3000'
   const loginUrl = `${authUrl}/api/auth/login`
   axios
     .post(loginUrl, form.value, { withCredentials: true })
