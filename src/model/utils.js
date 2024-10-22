@@ -1,4 +1,4 @@
-export const isDeepEqual = (object1: any, object2: any) => {
+export const isDeepEqual = (object1, object2) => {
   const objKeys1 = Object.keys(object1)
   const objKeys2 = Object.keys(object2)
 
@@ -17,6 +17,6 @@ export const isDeepEqual = (object1: any, object2: any) => {
   return true
 }
 
-export const isObject = (object: any) => {
+export const isObject = (object) => {
   return object != null && typeof object === 'object'
 }

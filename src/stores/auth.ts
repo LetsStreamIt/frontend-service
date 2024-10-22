@@ -58,7 +58,7 @@ export const useAuthStore = defineStore('auth', {
           this.setAccessToken(refreshedToken)
           return true
         }
-      } catch (refreshError) {
+      } catch {
         return false
       }
     },

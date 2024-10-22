@@ -23,7 +23,7 @@ const chatStyleAttr = ref({
 // Variables used to manage chat contents
 const chatContent = ref({
   inputMessage: '',
-  chatMessages: [] as any[]
+  chatMessages: [] as Message<MessageContent>[]
 })
 
 const cardClass = computed(() => {
