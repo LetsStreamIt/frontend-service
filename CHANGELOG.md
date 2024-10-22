@@ -1,3 +1,24 @@
+## [0.12.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.11.0...v0.12.0) (2024-10-22)
+
+### Features
+
+* **profile:** added watched videos list ([1a14cc8](https://github.com/LetsStreamIt/frontend-service/commit/1a14cc8749b78f422135e1c33a75ce69a66443eb))
+
+### Dependency updates
+
+* **deps:** update dependency @eslint/js to v9.13.0 ([083ec83](https://github.com/LetsStreamIt/frontend-service/commit/083ec8361760a4dcc3fa611f52ab46ff2b4fcbea))
+* **deps:** update dependency sass to v1.80.3 ([0dc9259](https://github.com/LetsStreamIt/frontend-service/commit/0dc92598eb398fc5804a04864080b376cde124d9))
+
+### General maintenance
+
+* legacy js warning ([cce9ae2](https://github.com/LetsStreamIt/frontend-service/commit/cce9ae25972c49bf64dcfc4f9c6b456a1cfe4828))
+* remove serializer and deserializers ([ab7b97c](https://github.com/LetsStreamIt/frontend-service/commit/ab7b97c0c00ece645b501cf75076fcbeed91da2e))
+* update eslint, fix errors ([793dace](https://github.com/LetsStreamIt/frontend-service/commit/793daceb08ab2e96ef3203da3fcdf478d20cf71c))
+
+### Style improvements
+
+* add icon ([4f75ab8](https://github.com/LetsStreamIt/frontend-service/commit/4f75ab8b27d4644c3ab6f5cd59270273edbeb9c8))
+
 ## [0.11.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.10.1...v0.11.0) (2024-10-21)
 
 ### Features
