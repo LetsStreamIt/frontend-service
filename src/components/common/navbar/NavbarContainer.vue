@@ -1,8 +1,23 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { onMounted, ref } from 'vue'
 
 const authStore = useAuthStore()
+
+const isLoggedIn = ref(false)
+
+// Fetch logged-in state asynchronously
+onMounted(async () => {
+  isLoggedIn.value = await authStore.isLoggedIn()
+})
+
+const logout = async () => {
+  if (confirm('Are you sure you want to logout?')) {
+    authStore.logout()
+    isLoggedIn.value = await authStore.isLoggedIn()
+  }
+}
 </script>
 
 <template>
@@ -30,14 +45,23 @@ const authStore = useAuthStore()
         <RouterLink to="/" class="nav-link">Home</RouterLink>
       </li>
       <li class="nav-item">
-        <RouterLink :to="`/profile/${authStore.email}`" class="nav-link">Profile</RouterLink>
+        <RouterLink :to="`/profile/${authStore.email || 'not-logged'}`" class="nav-link"
+          >Profile</RouterLink
+        >
       </li>
       <li class="nav-item">
         <RouterLink to="/about" class="nav-link">About</RouterLink>
       </li>
-      <li class="nav-item">
-        <RouterLink to="/Login" class="nav-link">Login</RouterLink>
-      </li>
+      <div v-if="!isLoggedIn">
+        <li class="nav-item">
+          <RouterLink to="/Login" class="nav-link">Login</RouterLink>
+        </li>
+      </div>
+      <div v-else>
+        <li class="nav-item">
+          <button @click="logout" class="nav-link">Logout</button>
+        </li>
+      </div>
     </ul>
   </div>
 </template>

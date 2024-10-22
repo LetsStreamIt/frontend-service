@@ -77,8 +77,12 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         console.error('Error validating token', error)
         if (error.response && error.response.status === 401) {
-          if (await this.refreshToken()) {
-            return true
+          try {
+            if (await this.refreshToken()) {
+              return true
+            }
+          } catch {
+            return false
           }
         }
         return false
