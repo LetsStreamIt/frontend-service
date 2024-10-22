@@ -9,6 +9,7 @@ import {
 import { connectToSession, connectionErrors } from '@/composables/session/connection'
 import { CreateSessionResponse, ResponseStatus } from '@/model/command/response'
 import { useAuthStore } from '@/stores/auth'
+import { Modal } from 'bootstrap'
 
 const emit = defineEmits<{
   closePopup: []
@@ -20,7 +21,7 @@ const router: Router = useRouter()
 const sessionServiceUrl = ref<string>('http://localhost:4000')
 const authStore = useAuthStore()
 
-const createSessionModal = ref<bootstrap.Modal | undefined>(undefined)
+const createSessionModal = ref<Modal | undefined>(undefined)
 const sessionController = ref<SessionController>(
   new SessionControllerImpl(sessionServiceUrl.value, authStore.accessToken)
 )
@@ -58,7 +59,7 @@ function createSession() {
 }
 
 onMounted(() => {
-  createSessionModal.value = new bootstrap.Modal('#createSessionPopup')
+  createSessionModal.value = new Modal('#createSessionPopup')
   createSessionModal.value.show()
 })
 </script>
