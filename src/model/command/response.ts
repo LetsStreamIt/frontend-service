@@ -1,32 +1,43 @@
+import { User } from '../user'
 import { CommandType } from './command'
 
-export interface SessionCommand {
-  type: CommandType
-  token: string
-}
-
-export interface Response<X> {
+/**
+ * Response
+ */
+export interface IResponse<X> {
   command: CommandType
   content: X
 }
 
+/**
+ * Response Status
+ */
 export enum ResponseStatus {
   SUCCESS = 0,
   FAILURE = 1
 }
 
+/**
+ * Join Session Response Type
+ */
 export enum JoinSessionResponseType {
   SUCCESS = 0,
   USER_ALREADY_JOINED = 1,
   SESSION_NOT_FOUND = 2
 }
 
+/**
+ * Token Status
+ */
 export enum TokenStatus {
   TOKEN_VALID = 0,
   TOKEN_INVALID = 1
 }
 
-class CreateSessionResponseContent {
+/**
+ * Create Session Response Content
+ */
+export class CreateSessionResponseContent {
   status: ResponseStatus
   sessionName: string
 
@@ -36,16 +47,24 @@ class CreateSessionResponseContent {
   }
 }
 
+/**
+ * User Token Response Content
+ */
 export class UserTokenResponseContent {
   status: ResponseStatus
+  user?: User
   tokenStatus: TokenStatus
 
-  constructor(status: ResponseStatus, tokenStatus: TokenStatus) {
+  constructor(status: ResponseStatus, tokenStatus: TokenStatus, user?: User) {
     this.status = status
+    this.user = user
     this.tokenStatus = tokenStatus
   }
 }
 
+/**
+ * Join Session Response Content
+ */
 export class JoinSessionResponseContent {
   responseType: JoinSessionResponseType
   videoId: string
@@ -56,7 +75,10 @@ export class JoinSessionResponseContent {
   }
 }
 
-export class JoinSessionResponse implements Response<JoinSessionResponseContent> {
+/**
+ * Join Session Response
+ */
+export class JoinSessionResponse implements IResponse<JoinSessionResponseContent> {
   command: CommandType
   content: JoinSessionResponseContent
 
@@ -66,7 +88,10 @@ export class JoinSessionResponse implements Response<JoinSessionResponseContent>
   }
 }
 
-export class CreateSessionResponse implements Response<CreateSessionResponseContent> {
+/**
+ * Create Session Response
+ */
+export class CreateSessionResponse implements IResponse<CreateSessionResponseContent> {
   command: CommandType
   content: CreateSessionResponseContent
 
@@ -76,7 +101,10 @@ export class CreateSessionResponse implements Response<CreateSessionResponseCont
   }
 }
 
-export class PlayVideoResponse implements Response<ResponseStatus> {
+/**
+ * Play Video Response
+ */
+export class PlayVideoResponse implements IResponse<ResponseStatus> {
   command: CommandType
   content: ResponseStatus
 
@@ -86,7 +114,10 @@ export class PlayVideoResponse implements Response<ResponseStatus> {
   }
 }
 
-export class StopVideoResponse implements Response<ResponseStatus> {
+/**
+ * Stop Video Reponse
+ */
+export class StopVideoResponse implements IResponse<ResponseStatus> {
   command: CommandType
   content: ResponseStatus
 
@@ -96,7 +127,10 @@ export class StopVideoResponse implements Response<ResponseStatus> {
   }
 }
 
-export class SendMessageResponse implements Response<ResponseStatus> {
+/**
+ * Send Message Response
+ */
+export class SendMessageResponse implements IResponse<ResponseStatus> {
   command: CommandType
   content: ResponseStatus
 
@@ -106,17 +140,23 @@ export class SendMessageResponse implements Response<ResponseStatus> {
   }
 }
 
-export class UserTokenResponse implements Response<UserTokenResponseContent> {
+/**
+ * User Token Response
+ */
+export class UserTokenResponse implements IResponse<UserTokenResponseContent> {
   command: CommandType
   content: UserTokenResponseContent
 
-  constructor(content: UserTokenResponseContent) {
+  constructor(status: ResponseStatus, tokenStatus: TokenStatus, user?: User) {
     this.command = CommandType.USER_TOKEN
-    this.content = content
+    this.content = new UserTokenResponseContent(status, tokenStatus, user)
   }
 }
 
-export class LeaveSessionResponse implements Response<ResponseStatus> {
+/**
+ * Leave Session Response
+ */
+export class LeaveSessionResponse implements IResponse<ResponseStatus> {
   command: CommandType
   content: ResponseStatus
 
