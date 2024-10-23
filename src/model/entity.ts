@@ -1,29 +1,60 @@
 import { isDeepEqual } from './utils'
 
-export class Entity<X, Y> {
-  id: X
-  value?: Y
+/**
+ * Pair of objects
+ */
+export class Pair<X, Y> {
+  private readonly x: X
+  private readonly y: Y
 
-  constructor(id: X, value?: Y) {
-    this.id = id
-    this.value = value
+  constructor(x: X, y: Y) {
+    this.x = x
+    this.y = y
+  }
+
+  get getX(): X {
+    return this.x
+  }
+
+  get getY(): Y {
+    return this.y
   }
 }
 
-export class Repository<X extends Entity<Y, Z>, Y = X['id'], Z = X['value']> {
-  private array: X[]
+/**
+ * Entity
+ */
+export class Entity<X, Y> {
+  protected readonly id: X
+  protected readonly value: Y
 
-  constructor(array: X[]) {
-    this.array = array
+  constructor(id: X, value: Y) {
+    this.id = id
+    this.value = value
+  }
+
+  get getId(): X {
+    return this.id
+  }
+}
+
+/**
+ * Repository
+ */
+export class Repository<X extends Entity<Y, Z>, Y, Z> {
+  private values: X[]
+
+  constructor(...values: X[]) {
+    this.values = values
   }
 
   contains(id: Y): boolean {
-    return this.array.some((el) => isDeepEqual(el.id, id))
+    return this.values.some((el) => isDeepEqual(el.getId, id))
   }
 
   add(element: X): boolean {
-    if (!this.contains(element.id)) {
-      this.array.push(element)
+    if (!this.contains(element.getId)) {
+      this.values.push(element)
       return true
     }
     return false
@@ -31,17 +62,17 @@ export class Repository<X extends Entity<Y, Z>, Y = X['id'], Z = X['value']> {
 
   remove(id: Y): boolean {
     if (this.contains(id)) {
-      this.array = this.array.filter((el) => !isDeepEqual(el.id, id))
+      this.values = this.values.filter((el) => !isDeepEqual(el.getId, id))
       return true
     }
     return false
   }
 
   find(id: Y): X | undefined {
-    return this.array.find((el) => isDeepEqual(el.id, id))
+    return this.values.find((el) => isDeepEqual(el.getId, id))
   }
 
-  get values(): X[] {
-    return this.array
+  get getValues(): X[] {
+    return this.values
   }
 }
