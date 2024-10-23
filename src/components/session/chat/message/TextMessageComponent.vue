@@ -16,7 +16,7 @@ const { message } = toRefs(props)
   <div class="d-flex flex-row justify-content-start m-1">
     <div class="p-2" style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)">
       <p class="small mb-0">
-        {{ message.getSender.value.getX }} {{ message.getSender.value.getY }}:
+        {{ message.getSender.value }}:
         {{ message.getContent }}
       </p>
     </div>

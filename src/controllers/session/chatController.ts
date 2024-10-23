@@ -32,11 +32,7 @@ export class ChatControllerImpl implements ChatController {
   ): Promise<void> {
     this.socket.on('textMessage', (chatMessages) => {
       chatMessages.forEach((message) => {
-        const sender: User = new User(
-          message.sender.id,
-          message.sender.value.x,
-          message.sender.value.y
-        )
+        const sender: User = new User(message.sender.id, message.sender.value)
         const textMessage: TextMessage = new TextMessage(sender, message.content)
         recvMessageCallback(textMessage)
       })
