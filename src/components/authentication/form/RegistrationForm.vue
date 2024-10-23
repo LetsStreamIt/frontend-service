@@ -1,9 +1,7 @@
 <template>
   <div class="form-register mt-auto row text-center justify-content-center p-3">
     <div class="col-lg-6 col-md-8">
-      <!-- TODO: insert logo -->
-      <img class="mb-5 logo" src="https://via.placeholder.com/300x150" alt="Logo" />
-      <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
       <form @submit.prevent="submitForm" novalidate>
         <div class="pt-3">
           <div class="row">
