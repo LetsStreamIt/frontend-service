@@ -1,3 +1,13 @@
+## [0.13.1](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.0...v0.13.1) (2024-10-23)
+
+### Bug Fixes
+
+* remove profile picture from registration form ([1a3dc91](https://github.com/LetsStreamIt/frontend-service/commit/1a3dc916cd7d08b060f71b299f3c121e371d3f90))
+
+### General maintenance
+
+* remove placeholder images ([4ddb037](https://github.com/LetsStreamIt/frontend-service/commit/4ddb03754e6757ad5a398d40808673c035091aaa))
+
 ## [0.13.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.12.1...v0.13.0) (2024-10-23)
 
 ### Features
