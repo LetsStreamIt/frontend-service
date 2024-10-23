@@ -1,3 +1,14 @@
+## [0.13.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.12.1...v0.13.0) (2024-10-23)
+
+### Features
+
+* align text message right if coming from the local user, left otherwise ([ffa70bf](https://github.com/LetsStreamIt/frontend-service/commit/ffa70bf06213bf218b1292364e612e9b609eb889))
+
+### General maintenance
+
+* align user model ([b848891](https://github.com/LetsStreamIt/frontend-service/commit/b848891ebeb8b35e3838957d5043efe7f5c44c12))
+* realign domain ([d3eda5a](https://github.com/LetsStreamIt/frontend-service/commit/d3eda5a7ef01431bf6cc6d08bfdc07d4ff6f6868))
+
 ## [0.12.1](https://github.com/LetsStreamIt/frontend-service/compare/v0.12.0...v0.12.1) (2024-10-22)
 
 ### Bug Fixes
