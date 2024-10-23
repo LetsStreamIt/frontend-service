@@ -1,7 +1,7 @@
 <template>
   <div class="form-register mt-auto row text-center justify-content-center p-3">
     <div class="col-lg-6 col-md-8">
-            <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
       <form @submit.prevent="submitForm" novalidate>
         <div class="pt-3">
           <div class="row">
@@ -52,15 +52,6 @@
               />
             </div>
           </div>
-          <div class="form-group mb-4">
-            <InputField
-              id="profilePicture"
-              label="Profile Picture"
-              type="file"
-              @change="handleFileUpload"
-              required
-            />
-          </div>
           <div v-if="form.success" class="alert alert-success mt-3" role="alert">
             Account created successfully. You will be redirected to the login page.
           </div>
@@ -92,7 +83,6 @@ const router = useRouter()
 
 interface FormState {
   username: string
-  profilePicture?: File
   error: string
   success: boolean
 }
@@ -110,18 +100,9 @@ const {
 
 const form = ref<FormState>({
   username: '',
-  profilePicture: undefined,
   error: '',
   success: false
 })
-
-function handleFileUpload(event: Event) {
-  const target = event.target as HTMLInputElement
-  const files = target.files
-  if (files && files.length > 0) {
-    form.value.profilePicture = files[0]
-  }
-}
 
 function submitForm() {
   form.value.error = ''
@@ -147,8 +128,7 @@ function submitForm() {
   const formData: IRegistrationData = {
     username: form.value.username,
     email: email.value,
-    password: password.value,
-    profilePicture: form.value.profilePicture
+    password: password.value
   }
 
   axios
