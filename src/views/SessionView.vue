@@ -11,10 +11,12 @@ import { useRoute } from 'vue-router'
 import { JoinSessionResponseType, JoinSessionResponse } from '@/model/command/response'
 import { connectToSession, connectionErrors } from '@/composables/session/connection'
 import { useAuthStore } from '@/stores/auth'
+import { standardConfig } from '../config'
 
 const route = useRoute()
-const sessionServiceUrl = ref<string>('http://localhost:4000')
-
+const sessionServiceUrl = ref<string>(
+  `http://${standardConfig.SESSION_SERVICE_HOSTNAME}:${standardConfig.SESSION_SERVICE_PORT}`
+)
 const videoId = ref<string>('')
 const isChatMounted = ref<boolean>(false)
 const isFrameMounted = ref<boolean>(false)

@@ -4,12 +4,13 @@ import ApiClient from '@/middlewares/apiClient'
 import ProfileInformations from '@/components/profile/ProfileInformations.vue'
 import WatchedVideos from '@/components/profile/WatchedVideos.vue'
 import { useRouter } from 'vue-router'
+import { standardConfig } from '../config'
 
 const props = defineProps<{
   email: string
 }>()
 
-const profileUrl = import.meta.env.VITE_PROFILE_URL || 'http://localhost:8080'
+const profileUrl = `http://${standardConfig.PROFILE_SERVICE_HOSTNAME}:${standardConfig.PROFILE_SERVICE_PORT}`
 
 const router = useRouter()
 

@@ -1,5 +1,6 @@
 import ApiClient from '@/middlewares/apiClient'
 import { defineStore } from 'pinia'
+import { standardConfig } from '../config'
 
 interface State {
   email: string
@@ -12,7 +13,7 @@ export const useProfileStore = defineStore('profile', {
     return {
       email: localStorage.getItem('email') || '',
       username: localStorage.getItem('username') || '',
-      url: import.meta.env.VITE_PROFILE_URL || 'http://localhost:8080'
+      url: `http://${standardConfig.PROFILE_SERVICE_HOSTNAME}:${standardConfig.PROFILE_SERVICE_PORT}`
     }
   },
   actions: {

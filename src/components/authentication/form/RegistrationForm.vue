@@ -78,6 +78,7 @@ import { useRouter } from 'vue-router'
 import { useEmailValidator } from '@/composables/registration/email'
 import { usePasswordValidator } from '@/composables/registration/password'
 import { IRegistrationData } from '@/controllers/authController/registrationController'
+import { standardConfig } from '../../../config'
 
 const router = useRouter()
 
@@ -122,7 +123,7 @@ function submitForm() {
     form.value.error = 'Please enter a valid email address'
     return
   }
-  const authUrl = import.meta.env.VITE_AUTH_URL || 'http://localhost:3000'
+  const authUrl = `http://${standardConfig.AUTH_SERVICE_HOSTNAME}:${standardConfig.AUTH_SERVICE_PORT}`
   const registerUrl = `${authUrl}/api/auth/register`
 
   const formData: IRegistrationData = {

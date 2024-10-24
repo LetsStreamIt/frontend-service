@@ -10,6 +10,7 @@ import { connectToSession, connectionErrors } from '@/composables/session/connec
 import { CreateSessionResponse, ResponseStatus } from '@/model/command/response'
 import { useAuthStore } from '@/stores/auth'
 import { Modal } from 'bootstrap'
+import { standardConfig } from '../../config'
 
 const emit = defineEmits<{
   closePopup: []
@@ -18,7 +19,9 @@ const emit = defineEmits<{
 const videoUrl = ref<string>('')
 const router: Router = useRouter()
 
-const sessionServiceUrl = ref<string>('http://localhost:4000')
+const sessionServiceUrl = ref<string>(
+  `http://${standardConfig.SESSION_SERVICE_HOSTNAME}:${standardConfig.SESSION_SERVICE_PORT}`
+)
 const authStore = useAuthStore()
 
 const createSessionModal = ref<Modal | undefined>(undefined)

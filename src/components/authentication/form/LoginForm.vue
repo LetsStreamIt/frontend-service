@@ -42,6 +42,7 @@ import InputField from './InputField.vue'
 import axios, { AxiosError } from 'axios'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import { standardConfig } from '../../../config'
 
 const router = useRouter()
 
@@ -60,7 +61,7 @@ const form = ref<FormState>({
 const authStore = useAuthStore()
 
 function submitForm() {
-  const authUrl = import.meta.env.VITE_AUTH_URL || 'http://localhost:3000'
+  const authUrl = `http://${standardConfig.AUTH_SERVICE_HOSTNAME}:${standardConfig.AUTH_SERVICE_PORT}`
   const loginUrl = `${authUrl}/api/auth/login`
   axios
     .post(loginUrl, form.value, { withCredentials: true })
@@ -84,14 +85,17 @@ function submitForm() {
   .logo {
     max-width: 100%;
   }
+
   input[type='email'] {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
+
   input[type='password'] {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
+
   button[type='submit'] {
     width: 100%;
   }
