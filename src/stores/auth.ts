@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import { useProfileStore } from './profile'
+import { standardConfig } from '../config'
 
-const authUrl = import.meta.env.VITE_AUTH_URL || 'http://localhost:3000'
+const authUrl = `http://${standardConfig.AUTH_SERVICE_HOSTNAME}:${standardConfig.AUTH_SERVICE_PORT}`
 
 interface State {
   id: string
