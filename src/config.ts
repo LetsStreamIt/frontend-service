@@ -8,10 +8,10 @@ interface ServiceConfig {
 }
 
 export const standardConfig: ServiceConfig = {
-  PROFILE_SERVICE_HOSTNAME: process.env.PROFILE_SERVICE_HOSTNAME || 'localhost',
-  PROFILE_SERVICE_PORT: process.env.PROFILE_SERVICE_PORT || '8080',
-  AUTH_SERVICE_HOSTNAME: process.env.AUTH_SERVICE_HOSTNAME || 'localhost',
-  AUTH_SERVICE_PORT: process.env.AUTH_SERVICE_PORT || '3000',
-  SESSION_SERVICE_HOSTNAME: process.env.SESSION_SERVICE_HOSTNAME || 'localhost',
-  SESSION_SERVICE_PORT: process.env.SESSION_SERVICE_PORT || '4000'
+  PROFILE_SERVICE_HOSTNAME: import.meta.env.PROFILE_SERVICE_HOSTNAME || 'localhost',
+  PROFILE_SERVICE_PORT: import.meta.env.PROFILE_SERVICE_PORT || '8080',
+  AUTH_SERVICE_HOSTNAME: import.meta.env.AUTH_SERVICE_HOSTNAME || 'localhost',
+  AUTH_SERVICE_PORT: import.meta.env.AUTH_SERVICE_PORT || '3000',
+  SESSION_SERVICE_HOSTNAME: import.meta.env.SESSION_SERVICE_HOSTNAME || 'localhost',
+  SESSION_SERVICE_PORT: import.meta.env.SESSION_SERVICE_PORT || '4000'
 }
