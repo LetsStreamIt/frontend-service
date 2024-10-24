@@ -61,6 +61,13 @@ function createSession() {
 onMounted(() => {
   createSessionModal.value = new Modal('#createSessionPopup')
   createSessionModal.value.show()
+
+  const modalElement = document.getElementById('createSessionPopup')
+  if (modalElement) {
+    modalElement.addEventListener('hidden.bs.modal', () => {
+      closePopup()
+    })
+  }
 })
 </script>
 
