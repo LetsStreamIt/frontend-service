@@ -30,8 +30,7 @@ const chatContent = ref({
 const cardClass = computed(() => {
   return {
     'overflow-scroll': true,
-    card: true,
-    'd-none': chatStyleAttr.value.isChatHidden
+    card: true
   }
 })
 
@@ -59,10 +58,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="w-100" style="border-radius: 15px">
+  <div class="w-100">
     <div
       class="card-header d-flex justify-content-between align-items-center p-3 bg-dark text-white border-bottom-0"
-      style="border-top-left-radius: 15px; border-top-right-radius: 15px"
+      style="border-radius: 15px 15px 0 0"
     >
       <i class="fas fa-angle-left"></i>
       <p class="mb-0 fw-bold">Live chat</p>
@@ -71,7 +70,11 @@ onMounted(async () => {
       </button>
     </div>
 
-    <div :class="cardClass" style="max-height: 500px">
+    <div
+      v-if="chatStyleAttr.isChatHidden && chatContent.chatMessages.length > 0"
+      :class="cardClass"
+      style="max-height: 500px"
+    >
       <div v-for="(message, index) in chatContent.chatMessages" :key="index">
         <NotificationMessageComponent
           v-if="message.type === MessageType.NOTIFICATION_MSG"
@@ -82,7 +85,9 @@ onMounted(async () => {
     </div>
     <form @submit.prevent="sendMessage" class="form-group">
       <input type="text" class="w-100" v-model="chatContent.inputMessage" placeholder="Message" />
-      <button type="submit" class="btn btn-primary w-100">Send Message</button>
+      <button type="submit" class="btn btn-primary w-100" style="border-radius: 0 0 10px 10px">
+        Send Message
+      </button>
     </form>
   </div>
 </template>
