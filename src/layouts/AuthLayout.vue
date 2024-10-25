@@ -6,5 +6,10 @@
 </template>
 
 <script setup>
+/**
+ * @file AuthLayout.vue
+ * @module AuthLayout
+ * Authentication layout component.
+ */
 import FooterComponent from '@/components/common/FooterComponent.vue'
 </script>

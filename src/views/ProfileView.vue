@@ -1,4 +1,9 @@
 <script setup lang="ts">
+/**
+ * @file ProfileView.vue
+ * @module ProfileView
+ * Profile view component.
+ */
 import { onMounted, Ref, ref } from 'vue'
 import ApiClient from '@/middlewares/apiClient'
 import ProfileInformations from '@/components/profile/ProfileInformations.vue'
@@ -7,6 +12,9 @@ import { useRouter } from 'vue-router'
 import { standardConfig } from '../config'
 
 const props = defineProps<{
+  /**
+   * The email of the user.
+   */
   email: string
 }>()
 

@@ -18,12 +18,35 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * @file VideoCard.vue
+ * @module VideoCard
+ * Video card component.
+ */
 const props = defineProps<{
+  /**
+   * The unique identifier of the video from YouTube.
+   */
   id: string
+  /**
+   * The title of the video.
+   */
   title: string
+  /**
+   * The thumbnail of the video.
+   */
   thumbnail: string
+  /**
+   * The duration of the video.
+   */
   duration: string
+  /**
+   * The view count of the video.
+   */
   viewCount: string
+  /**
+   * The like count of the video.
+   */
   likeCount: string
 }>()
 const link = `https://www.youtube.com/watch?v=${props.id}`

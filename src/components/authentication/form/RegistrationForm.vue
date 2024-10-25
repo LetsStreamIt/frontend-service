@@ -71,6 +71,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * @file RegistrationForm.vue
+ * @module RegistrationForm
+ * Registration form component.
+ */
 import { ref } from 'vue'
 import InputField from './InputField.vue'
 import axios, { AxiosError } from 'axios'
@@ -106,6 +111,9 @@ const form = ref<FormState>({
 })
 
 function submitForm() {
+  /**
+   * Handles the form submission.
+   */
   form.value.error = ''
   if (!form.value.username) {
     form.value.error = 'Please enter a username'
@@ -123,6 +131,9 @@ function submitForm() {
     form.value.error = 'Please enter a valid email address'
     return
   }
+  /**
+   * Register the user.
+   */
   const authUrl = `http://${standardConfig.AUTH_SERVICE_HOSTNAME}:${standardConfig.AUTH_SERVICE_PORT}`
   const registerUrl = `${authUrl}/api/auth/register`
 
