@@ -37,6 +37,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * @file LoginForm.vue
+ * @module LoginForm
+ * Login form component.
+ */
 import { ref } from 'vue'
 import InputField from './InputField.vue'
 import axios, { AxiosError } from 'axios'
@@ -61,6 +66,9 @@ const form = ref<FormState>({
 const authStore = useAuthStore()
 
 function submitForm() {
+  /**
+   * Login the user.
+   */
   const authUrl = `http://${standardConfig.AUTH_SERVICE_HOSTNAME}:${standardConfig.AUTH_SERVICE_PORT}`
   const loginUrl = `${authUrl}/api/auth/login`
   axios

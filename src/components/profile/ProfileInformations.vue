@@ -1,10 +1,24 @@
 <script setup lang="ts">
+/**
+ * @file ProfileInformations.vue
+ * @module ProfileInformations
+ * Profile information component.
+ */
 import { computed, ref, watch } from 'vue'
 import { useProfileStore } from '@/stores/profile'
 
 const props = defineProps<{
+  /**
+   * The email of the user.
+   */
   email: string
+  /**
+   * The username of the user.
+   */
   username: string
+  /**
+   * The bio of the user.
+   */
   bio: string
 }>()
 

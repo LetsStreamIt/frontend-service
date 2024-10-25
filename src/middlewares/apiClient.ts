@@ -8,11 +8,24 @@ export class RefreshError extends Error {
   }
 }
 
+/**
+ * Axios instance for API requests
+ * - Timeout: 10 seconds
+ * - With credentials: true
+ */
 const apiClient = axios.create({
   timeout: 10000,
   withCredentials: true
 })
 
+/**
+ * Request interceptor
+ * - Add Authorization header with access token
+ * - Check if access token is still valid
+ * - If not, reject the request
+ * - If valid, continue with the request
+ * - If refresh token is invalid, reject the request
+ */
 apiClient.interceptors.request.use(
   async (config) => {
     const authStore = useAuthStore()

@@ -1,5 +1,14 @@
 import { ref, watch } from 'vue'
 export function usePasswordValidator() {
+  /**
+   * Password validation
+   * - Password must be at least 8 characters
+   * - Password must contain at least one uppercase letter
+   * - Password must contain at least one lowercase letter
+   * - Password must contain at least one number
+   * - Password must contain at least one special character
+   * - Password and confirm password should match
+   */
   const password = ref('')
   const confirmPassword = ref('')
   const passwordErrors = ref<string[]>([])
