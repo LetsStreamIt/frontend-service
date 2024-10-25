@@ -1,3 +1,25 @@
+## [0.13.3](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.2...v0.13.3) (2024-10-25)
+
+### Dependency updates
+
+* **deps:** update dependency @vuepress/theme-default to v2.0.0-rc.56 ([124c472](https://github.com/LetsStreamIt/frontend-service/commit/124c47286002a1d9ccc9f6eaa33239d5d3b09218))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.112 ([d0267b8](https://github.com/LetsStreamIt/frontend-service/commit/d0267b88fbe42cb1e8f43fac6f864e6193b27398))
+
+### Bug Fixes
+
+* video autoplay by muting the video when joining ([5b3a9e7](https://github.com/LetsStreamIt/frontend-service/commit/5b3a9e7c743ffea3889ce0da31abec73ab0a0b40))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-node action to v4.1.0 ([ba2e52f](https://github.com/LetsStreamIt/frontend-service/commit/ba2e52f402e43cc578244a346f31e4f22929157d))
+* **deps:** update danysk/action-checkout action to v0.2.22 ([7342e50](https://github.com/LetsStreamIt/frontend-service/commit/7342e50ee69513b4d52dc60ca8e22660de5372d0))
+* **deps:** update docker/login-action digest to 5d8785b ([bd4bbe3](https://github.com/LetsStreamIt/frontend-service/commit/bd4bbe305f32150503b1fcf73a2a089e637525b1))
+
+### General maintenance
+
+* add config file for deploy ([9b008aa](https://github.com/LetsStreamIt/frontend-service/commit/9b008aaa8794115242cbfae937c7456e437fc79a))
+* restore meta env ([8c79b25](https://github.com/LetsStreamIt/frontend-service/commit/8c79b25f6b3d1553bd8a3627a42eaf9dd58d94cb))
+
 ## [0.13.2](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.1...v0.13.2) (2024-10-24)
 
 ### Bug Fixes
