@@ -1,3 +1,9 @@
+## [0.13.8](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.7...v0.13.8) (2024-10-25)
+
+### Bug Fixes
+
+* env variables naming convention ([c4a95b2](https://github.com/LetsStreamIt/frontend-service/commit/c4a95b2359ef83d3000413c8a3c4ee87b7554442))
+
 ## [0.13.7](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.6...v0.13.7) (2024-10-25)
 
 ### Documentation
