@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, onMounted, computed } from 'vue'
+import { ref, toRefs, onMounted } from 'vue'
 import { ChatController } from '@/controllers/session/chatController'
 import TextMessageComponent from './message/TextMessageComponent.vue'
 import NotificationMessageComponent from './message/NotificationMessageComponent.vue'
@@ -25,13 +25,6 @@ const chatStyleAttr = ref({
 const chatContent = ref({
   inputMessage: '',
   chatMessages: [] as Message<MessageContent>[]
-})
-
-const cardClass = computed(() => {
-  return {
-    'overflow-scroll': true,
-    card: true
-  }
 })
 
 function toggleChat() {
@@ -72,8 +65,8 @@ onMounted(async () => {
 
     <div
       v-if="chatStyleAttr.isChatHidden && chatContent.chatMessages.length > 0"
-      :class="cardClass"
-      style="max-height: 500px"
+      class="card"
+      style="overflow-y: scroll; max-height: 500px"
     >
       <div v-for="(message, index) in chatContent.chatMessages" :key="index">
         <NotificationMessageComponent
