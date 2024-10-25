@@ -18,6 +18,7 @@ const emit = defineEmits<{
 const { videoController, videoId } = toRefs(props)
 const player = ref<window.YT.Player | null>(null)
 const playerActions = ref<((player: window.YT.Player) => void)[]>([])
+const playerState = ref<PlayState>(PlayState.PAUSED)
 
 const commUtils = reactive({
   backendChange: false,
@@ -48,6 +49,11 @@ watch(
 function initializePlayer() {
   new window.YT.Player('player', {
     videoId: videoId.value,
+    playerVars: {
+      autoplay: 1,
+      rel: 0,
+      mute: 1
+    },
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange
@@ -85,24 +91,25 @@ function registerVideoHandlers() {
     () => {
       return new Promise((resolve) => {
         playerActions.value.push((player: window.YT.Player) => {
-          const state: PlayState =
-            player.getPlayerState() == window.YT.PlayerState.PLAYING
-              ? PlayState.PLAYING
-              : PlayState.PAUSED
-          resolve({ state: state, timestamp: player.getCurrentTime() })
+          resolve({ state: playerState.value, timestamp: player.getCurrentTime() })
         })
       })
     },
 
     (videoState: VideoState) => {
       return new Promise<void>((resolve) => {
-        playerActions.value.push((player: window.window.YT.Player) => {
+        playerActions.value.push((player: window.YT.Player) => {
           player.seekTo(videoState.timestamp, true)
-          commUtils.backendChange = true
-          if (videoState.state == PlayState.PLAYING) {
+          if (videoState.state == PlayState.PLAYING && playerState.value == PlayState.PAUSED) {
+            commUtils.backendChange = true
+            playerState.value = PlayState.PLAYING
             player.playVideo()
           } else {
-            player.pauseVideo()
+            if (videoState.state == PlayState.PAUSED && playerState.value == PlayState.PLAYING) {
+              commUtils.backendChange = true
+              playerState.value = PlayState.PAUSED
+              player.pauseVideo()
+            }
           }
           resolve()
         })
@@ -132,6 +139,7 @@ function onPlayerStateChange(event) {
 
         stateChangeActionBySource(() => {
           commUtils.frontendChange = true
+          playerState.value = PlayState.PAUSED
           event.target.pauseVideo()
           videoController.value.playVideo(event.target.getCurrentTime())
         })
@@ -146,6 +154,7 @@ function onPlayerStateChange(event) {
         stateChangeActionBySource(() => {
           commUtils.alreadyPaused = true
           videoController.value.stopVideo(event.target.getCurrentTime())
+          playerState.value = PlayState.PLAYING
           event.target.playVideo()
         })
       }
