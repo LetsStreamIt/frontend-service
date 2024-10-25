@@ -1,3 +1,9 @@
+## [0.13.7](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.6...v0.13.7) (2024-10-25)
+
+### Documentation
+
+* added initial documentation ([e2024ea](https://github.com/LetsStreamIt/frontend-service/commit/e2024ea127c9b542bb448b0abd625f88b66cdf90))
+
 ## [0.13.6](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.5...v0.13.6) (2024-10-25)
 
 ### Bug Fixes
