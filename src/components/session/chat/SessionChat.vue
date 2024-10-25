@@ -4,6 +4,7 @@ import { ChatController } from '@/controllers/session/chatController'
 import TextMessageComponent from './message/TextMessageComponent.vue'
 import NotificationMessageComponent from './message/NotificationMessageComponent.vue'
 import { Message, MessageContent } from '@/model/message'
+import { MessageType } from '../../../model/message'
 
 const props = defineProps<{
   chatController: ChatController
@@ -73,10 +74,10 @@ onMounted(async () => {
     <div :class="cardClass" style="max-height: 500px">
       <div v-for="(message, index) in chatContent.chatMessages" :key="index">
         <NotificationMessageComponent
-          v-if="message.type === 'notificationMessage'"
+          v-if="message.type === MessageType.NOTIFICATION_MSG"
           :message="message"
         />
-        <TextMessageComponent v-if="message.type === 'textMessage'" :message="message" />
+        <TextMessageComponent v-if="message.type === MessageType.TEXT_MSG" :message="message" />
       </div>
     </div>
     <form @submit.prevent="sendMessage" class="form-group">

@@ -2,6 +2,8 @@ import { Socket } from 'socket.io-client'
 import { SendMessageResponse } from '@/model/command/response'
 import { Message, MessageContent, TextMessage, NotificationMessage } from '@/model/message'
 import { User, UserId } from '../../model/user'
+import { CommandType } from '../../model/command/command'
+import { ChatNotificationType } from '../../model/notification/notification'
 
 export interface ChatController {
   handleChatMessages(recvMessageCallback: (message: Message<MessageContent>) => void): Promise<void>
@@ -18,7 +20,7 @@ export class ChatControllerImpl implements ChatController {
   async sendMessage(message: string): Promise<SendMessageResponse> {
     return new Promise((resolve) => {
       this.socket.emit(
-        'sendMessage',
+        CommandType.SEND_MSG,
         { message: message },
         (SendMessageResponse: SendMessageResponse) => {
           resolve(SendMessageResponse)
@@ -30,7 +32,7 @@ export class ChatControllerImpl implements ChatController {
   async handleChatMessages(
     recvMessageCallback: (message: Message<MessageContent>) => void
   ): Promise<void> {
-    this.socket.on('textMessage', (chatMessages) => {
+    this.socket.on(ChatNotificationType.TEXT_MESSAGE, (chatMessages) => {
       chatMessages.forEach((message) => {
         const sender: User = new User(new UserId(message.sender.id.email), message.sender.value)
         const textMessage: TextMessage = new TextMessage(sender, message.content)
@@ -38,7 +40,7 @@ export class ChatControllerImpl implements ChatController {
       })
     })
 
-    this.socket.on('notificationMessage', (message) => {
+    this.socket.on(ChatNotificationType.NOTIFICATION_MESSAGE, (message) => {
       const notificationMessage: NotificationMessage = new NotificationMessage(
         message.sender,
         message.content
