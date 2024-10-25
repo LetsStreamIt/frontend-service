@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { onMounted, ref } from 'vue'
 
@@ -16,6 +16,7 @@ const logout = async () => {
   if (confirm('Are you sure you want to logout?')) {
     authStore.logout()
     isLoggedIn.value = await authStore.isLoggedIn()
+    useRouter().push('/')
   }
 }
 </script>
