@@ -1,3 +1,9 @@
+## [0.13.6](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.5...v0.13.6) (2024-10-25)
+
+### Bug Fixes
+
+* logout not redirecting to homepage ([ce095b9](https://github.com/LetsStreamIt/frontend-service/commit/ce095b9026310a7323149f11094df61015162500))
+
 ## [0.13.5](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.4...v0.13.5) (2024-10-25)
 
 ### Bug Fixes
