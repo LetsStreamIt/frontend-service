@@ -49,7 +49,7 @@ export class TextMessage implements Message<string> {
   constructor(sender: User, text: string) {
     this.content = text
     this.sender = sender
-    this.type = MessageType.NOTIFICATION_MSG
+    this.type = MessageType.TEXT_MSG
   }
 
   get getContent(): string {
