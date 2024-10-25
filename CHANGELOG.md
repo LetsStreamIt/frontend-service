@@ -1,3 +1,9 @@
+## [0.13.5](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.4...v0.13.5) (2024-10-25)
+
+### Bug Fixes
+
+* chat message username and scrolling ([692d1f2](https://github.com/LetsStreamIt/frontend-service/commit/692d1f280030f7a1f93f3332ebaca71cd966d9c6))
+
 ## [0.13.4](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.3...v0.13.4) (2024-10-25)
 
 ### Bug Fixes
