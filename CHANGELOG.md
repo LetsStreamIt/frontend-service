@@ -1,3 +1,15 @@
+## [0.13.4](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.3...v0.13.4) (2024-10-25)
+
+### Bug Fixes
+
+* message type in text message ([6f0fbb7](https://github.com/LetsStreamIt/frontend-service/commit/6f0fbb7afc8a5760d4719f9ab1c4e94433cfeb12))
+
+### General maintenance
+
+* refine chat borders and hiding ([7db03ab](https://github.com/LetsStreamIt/frontend-service/commit/7db03ab22e273f38e3c46d23269f1fd3bea8dd37))
+* refine message content and model ([f9547f3](https://github.com/LetsStreamIt/frontend-service/commit/f9547f31df29cf381d9d83f9332b92f5f7608955))
+* use 'me' as username text inside the chat (for local user) ([7290daa](https://github.com/LetsStreamIt/frontend-service/commit/7290daa67eafd27671b6a4a9544ac08cc510f1a1))
+
 ## [0.13.3](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.2...v0.13.3) (2024-10-25)
 
 ### Dependency updates
