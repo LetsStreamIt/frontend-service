@@ -24,7 +24,7 @@ textColor
 <template>
   <div style="border-radius: 15px" :class="msgClass">
     <p class="p-2 w-100 small mb-0 fst-italic">
-      {{ message.getSender.value.getX }} {{ message.getSender.value.getY }} {{ msgBody }}
+      <span class="fw-bolder"> {{ message.getSender.value }} </span> {{ msgBody }}
     </p>
   </div>
 </template>

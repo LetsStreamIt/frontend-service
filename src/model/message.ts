@@ -5,6 +5,11 @@ export enum Notification {
   LEAVEROOM
 }
 
+export enum MessageType {
+  NOTIFICATION_MSG = 'notificationMessage',
+  TEXT_MSG = 'textMessage'
+}
+
 export type MessageContent = Notification | string
 
 export interface Message<X extends MessageContent> {
@@ -19,11 +24,12 @@ export interface Message<X extends MessageContent> {
 export class NotificationMessage implements Message<Notification> {
   content: Notification
   sender: User
-  type = 'notificationMessage'
+  type: MessageType
 
   constructor(sender: User, notification: Notification) {
     this.content = notification
     this.sender = sender
+    this.type = MessageType.NOTIFICATION_MSG
   }
 
   get getContent(): Notification {
@@ -38,11 +44,12 @@ export class NotificationMessage implements Message<Notification> {
 export class TextMessage implements Message<string> {
   content: string
   sender: User
-  type = 'textMessage'
+  type: MessageType
 
   constructor(sender: User, text: string) {
     this.content = text
     this.sender = sender
+    this.type = MessageType.NOTIFICATION_MSG
   }
 
   get getContent(): string {
@@ -52,24 +59,4 @@ export class TextMessage implements Message<string> {
   get getSender(): User {
     return this.sender
   }
-}
-
-export class ChatUpdate {
-  readonly notificationMessage: NotificationMessage
-  readonly messages: TextMessage[]
-
-  constructor(notificationMessage: NotificationMessage, messages: TextMessage[]) {
-    this.notificationMessage = notificationMessage
-    this.messages = messages
-  }
-}
-
-export enum Ack {
-  OK = 0,
-  FAILURE = 1
-}
-
-export interface CreateRoomAck {
-  roomName: string
-  ack: Ack
 }
