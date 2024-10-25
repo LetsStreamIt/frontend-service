@@ -1,3 +1,9 @@
+## [0.13.9](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.8...v0.13.9) (2024-10-25)
+
+### Bug Fixes
+
+* typo in env variables types definition ([1b14f46](https://github.com/LetsStreamIt/frontend-service/commit/1b14f46fda96f07a889d5f26ca445187f4794003))
+
 ## [0.13.8](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.7...v0.13.8) (2024-10-25)
 
 ### Bug Fixes
