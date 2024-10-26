@@ -1,6 +1,6 @@
 import { Ref, ref, watch } from 'vue'
 import { ConnectionStatus, SessionController } from '@/controllers/session/sessionController'
-import { UserTokenResponse, ResponseStatus } from '@/model/command/response'
+import { UserTokenResponse, ResponseStatus } from '@/model/session/command/response'
 
 /**
  * Watches for connection errors and eventually sets error messages.

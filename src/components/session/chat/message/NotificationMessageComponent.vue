@@ -5,7 +5,7 @@
  * Notification Message Component
  */
 import { ref, toRefs } from 'vue'
-import { NotificationMessage, Notification } from '@/model/message'
+import { NotificationMessage, JoinNotification } from '@/model/session/message/chatMessage'
 
 const props = defineProps({
   /**
@@ -18,7 +18,7 @@ const props = defineProps({
 })
 
 const { message } = toRefs(props)
-const isJoined = message.value.content == Notification.JOINROOM
+const isJoined = message.value.content == JoinNotification.JOINROOM
 
 const messageBody = ref<string>(isJoined ? 'Joined the room' : 'Left the room')
 const messageClass = ref<string>(

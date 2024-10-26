@@ -12,11 +12,11 @@ import CollapsableNavbar from '@/components/common/navbar/CollapsableNavbar.vue'
   <div class="container-fluid">
     <div clas="row">
       <nav class="navbar navbar-expand-md navbar-dark w-100 px-3">
-        <NavbarContainer></NavbarContainer>
+        <NavbarContainer />
       </nav>
     </div>
     <div class="row">
-      <CollapsableNavbar></CollapsableNavbar>
+      <CollapsableNavbar />
     </div>
   </div>
 </template>
