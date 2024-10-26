@@ -2,6 +2,10 @@ import { Ref, ref, watch } from 'vue'
 import { ConnectionStatus, SessionController } from '@/controllers/session/sessionController'
 import { UserTokenResponse, ResponseStatus } from '@/model/command/response'
 
+/**
+ * Watches for connection errors and eventually sets error messages.
+ * @returns connection status, connection error message variables
+ */
 export function connectionErrors() {
   const connectionStatus = ref<ConnectionStatus>(ConnectionStatus.DISCONNECTED)
   const connectionErrorMessage = ref<string>('')
@@ -34,6 +38,12 @@ export function connectionErrors() {
   return { connectionStatus, connectionErrorMessage }
 }
 
+/**
+ * Connects to the Session Service.
+ * @param sessionController Session Controller
+ * @param error Error variable
+ * @returns connection variable eventually set to true if the connection is estabilished.
+ */
 export function connectToSession(
   sessionController: SessionController,
   error: Ref<ConnectionStatus>
