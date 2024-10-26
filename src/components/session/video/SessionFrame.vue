@@ -1,17 +1,31 @@
 <script setup lang="ts">
+/**
+ * @file SessionFrame.vue
+ * @module SessionFrame
+ * Session Frame
+ */
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
-import { VideoController } from '@/controllers/session/videoController.ts'
+import { IVideoController } from '@/controllers/session/videoController.ts'
 import { PlayState, VideoState } from '@/model/video.ts'
 import { useProfileStore } from '@/stores/profile.ts'
 
 const props = defineProps<{
-  videoController: VideoController
+  /**
+   * Video Controller used to send/recv synchronization messages
+   */
+  videoController: IVideoController
+  /**
+   * Youtube Video ID
+   */
   videoId: string
 }>()
 
 const profileStore = useProfileStore()
 
 const emit = defineEmits<{
+  /**
+   * Message to emit whenever the component is ready to recv messages
+   */
   frameMounted: []
 }>()
 
@@ -21,9 +35,21 @@ const playerActions = ref<((player: window.YT.Player) => void)[]>([])
 const playerState = ref<PlayState>(PlayState.PAUSED)
 
 const commUtils = reactive({
+  /**
+   * Flag to set whenever a player action is executed by the backend
+   */
   backendChange: false,
+  /**
+   * Flag to set whenever a player action is executed by the frontend
+   */
   frontendChange: false,
+  /**
+   * Util variable for handling player state changes
+   */
   alreadyPaused: false,
+  /**
+   * Variable tracking the last stable state
+   */
   prevStableState: PlayState.PAUSED
 })
 
@@ -61,6 +87,9 @@ function initializePlayer() {
   })
 }
 
+/**
+ * Executes player actions previously queued, if any.
+ */
 function handlePlayerActions() {
   while (playerActions.value.length > 0) {
     const playerActionCallback: ((player: window.YT.Player) => void) | undefined =
@@ -71,6 +100,11 @@ function handlePlayerActions() {
   }
 }
 
+/**
+ * Player ready function.
+ * Whenever the Player is ready, executes player actions if some message has been received already.
+ * @param event
+ */
 function onPlayerReady(event) {
   player.value = event.target
 
@@ -86,8 +120,12 @@ function onPlayerReady(event) {
   )
 }
 
-function registerVideoHandlers() {
+/**
+ * Registers Callbacks to execute whenever Video Controller receives a message
+ */
+function registerVideoMessageCallbacks() {
   videoController.value.handleVideoNotifications(
+    // This function will be executed whenever the backend requests for the current video state.
     () => {
       return new Promise((resolve) => {
         playerActions.value.push((player: window.YT.Player) => {
@@ -95,7 +133,7 @@ function registerVideoHandlers() {
         })
       })
     },
-
+    // This function will be executed whenever the backend wants to synchronize the local video.
     (videoState: VideoState) => {
       return new Promise<void>((resolve) => {
         playerActions.value.push((player: window.YT.Player) => {
@@ -119,6 +157,11 @@ function registerVideoHandlers() {
   emit('frameMounted')
 }
 
+/**
+ * Util function to track the event change source.
+ * If it's different from a backend/frontend source, executes f.
+ * @param f
+ */
 function stateChangeActionBySource(f: () => void) {
   if (commUtils.backendChange) {
     commUtils.backendChange = false
@@ -131,8 +174,18 @@ function stateChangeActionBySource(f: () => void) {
   }
 }
 
+/**
+ * Reacts to Player state changes.
+ * The Youtube video has to be managed by the synchronization (session) service so:
+ * 1. If the video is played by the user, it has to be (locally) stopped, and a message is sent to the backend.
+ *    Stopping the will trigger another Player state change, so the frontendChange flag is set.
+ * 2. If the video is played by the backend, the backendChange flag is set.
+ * Both these two flags allow to discriminate an event change source and avoid sending an infinite amount of messages to the backend.
+ * @param event
+ */
 function onPlayerStateChange(event) {
   switch (event.data) {
+    // Video has been played
     case window.YT.PlayerState.PLAYING:
       if (commUtils.prevStableState == PlayState.PAUSED) {
         commUtils.prevStableState = PlayState.PLAYING
@@ -145,7 +198,7 @@ function onPlayerStateChange(event) {
         })
       }
       break
-
+    // Video has been stopped
     case window.YT.PlayerState.PAUSED:
       if (commUtils.prevStableState == PlayState.PLAYING || commUtils.alreadyPaused) {
         commUtils.alreadyPaused = false
@@ -164,15 +217,18 @@ function onPlayerStateChange(event) {
   }
 }
 
+/**
+ * Register function callbacks to execute at message receiving.
+ */
 onMounted(() => {
   if (!window.YT) {
     const tag = document.createElement('script')
     tag.src = 'https://www.youtube.com/iframe_api'
     const firstScriptTag = document.getElementsByTagName('script')[0]
     firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag)
-    window.onYouTubeIframeAPIReady = registerVideoHandlers
+    window.onYouTubeIframeAPIReady = registerVideoMessageCallbacks
   } else {
-    registerVideoHandlers()
+    registerVideoMessageCallbacks()
   }
 })
 </script>

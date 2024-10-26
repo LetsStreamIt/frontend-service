@@ -1,11 +1,19 @@
 <script setup lang="ts">
+/**
+ * @file TextMessageComponent.vue
+ * @module TextMessageComponent
+ * Text Message Component
+ */
 import { toRefs } from 'vue'
 import { TextMessage } from '@/model/message'
-import { useAuthStore } from '../../../../stores/auth'
+import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
 
 const props = defineProps({
+  /**
+   * The text message
+   */
   message: {
     type: TextMessage,
     required: true
@@ -13,15 +21,11 @@ const props = defineProps({
 })
 
 const { message } = toRefs(props)
-console.log('AUTH STORE EMAIL', authStore.email)
-console.log('MSG', message.value.getSender.getId.getEmail)
 
 const contentAlignment: string =
   authStore.email === message.value.getSender.getId.getEmail
     ? ' justify-content-end'
     : ' justify-content-start'
-
-console.log('ALIGN', message.value.getSender.getId.getEmail, contentAlignment)
 
 const messageUsernameText: string =
   authStore.email === message.value.getSender.getId.getEmail
