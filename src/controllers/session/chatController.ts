@@ -5,12 +5,27 @@ import { User, UserId } from '../../model/user'
 import { CommandType } from '../../model/command/command'
 import { ChatNotificationType } from '../../model/notification/notification'
 
-export interface ChatController {
-  handleChatMessages(recvMessageCallback: (message: Message<MessageContent>) => void): Promise<void>
+/**
+ * Chat Controller interface.
+ * Manages communication with the Session Chat.
+ */
+export interface IChatController {
+  /**
+   * Handles Chat messages.
+   * Executes the callback provided as parameter when a new message is received.
+   * @param chatMessageReceivedCallback
+   */
+  handleChatMessages(chatMessageReceivedCallback: (message: Message<MessageContent>) => void): void
+
+  /**
+   * Sends a message to the Session Chat.
+   * @param message Message to send
+   * @returns Response from the Session Service
+   */
   sendMessage(message: string): Promise<SendMessageResponse>
 }
 
-export class ChatControllerImpl implements ChatController {
+export class ChatController implements IChatController {
   socket: Socket
 
   constructor(socket: Socket) {
@@ -22,21 +37,22 @@ export class ChatControllerImpl implements ChatController {
       this.socket.emit(
         CommandType.SEND_MSG,
         { message: message },
-        (SendMessageResponse: SendMessageResponse) => {
-          resolve(SendMessageResponse)
+        (sendMessageResponse: SendMessageResponse) => {
+          resolve(sendMessageResponse)
         }
       )
     })
   }
 
   async handleChatMessages(
-    recvMessageCallback: (message: Message<MessageContent>) => void
-  ): Promise<void> {
+    chatMessageReceivedCallback: (message: Message<MessageContent>) => void
+  ) {
+    // Separately handle Text and Notification Messages.
     this.socket.on(ChatNotificationType.TEXT_MESSAGE, (chatMessages) => {
       chatMessages.forEach((message) => {
         const sender: User = new User(new UserId(message.sender.id.email), message.sender.value)
         const textMessage: TextMessage = new TextMessage(sender, message.content)
-        recvMessageCallback(textMessage)
+        chatMessageReceivedCallback(textMessage)
       })
     })
 
@@ -45,7 +61,7 @@ export class ChatControllerImpl implements ChatController {
         message.sender,
         message.content
       )
-      recvMessageCallback(notificationMessage)
+      chatMessageReceivedCallback(notificationMessage)
     })
   }
 }

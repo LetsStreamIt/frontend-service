@@ -4,16 +4,37 @@ import { VideoState } from '@/model/video'
 import { VideoNotificationType } from '@/model/notification/notification'
 import { CommandType } from '@/model/command/command'
 
-export interface VideoController {
+/**
+ * Video Controller interface.
+ * Manages communication with the Session Video.
+ */
+export interface IVideoController {
+  /**
+   * Handles Video messages.
+   * Executes the provided callbacks when a new message is received, based on its type.
+   * @param chatMessageReceivedCallback
+   */
   handleVideoNotifications(
     getVideoStateCallback: () => Promise<VideoState>,
     synchVideoCallback: (videoState: VideoState) => Promise<void>
   ): void
+
+  /**
+   * Sends a Play Video Command to the Session Service
+   * @param timestamp Timestamp of the Video
+   * @returns Play Video Response
+   */
   playVideo(timestamp: number): Promise<PlayVideoResponse>
+
+  /**
+   * Sends a Stop Video Command to the Session Service
+   * @param timestamp Timestamp of the Video
+   * @returns Stop Video Response
+   */
   stopVideo(timestamp: number): Promise<StopVideoResponse>
 }
 
-export class VideoControllerImpl implements VideoController {
+export class VideoController implements IVideoController {
   socket: Socket
 
   constructor(socket: Socket) {

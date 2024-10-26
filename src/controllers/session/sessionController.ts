@@ -1,7 +1,6 @@
 import { io, Socket } from 'socket.io-client'
-import { ChatController } from './chatController'
-import { ChatControllerImpl } from '@/controllers/session/chatController'
-import { VideoController, VideoControllerImpl } from '@/controllers/session/videoController'
+import { IChatController, ChatController } from '@/controllers/session/chatController'
+import { IVideoController, VideoController } from '@/controllers/session/videoController'
 import {
   CreateSessionResponse,
   JoinSessionResponse,
@@ -10,6 +9,9 @@ import {
 } from '@/model/command/response'
 import { CommandType } from '@/model/command/command'
 
+/**
+ * Connection Status
+ */
 export enum ConnectionStatus {
   SUCCESS,
   CONNECTION_ERROR,
@@ -20,21 +22,50 @@ export enum ConnectionStatus {
   DISCONNECTED
 }
 
-export interface SessionController {
+/**
+ * Session Controller interface
+ * Manages communication with the Session Service.
+ */
+export interface ISessionController {
+  /**
+   * Connects to the Session Service.
+   * @returns User Token Response
+   */
   connect(): Promise<UserTokenResponse>
+
+  /**
+   * Disconnects to the Session Service.
+   */
   disconnect(): void
-  createSession(videoId: string): Promise<CreateSessionResponse>
+
+  /**
+   * Sends a Create Session Command to the Session Service.
+   * @param videoUrl Youtube Video URL
+   * @returns Create Session Response
+   */
+  createSession(videoUrl: string): Promise<CreateSessionResponse>
+
+  /**
+   * Sends a Join Session Command to the Session Service.
+   * @param sessionName Session name
+   * @returns Join Session Response
+   */
   joinSession(sessionName: string): Promise<JoinSessionResponse>
+
+  /**
+   * Sends a Leave Session Command to the Session Service.
+   * @returns Leave Session Reponse
+   */
   leaveSession(): Promise<LeaveSessionResponse>
 
-  get getChatController(): ChatController
-  get getVideoController(): VideoController
+  get getChatController(): IChatController
+  get getVideoController(): IVideoController
 }
 
-export class SessionControllerImpl implements SessionController {
+export class SessionController implements ISessionController {
   socket: Socket
   token: string
-  chatController: ChatController
+  chatController: IChatController
   videoController: VideoController
 
   constructor(sessionServiceUrl: string, token: string) {
@@ -44,53 +75,46 @@ export class SessionControllerImpl implements SessionController {
         'my-custom-header': 'abcd'
       }
     })
-
     this.token = token
-    this.chatController = new ChatControllerImpl(this.socket)
-    this.videoController = new VideoControllerImpl(this.socket)
-  }
-
-  promise<X>(promise: Promise<X>, f: (commandAck: X) => void, g: () => void): void {
-    promise.then(f).catch(g)
+    this.chatController = new ChatController(this.socket)
+    this.videoController = new VideoController(this.socket)
   }
 
   async connect(): Promise<UserTokenResponse> {
-    return new Promise((resolve, reject) => {
-      this.promise(
-        this.connection(),
-        () =>
-          this.promise(
-            this.sendUserToken(),
-            (userTokenResponse: UserTokenResponse) => resolve(userTokenResponse),
-            () => reject()
-          ),
-        () => reject()
-      )
+    return new Promise((resolve) => {
+      this.connection().then(() => {
+        this.sendUserToken().then((userTokenResponse: UserTokenResponse) =>
+          resolve(userTokenResponse)
+        )
+      })
     })
   }
 
   disconnect(): void {
-    console.log('disconnecting')
     this.socket.disconnect()
   }
 
-  async createSession(videoId: string): Promise<CreateSessionResponse> {
-    return new Promise((resolve, reject) => {
-      this.sendCreateSessionMessage(videoId)
-        .then((createSessionResponse: CreateSessionResponse) => resolve(createSessionResponse))
-        .catch(() => reject())
+  async createSession(videoUrl: string): Promise<CreateSessionResponse> {
+    return new Promise((resolve) => {
+      this.socket.emit(
+        CommandType.CREATE_SESSION,
+        { videoUrl: videoUrl },
+        (createSessionResponse: CreateSessionResponse) => {
+          resolve(createSessionResponse)
+        }
+      )
     })
   }
 
   async joinSession(sessionName: string): Promise<JoinSessionResponse> {
-    return new Promise((resolve, reject) => {
-      this.promise(
-        this.sendJoinSessionMessage(sessionName),
+    return new Promise((resolve) => {
+      this.socket.emit(
+        CommandType.JOIN_SESSION,
+        { sessionName: sessionName },
         (joinSessionResponse: JoinSessionResponse) => {
           this.listenToClientEvents()
           resolve(joinSessionResponse)
-        },
-        () => reject()
+        }
       )
     })
   }
@@ -132,41 +156,17 @@ export class SessionControllerImpl implements SessionController {
     })
   }
 
-  private async sendJoinSessionMessage(sessionName: string): Promise<JoinSessionResponse> {
-    return new Promise((resolve) => {
-      this.socket.emit(
-        CommandType.JOIN_SESSION,
-        { sessionName: sessionName },
-        (joinSessionResponse: JoinSessionResponse) => {
-          resolve(joinSessionResponse)
-        }
-      )
-    })
-  }
-
-  private async sendCreateSessionMessage(videoUrl: string): Promise<CreateSessionResponse> {
-    return new Promise((resolve) => {
-      this.socket.emit(
-        CommandType.CREATE_SESSION,
-        { videoUrl: videoUrl },
-        (createSessionResponse: CreateSessionResponse) => {
-          resolve(createSessionResponse)
-        }
-      )
-    })
-  }
-
   private listenToClientEvents() {
     window.addEventListener('beforeunload', () => {
       this.leaveSession()
     })
   }
 
-  get getChatController(): ChatController {
+  get getChatController(): IChatController {
     return this.chatController
   }
 
-  get getVideoController(): VideoController {
+  get getVideoController(): IVideoController {
     return this.videoController
   }
 }
