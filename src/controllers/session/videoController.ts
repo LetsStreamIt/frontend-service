@@ -1,8 +1,8 @@
 import { Socket } from 'socket.io-client'
 import { PlayVideoResponse, StopVideoResponse } from '@/model/command/response'
 import { VideoState } from '@/model/video'
-import { VideoNotificationType } from '@/model/notification/notification'
-import { CommandType } from '@/model/command/command'
+import { VideoMessageType } from '@/model/session/message/videoMessage'
+import { CommandType } from '@/model/session/command/command'
 
 /**
  * Video Controller interface.
@@ -46,12 +46,12 @@ export class VideoController implements IVideoController {
     synchVideoCallback: (videoState: VideoState) => void
   ): void {
     // Get synchronization messages
-    this.socket.on(VideoNotificationType.SYNCHRONIZE, (videoState: VideoState) => {
+    this.socket.on(VideoMessageType.SYNCHRONIZE, (videoState: VideoState) => {
       synchVideoCallback(videoState)
     })
 
     // Send video state, at request
-    this.socket.on(VideoNotificationType.VIDEO_STATE, (callback) => {
+    this.socket.on(VideoMessageType.VIDEO_STATE, (callback) => {
       getVideoStateCallback().then((videoState: VideoState) => {
         callback(videoState)
       })

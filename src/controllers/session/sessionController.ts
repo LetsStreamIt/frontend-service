@@ -7,7 +7,7 @@ import {
   LeaveSessionResponse,
   UserTokenResponse
 } from '@/model/command/response'
-import { CommandType } from '@/model/command/command'
+import { CommandType } from '@/model/session/command/command'
 
 /**
  * Connection Status

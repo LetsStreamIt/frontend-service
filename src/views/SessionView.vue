@@ -1,14 +1,19 @@
 <script setup lang="ts">
+/**
+ * @file SessionView.vue
+ * @module SessionView
+ * Session View
+ */
 import SessionChat from '@/components/session/chat/SessionChat.vue'
 import SessionFrame from '@/components/session/video/SessionFrame.vue'
 import { ref, onUnmounted } from 'vue'
 import {
   ConnectionStatus,
-  SessionController,
-  SessionControllerImpl
+  ISessionController,
+  SessionController
 } from '@/controllers/session/sessionController'
 import { useRoute } from 'vue-router'
-import { JoinSessionResponseType, JoinSessionResponse } from '@/model/command/response'
+import { JoinSessionResponseType, JoinSessionResponse } from '@/model/session/command/response'
 import { connectToSession, connectionErrors } from '@/composables/session/connection'
 import { useAuthStore } from '@/stores/auth'
 import { standardConfig } from '../config'
@@ -23,14 +28,19 @@ const isFrameMounted = ref<boolean>(false)
 
 const authStore = useAuthStore()
 
-const sessionController: SessionController = new SessionControllerImpl(
+// Session Controller
+const sessionController: ISessionController = new SessionController(
   sessionServiceUrl.value,
   authStore.accessToken
 )
 
+// Handle connection and errors from he Session Service
 const { connectionStatus, connectionErrorMessage } = connectionErrors()
 const { connected } = connectToSession(sessionController, connectionStatus)
 
+/**
+ * Sets chat mounted flag and eventually joins the session if the frame is mounted as well.
+ */
 function chatMounted() {
   isChatMounted.value = true
   if (isFrameMounted.value) {
@@ -38,6 +48,9 @@ function chatMounted() {
   }
 }
 
+/**
+ * Sets frame mounted flag and eventually joins the session if the chat is mounted as well.
+ */
 function frameMounted() {
   isFrameMounted.value = true
   if (isChatMounted.value) {
@@ -45,6 +58,12 @@ function frameMounted() {
   }
 }
 
+/**
+ * Join Session function.
+ * Joins the Session given the Session name specified in the route,
+ * if the connection has been previously estabilished.
+ * Sets the connection status variable if an error occurred.
+ */
 function joinSession() {
   if (connected.value) {
     sessionController
