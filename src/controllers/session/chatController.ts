@@ -1,9 +1,14 @@
 import { Socket } from 'socket.io-client'
 import { SendMessageResponse } from '@/model/command/response'
-import { Message, MessageContent, TextMessage, NotificationMessage } from '@/model/message'
-import { User, UserId } from '../../model/user'
-import { CommandType } from '../../model/command/command'
-import { ChatNotificationType } from '../../model/notification/notification'
+import {
+  ChatMessage,
+  MessageContent,
+  TextMessage,
+  NotificationMessage
+} from '@/model/session/message/chatMessage'
+import { User, UserId } from '@/model/session/user'
+import { CommandType } from '@/model/session/command/command'
+import { ChatMessageType } from '@/model/session/message/chatMessage'
 
 /**
  * Chat Controller interface.
@@ -15,11 +20,13 @@ export interface IChatController {
    * Executes the callback provided as parameter when a new message is received.
    * @param chatMessageReceivedCallback
    */
-  handleChatMessages(chatMessageReceivedCallback: (message: Message<MessageContent>) => void): void
+  handleChatMessages(
+    chatMessageReceivedCallback: (message: ChatMessage<MessageContent>) => void
+  ): void
 
   /**
    * Sends a message to the Session Chat.
-   * @param message Message to send
+   * @param message ChatMessage to send
    * @returns Response from the Session Service
    */
   sendMessage(message: string): Promise<SendMessageResponse>
@@ -45,10 +52,10 @@ export class ChatController implements IChatController {
   }
 
   async handleChatMessages(
-    chatMessageReceivedCallback: (message: Message<MessageContent>) => void
+    chatMessageReceivedCallback: (message: ChatMessage<MessageContent>) => void
   ) {
     // Separately handle Text and Notification Messages.
-    this.socket.on(ChatNotificationType.TEXT_MESSAGE, (chatMessages) => {
+    this.socket.on(ChatMessageType.TEXT_MESSAGE, (chatMessages) => {
       chatMessages.forEach((message) => {
         const sender: User = new User(new UserId(message.sender.id.email), message.sender.value)
         const textMessage: TextMessage = new TextMessage(sender, message.content)
@@ -56,7 +63,7 @@ export class ChatController implements IChatController {
       })
     })
 
-    this.socket.on(ChatNotificationType.NOTIFICATION_MESSAGE, (message) => {
+    this.socket.on(ChatMessageType.NOTIFICATION_MESSAGE, (message) => {
       const notificationMessage: NotificationMessage = new NotificationMessage(
         message.sender,
         message.content

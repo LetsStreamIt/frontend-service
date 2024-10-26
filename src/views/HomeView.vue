@@ -1,4 +1,9 @@
 <script setup lang="ts">
+/**
+ * @file HomeView.vue
+ * @module HomeView
+ * Home View
+ */
 import { ref } from 'vue'
 import CreateSessionPopup from '@/components/session/CreateSessionPopup.vue'
 import { useAuthStore } from '@/stores/auth.ts'
