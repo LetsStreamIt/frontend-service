@@ -6,7 +6,7 @@
  */
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { IVideoController } from '@/controllers/session/videoController.ts'
-import { PlayState, VideoState } from '@/model/video.ts'
+import { PlayState, VideoState } from '@/model/session/message/videoMessage.ts'
 import { useProfileStore } from '@/stores/profile.ts'
 
 const props = defineProps<{

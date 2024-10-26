@@ -5,7 +5,7 @@
  * Text Message Component
  */
 import { toRefs } from 'vue'
-import { TextMessage } from '@/model/message'
+import { TextMessage } from '@/model/session/message/chatMessage'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()

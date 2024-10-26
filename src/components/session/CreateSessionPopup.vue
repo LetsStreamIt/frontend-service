@@ -12,7 +12,7 @@ import {
   SessionController
 } from '@/controllers/session/sessionController'
 import { connectToSession, connectionErrors } from '@/composables/session/connection'
-import { CreateSessionResponse, ResponseStatus } from '@/model/command/response'
+import { CreateSessionResponse, ResponseStatus } from '@/model/session/command/response'
 import { useAuthStore } from '@/stores/auth'
 import { Modal } from 'bootstrap'
 import { standardConfig } from '../../config'

@@ -1,4 +1,4 @@
-import { Entity, Repository } from './entity'
+import { Entity } from './entity'
 
 /**
  * User
@@ -23,8 +23,3 @@ export class UserId {
     return this.email
   }
 }
-
-/**
- * User Repository
- */
-export class UserRepository extends Repository<User, UserId, string> {}

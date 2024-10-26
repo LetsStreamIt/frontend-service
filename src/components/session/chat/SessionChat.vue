@@ -8,8 +8,8 @@ import { ref, toRefs, onMounted } from 'vue'
 import { IChatController } from '@/controllers/session/chatController'
 import TextMessageComponent from './message/TextMessageComponent.vue'
 import NotificationMessageComponent from './message/NotificationMessageComponent.vue'
-import { Message, MessageContent } from '@/model/message'
-import { MessageType } from '../../../model/message'
+import { ChatMessage, MessageContent } from '@/model/session/message/chatMessage'
+import { ChatMessageType } from '@/model/session/message/chatMessage'
 
 const props = defineProps<{
   /**
@@ -36,7 +36,7 @@ const chatStyleAttr = ref({
 // Variables used to manage chat contents
 const chatContent = ref({
   inputMessage: '',
-  chatMessages: [] as Message<MessageContent>[]
+  chatMessages: [] as ChatMessage<MessageContent>[]
 })
 
 /**
@@ -61,7 +61,7 @@ function sendMessage() {
  * Callback to execute whenever Chat Controller receives a message
  * @param message
  */
-function chatMessageReceivedCallback(message: Message<MessageContent>) {
+function chatMessageReceivedCallback(message: ChatMessage<MessageContent>) {
   chatContent.value.chatMessages.push(message)
 }
 
@@ -94,10 +94,13 @@ onMounted(() => {
     >
       <div v-for="(message, index) in chatContent.chatMessages" :key="index">
         <NotificationMessageComponent
-          v-if="message.type === MessageType.NOTIFICATION_MSG"
+          v-if="message.type === ChatMessageType.NOTIFICATION_MESSAGE"
           :message="message"
         />
-        <TextMessageComponent v-if="message.type === MessageType.TEXT_MSG" :message="message" />
+        <TextMessageComponent
+          v-if="message.type === ChatMessageType.TEXT_MESSAGE"
+          :message="message"
+        />
       </div>
     </div>
     <form @submit.prevent="sendMessage" class="form-group">
