@@ -1,10 +1,15 @@
 <script setup lang="ts">
+/**
+ * @file CreateSessionPopup.vue
+ * @module CreateSessionPopup
+ * Create Session Popup Component
+ */
 import { onMounted, ref } from 'vue'
 import { Router, useRouter } from 'vue-router'
 import {
   ConnectionStatus,
-  SessionController,
-  SessionControllerImpl
+  ISessionController,
+  SessionController
 } from '@/controllers/session/sessionController'
 import { connectToSession, connectionErrors } from '@/composables/session/connection'
 import { CreateSessionResponse, ResponseStatus } from '@/model/command/response'
@@ -13,6 +18,9 @@ import { Modal } from 'bootstrap'
 import { standardConfig } from '../../config'
 
 const emit = defineEmits<{
+  /**
+   * Message to emit whenever the popup is closed.
+   */
   closePopup: []
 }>()
 
@@ -25,25 +33,37 @@ const sessionServiceUrl = ref<string>(
 const authStore = useAuthStore()
 
 const createSessionModal = ref<Modal | undefined>(undefined)
-const sessionController = ref<SessionController>(
-  new SessionControllerImpl(sessionServiceUrl.value, authStore.accessToken)
+// Session Controller to handle communication with the Session Service.
+const sessionController = ref<ISessionController>(
+  new SessionController(sessionServiceUrl.value, authStore.accessToken)
 )
-
+// Handle connection and errors from he Session Service
 const { connectionStatus, connectionErrorMessage } = connectionErrors()
 const { connected } = connectToSession(sessionController.value, connectionStatus)
 
+/**
+ * Close Popup function.
+ */
 function closePopup() {
-  hideCreateSessionPopup()
+  hidePopupAndDisconnect()
   emit('closePopup')
 }
 
-function hideCreateSessionPopup() {
+/**
+ * Hide Popup and disconnects from the backend
+ */
+function hidePopupAndDisconnect() {
   if (createSessionModal.value) {
     createSessionModal.value.hide()
     sessionController.value.disconnect()
   }
 }
 
+/**
+ * Create Session function.
+ * Uses the Session Controller to send a create Session request.
+ * If successful, redirects to the Session page.
+ */
 function createSession() {
   if (connected.value && videoUrl.value) {
     sessionController.value
@@ -64,12 +84,9 @@ function createSession() {
 onMounted(() => {
   createSessionModal.value = new Modal('#createSessionPopup')
   createSessionModal.value.show()
-
   const modalElement = document.getElementById('createSessionPopup')
   if (modalElement) {
-    modalElement.addEventListener('hidden.bs.modal', () => {
-      closePopup()
-    })
+    modalElement.addEventListener('hidden.bs.modal', () => closePopup())
   }
 })
 </script>

@@ -1,20 +1,32 @@
 <script setup lang="ts">
+/**
+ * @file SessionChat.vue
+ * @module SessionChat
+ * Session Chat
+ */
 import { ref, toRefs, onMounted } from 'vue'
-import { ChatController } from '@/controllers/session/chatController'
+import { IChatController } from '@/controllers/session/chatController'
 import TextMessageComponent from './message/TextMessageComponent.vue'
 import NotificationMessageComponent from './message/NotificationMessageComponent.vue'
 import { Message, MessageContent } from '@/model/message'
 import { MessageType } from '../../../model/message'
 
 const props = defineProps<{
-  chatController: ChatController
+  /**
+   * Chat controller used to send/recv messages.
+   */
+  chatController: IChatController
 }>()
 
 const { chatController } = toRefs(props)
 
 const emit = defineEmits<{
+  /**
+   * Message to emit when the chat is ready to send/recv messages.
+   */
   chatMounted: []
 }>()
+
 // Style attributes
 const chatStyleAttr = ref({
   isChatHidden: false,
@@ -27,11 +39,17 @@ const chatContent = ref({
   chatMessages: [] as Message<MessageContent>[]
 })
 
+/**
+ * Show/Hide the messages when the arrow is toggled
+ */
 function toggleChat() {
   chatStyleAttr.value.isChatHidden = !chatStyleAttr.value.isChatHidden
   chatStyleAttr.value.toggleChatChar = chatStyleAttr.value.toggleChatChar === '▼' ? '▲' : '▼'
 }
 
+/**
+ * Send a message to the Session by leveraging the Chat Controller
+ */
 function sendMessage() {
   if (chatContent.value.inputMessage !== '') {
     chatController.value.sendMessage(chatContent.value.inputMessage)
@@ -39,13 +57,19 @@ function sendMessage() {
   }
 }
 
-function recvMessageCallback(message: Message<MessageContent>) {
+/**
+ * Callback to execute whenever Chat Controller receives a message
+ * @param message
+ */
+function chatMessageReceivedCallback(message: Message<MessageContent>) {
   chatContent.value.chatMessages.push(message)
 }
 
-onMounted(async () => {
-  // Connect to the chat whenever is mounted
-  await chatController.value.handleChatMessages(recvMessageCallback)
+/**
+ * Emit 'chatMounted' whenever the component is ready to receive messages
+ */
+onMounted(() => {
+  chatController.value.handleChatMessages(chatMessageReceivedCallback)
   emit('chatMounted')
 })
 </script>

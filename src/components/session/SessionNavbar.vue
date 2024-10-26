@@ -1,4 +1,9 @@
 <script setup>
+/**
+ * @file SessionNavbar.vue
+ * @module SessionNavbar
+ * Session Navbar Component
+ */
 import NavbarContainer from '@/components/common/navbar/NavbarContainer.vue'
 import CollapsableNavbar from '@/components/common/navbar/CollapsableNavbar.vue'
 </script>
