@@ -34,7 +34,11 @@ export interface IVideoController {
   stopVideo(timestamp: number): Promise<StopVideoResponse>
 }
 
-export class VideoController implements IVideoController {
+/**
+ * Video Controller Implementation.
+ * It leverages a websocket to handle communcation.
+ */
+export class WSVideoController implements IVideoController {
   socket: Socket
 
   constructor(socket: Socket) {

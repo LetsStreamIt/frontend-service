@@ -9,8 +9,8 @@ import SessionFrame from '@/components/session/video/SessionFrame.vue'
 import { ref, onUnmounted } from 'vue'
 import {
   ConnectionStatus,
-  ISessionController,
-  SessionController
+  type ISessionController,
+  WsSessionController
 } from '@/controllers/session/sessionController'
 import { useRoute } from 'vue-router'
 import { JoinSessionResponseType, JoinSessionResponse } from '@/model/session/command/response'
@@ -29,7 +29,7 @@ const isFrameMounted = ref<boolean>(false)
 const authStore = useAuthStore()
 
 // Session Controller
-const sessionController: ISessionController = new SessionController(
+const sessionController: ISessionController = new WsSessionController(
   sessionServiceUrl.value,
   authStore.accessToken
 )

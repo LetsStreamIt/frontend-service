@@ -32,7 +32,11 @@ export interface IChatController {
   sendMessage(message: string): Promise<SendMessageResponse>
 }
 
-export class ChatController implements IChatController {
+/**
+ * Chat Controller Implementation.
+ * It leverages a websocket to handle communcation.
+ */
+export class WSChatController implements IChatController {
   socket: Socket
 
   constructor(socket: Socket) {

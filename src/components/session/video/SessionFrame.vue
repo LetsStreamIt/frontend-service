@@ -5,8 +5,8 @@
  * Session Frame
  */
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
-import { IVideoController } from '@/controllers/session/videoController.ts'
-import { PlayState, VideoState } from '@/model/session/message/videoMessage.ts'
+import { type IVideoController } from '@/controllers/session/videoController.ts'
+import { PlayState, type IVideoState } from '@/model/session/message/videoMessage.ts'
 import { useProfileStore } from '@/stores/profile.ts'
 
 const props = defineProps<{
@@ -134,7 +134,7 @@ function registerVideoMessageCallbacks() {
       })
     },
     // This function will be executed whenever the backend wants to synchronize the local video.
-    (videoState: VideoState) => {
+    (videoState: IVideoState) => {
       return new Promise<void>((resolve) => {
         playerActions.value.push((player: window.YT.Player) => {
           player.seekTo(videoState.timestamp, true)

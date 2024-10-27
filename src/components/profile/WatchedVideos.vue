@@ -5,7 +5,7 @@
  * Watched videos component.
  */
 import { ref, watch } from 'vue'
-import { ProfileVideo } from '@/model/video'
+import { type ProfileVideo } from '@/model/profile/videoProfile'
 import { getVideoInfo } from '@/controllers/profile/youtubeController'
 import VideoCarousel from '@/components/profile/VideoCarousel.vue'
 

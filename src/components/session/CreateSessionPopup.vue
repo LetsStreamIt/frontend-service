@@ -5,11 +5,11 @@
  * Create Session Popup Component
  */
 import { onMounted, ref } from 'vue'
-import { Router, useRouter } from 'vue-router'
+import { type Router, useRouter } from 'vue-router'
 import {
   ConnectionStatus,
-  ISessionController,
-  SessionController
+  type ISessionController,
+  WsSessionController
 } from '@/controllers/session/sessionController'
 import { connectToSession, connectionErrors } from '@/composables/session/connection'
 import { CreateSessionResponse, ResponseStatus } from '@/model/session/command/response'
@@ -35,7 +35,7 @@ const authStore = useAuthStore()
 const createSessionModal = ref<Modal | undefined>(undefined)
 // Session Controller to handle communication with the Session Service.
 const sessionController = ref<ISessionController>(
-  new SessionController(sessionServiceUrl.value, authStore.accessToken)
+  new WsSessionController(sessionServiceUrl.value, authStore.accessToken)
 )
 // Handle connection and errors from he Session Service
 const { connectionStatus, connectionErrorMessage } = connectionErrors()

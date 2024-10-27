@@ -1,6 +1,6 @@
 import { io, Socket } from 'socket.io-client'
-import { type IChatController, ChatController } from '@/controllers/session/chatController'
-import { type IVideoController, VideoController } from '@/controllers/session/videoController'
+import { type IChatController, WSChatController } from '@/controllers/session/chatController'
+import { type IVideoController, WSVideoController } from '@/controllers/session/videoController'
 import {
   CreateSessionResponse,
   JoinSessionResponse,
@@ -62,11 +62,15 @@ export interface ISessionController {
   get getVideoController(): IVideoController
 }
 
-export class SessionController implements ISessionController {
+/**
+ * Session Controller Implementation.
+ * It leverages a websocket to handle communcation.
+ */
+export class WsSessionController implements ISessionController {
   socket: Socket
   token: string
   chatController: IChatController
-  videoController: VideoController
+  videoController: IVideoController
 
   constructor(sessionServiceUrl: string, token: string) {
     this.socket = io(`${sessionServiceUrl}`, {
@@ -76,8 +80,8 @@ export class SessionController implements ISessionController {
       }
     })
     this.token = token
-    this.chatController = new ChatController(this.socket)
-    this.videoController = new VideoController(this.socket)
+    this.chatController = new WSChatController(this.socket)
+    this.videoController = new WSVideoController(this.socket)
   }
 
   async connect(): Promise<UserTokenResponse> {

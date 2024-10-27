@@ -5,11 +5,14 @@
  * Session Chat
  */
 import { ref, toRefs, onMounted } from 'vue'
-import { IChatController } from '@/controllers/session/chatController'
+import { type IChatController } from '@/controllers/session/chatController'
 import TextMessageComponent from './message/TextMessageComponent.vue'
 import NotificationMessageComponent from './message/NotificationMessageComponent.vue'
-import { ChatMessage, MessageContent } from '@/model/session/message/chatMessage'
-import { ChatMessageType } from '@/model/session/message/chatMessage'
+import type {
+  ChatMessageType,
+  ChatMessage,
+  MessageContent
+} from '@/model/session/message/chatMessage'
 
 const props = defineProps<{
   /**

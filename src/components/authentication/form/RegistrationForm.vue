@@ -82,7 +82,6 @@ import axios, { AxiosError } from 'axios'
 import { useRouter } from 'vue-router'
 import { useEmailValidator } from '@/composables/registration/email'
 import { usePasswordValidator } from '@/composables/registration/password'
-import { IRegistrationData } from '@/controllers/authController/registrationController'
 import { standardConfig } from '../../../config'
 
 const router = useRouter()
@@ -91,6 +90,12 @@ interface FormState {
   username: string
   error: string
   success: boolean
+}
+
+interface IRegistrationData {
+  username: string
+  email: string
+  password: string
 }
 
 const { email, emailError, isValidEmail } = useEmailValidator()
@@ -165,9 +170,11 @@ function submitForm() {
 <style lang="scss">
 .form-register {
   display: flex;
+
   .logo {
     max-width: 100%;
   }
+
   button[type='submit'] {
     width: 100%;
   }
