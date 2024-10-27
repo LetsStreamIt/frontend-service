@@ -2,18 +2,12 @@ import axios from 'axios'
 import { defineStore } from 'pinia'
 import { useProfileStore } from './profile'
 import { standardConfig } from '../config'
+import type { UserAuthState } from '@/model/auth/userAuthState'
 
 const authUrl = `http://${standardConfig.AUTH_SERVICE_HOSTNAME}:${standardConfig.AUTH_SERVICE_PORT}`
 
-interface State {
-  id: string
-  email: string
-  accessToken: string
-  refreshToken: string
-}
-
 export const useAuthStore = defineStore('auth', {
-  state: (): State => {
+  state: (): UserAuthState => {
     return {
       id: '',
       email: localStorage.getItem('email') || '',
@@ -47,7 +41,7 @@ export const useAuthStore = defineStore('auth', {
       this.setAccessToken('')
       this.setRefreshToken('')
     },
-    async refreshToken() {
+    async refreshAccessToken() {
       try {
         const { data } = await axios.post(
           `${authUrl}/api/auth/refresh`,
@@ -79,7 +73,7 @@ export const useAuthStore = defineStore('auth', {
         console.error('Error validating token', error)
         if (error.response && error.response.status === 401) {
           try {
-            if (await this.refreshToken()) {
+            if (await this.refreshAccessToken()) {
               return true
             }
           } catch {

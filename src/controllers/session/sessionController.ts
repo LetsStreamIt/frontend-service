@@ -1,12 +1,12 @@
 import { io, Socket } from 'socket.io-client'
-import { IChatController, ChatController } from '@/controllers/session/chatController'
-import { IVideoController, VideoController } from '@/controllers/session/videoController'
+import { type IChatController, ChatController } from '@/controllers/session/chatController'
+import { type IVideoController, VideoController } from '@/controllers/session/videoController'
 import {
   CreateSessionResponse,
   JoinSessionResponse,
   LeaveSessionResponse,
   UserTokenResponse
-} from '@/model/command/response'
+} from '@/model/session/command/response'
 import { CommandType } from '@/model/session/command/command'
 
 /**

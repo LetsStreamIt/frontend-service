@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ProfileVideo } from '../../model/video'
+import { type VideoProfile } from '@/model/profile/videoProfile'
 
 const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY
 
@@ -8,7 +8,7 @@ const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY
  * @param videoId - YouTube video ID
  * @returns Video information
  */
-export const getVideoInfo = async (videoId: string): Promise<ProfileVideo | null> => {
+export const getVideoInfo = async (videoId: string): Promise<VideoProfile | null> => {
   try {
     const response = await axios.get(
       `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails,status&id=${videoId}&key=${apiKey}`
