@@ -1,7 +1,6 @@
 import { Socket } from 'socket.io-client'
-import { PlayVideoResponse, StopVideoResponse } from '@/model/command/response'
-import { VideoState } from '@/model/video'
-import { VideoMessageType } from '@/model/session/message/videoMessage'
+import type { PlayVideoResponse, StopVideoResponse } from '@/model/session/command/response'
+import { type IVideoState, VideoMessageType } from '@/model/session/message/videoMessage'
 import { CommandType } from '@/model/session/command/command'
 
 /**
@@ -12,11 +11,12 @@ export interface IVideoController {
   /**
    * Handles Video messages.
    * Executes the provided callbacks when a new message is received, based on its type.
-   * @param chatMessageReceivedCallback
+   * @param getVideoStateCallback the function should return the state video
+   * @param synchVideoCallback the function should synchronize the local video, given a video state
    */
   handleVideoNotifications(
-    getVideoStateCallback: () => Promise<VideoState>,
-    synchVideoCallback: (videoState: VideoState) => Promise<void>
+    getVideoStateCallback: () => Promise<IVideoState>,
+    synchVideoCallback: (videoState: IVideoState) => void
   ): void
 
   /**
@@ -42,17 +42,17 @@ export class VideoController implements IVideoController {
   }
 
   handleVideoNotifications(
-    getVideoStateCallback: () => Promise<VideoState>,
-    synchVideoCallback: (videoState: VideoState) => void
+    getVideoStateCallback: () => Promise<IVideoState>,
+    synchVideoCallback: (videoState: IVideoState) => void
   ): void {
     // Get synchronization messages
-    this.socket.on(VideoMessageType.SYNCHRONIZE, (videoState: VideoState) => {
+    this.socket.on(VideoMessageType.SYNCHRONIZE, (videoState: IVideoState) => {
       synchVideoCallback(videoState)
     })
 
     // Send video state, at request
-    this.socket.on(VideoMessageType.VIDEO_STATE, (callback) => {
-      getVideoStateCallback().then((videoState: VideoState) => {
+    this.socket.on(VideoMessageType.VIDEO_STATE, (callback: (videoState: IVideoState) => void) => {
+      getVideoStateCallback().then((videoState: IVideoState) => {
         callback(videoState)
       })
     })

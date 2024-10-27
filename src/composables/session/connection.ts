@@ -1,4 +1,4 @@
-import { Ref, ref, watch } from 'vue'
+import { type Ref, ref, watch } from 'vue'
 import { ConnectionStatus, SessionController } from '@/controllers/session/sessionController'
 import { UserTokenResponse, ResponseStatus } from '@/model/session/command/response'
 

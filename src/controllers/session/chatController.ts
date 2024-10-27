@@ -1,8 +1,8 @@
 import { Socket } from 'socket.io-client'
-import { SendMessageResponse } from '@/model/command/response'
+import { SendMessageResponse } from '@/model/session/command/response'
 import {
-  ChatMessage,
-  MessageContent,
+  type ChatMessage,
+  type MessageContent,
   TextMessage,
   NotificationMessage
 } from '@/model/session/message/chatMessage'

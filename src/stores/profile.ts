@@ -1,15 +1,10 @@
 import ApiClient from '@/middlewares/apiClient'
 import { defineStore } from 'pinia'
 import { standardConfig } from '../config'
-
-interface State {
-  email: string
-  username: string
-  url: string
-}
+import type { UserProfileState } from '@/model/profile/userProfileState'
 
 export const useProfileStore = defineStore('profile', {
-  state: (): State => {
+  state: (): UserProfileState => {
     return {
       email: localStorage.getItem('email') || '',
       username: localStorage.getItem('username') || '',
