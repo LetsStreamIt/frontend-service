@@ -1,3 +1,38 @@
+## [0.13.10](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.9...v0.13.10) (2024-10-27)
+
+### Dependency updates
+
+* **deps:** update dependency @vue/eslint-config-prettier to v10.1.0 ([af958ab](https://github.com/LetsStreamIt/frontend-service/commit/af958ab82e4991ead412a0b1ccb0103a1977f456))
+* **deps:** update dependency sass to v1.80.4 ([20c31d9](https://github.com/LetsStreamIt/frontend-service/commit/20c31d9ba3cb8b9d5013f9eadc94aef88eb6b0b5))
+* **deps:** update dependency vite to v5.4.10 ([58c3481](https://github.com/LetsStreamIt/frontend-service/commit/58c3481a518c40c6acb51fd623b45f568c7a6c2f))
+
+### Bug Fixes
+
+* imports ([4714762](https://github.com/LetsStreamIt/frontend-service/commit/4714762b00b4aac2287ad23f9c269485c0606e76))
+
+### Documentation
+
+* add controller docs and view's ([804d505](https://github.com/LetsStreamIt/frontend-service/commit/804d505aeb3124fbe338d55a264c2f2c3f2eba89))
+* add session components docs ([52e08a0](https://github.com/LetsStreamIt/frontend-service/commit/52e08a072a8b2075b81d413060cd2842d9139339))
+* add session composables docs ([e21db3a](https://github.com/LetsStreamIt/frontend-service/commit/e21db3ac47e18afa4c9835161fd177add71afb2b))
+* add session controller doc ([a401ff8](https://github.com/LetsStreamIt/frontend-service/commit/a401ff80e3a5f7828cd58277c4ce18a99c1b1855))
+
+### Build and continuous integration
+
+* **deps:** update docker/build-push-action digest to 5e99dac ([8e96730](https://github.com/LetsStreamIt/frontend-service/commit/8e967300a9fad186152b6f84c48868694eeeb8b8))
+* **deps:** update docker/login-action digest to 0689575 ([b611a7c](https://github.com/LetsStreamIt/frontend-service/commit/b611a7cf0eca6c8da58b6d115019bd7c2ae55c3f))
+* **deps:** update docker/metadata-action digest to d31acd5 ([a268ca5](https://github.com/LetsStreamIt/frontend-service/commit/a268ca5073c699dbb0bce5037c20605f9e213ba1))
+* update docs build command ([3dd76a2](https://github.com/LetsStreamIt/frontend-service/commit/3dd76a2640c74801cbe534ce1eeee595666e172f))
+
+### General maintenance
+
+* add tsconfig for generating typescript documentation ([a4c1423](https://github.com/LetsStreamIt/frontend-service/commit/a4c14234315d588b6f3e84c22fb0cb329b11e5ad))
+* fix imports for doc gen, move/rename store state inside model ([3a529bf](https://github.com/LetsStreamIt/frontend-service/commit/3a529bf56b60867b168d89f4a9e0f4eab46b74e5))
+
+### Refactoring
+
+* move model files, align model with backend ([954d635](https://github.com/LetsStreamIt/frontend-service/commit/954d6358de109d220c8cfb747bd49b08271491ec))
+
 ## [0.13.9](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.8...v0.13.9) (2024-10-25)
 
 ### Bug Fixes
