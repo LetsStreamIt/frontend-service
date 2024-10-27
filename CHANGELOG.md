@@ -1,3 +1,9 @@
+## [0.13.11](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.10...v0.13.11) (2024-10-27)
+
+### Bug Fixes
+
+* env variables not found on prod stage ([1f59704](https://github.com/LetsStreamIt/frontend-service/commit/1f597047fedf080d94db5479e1448a95c9e7b4d3))
+
 ## [0.13.10](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.9...v0.13.10) (2024-10-27)
 
 ### Dependency updates
