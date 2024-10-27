@@ -1,5 +1,5 @@
 import { type Ref, ref, watch } from 'vue'
-import { ConnectionStatus, SessionController } from '@/controllers/session/sessionController'
+import { ConnectionStatus, WsSessionController } from '@/controllers/session/sessionController'
 import { UserTokenResponse, ResponseStatus } from '@/model/session/command/response'
 
 /**
@@ -45,7 +45,7 @@ export function connectionErrors() {
  * @returns connection variable eventually set to true if the connection is estabilished.
  */
 export function connectToSession(
-  sessionController: SessionController,
+  sessionController: WsSessionController,
   error: Ref<ConnectionStatus>
 ) {
   const connected = ref<boolean>(false)

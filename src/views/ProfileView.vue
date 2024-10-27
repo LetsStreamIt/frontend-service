@@ -4,7 +4,7 @@
  * @module ProfileView
  * Profile view component.
  */
-import { onMounted, Ref, ref } from 'vue'
+import { onMounted, type Ref, ref } from 'vue'
 import ApiClient from '@/middlewares/apiClient'
 import ProfileInformations from '@/components/profile/ProfileInformations.vue'
 import WatchedVideos from '@/components/profile/WatchedVideos.vue'

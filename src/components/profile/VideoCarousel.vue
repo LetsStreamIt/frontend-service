@@ -22,13 +22,13 @@
  * Video carousel component of the profile page.
  */
 import VideoCard from '@/components/profile/VideoCard.vue'
-import { ProfileVideo } from '@/model/video'
+import { type VideoProfile } from '@/model/profile/videoProfile'
 
 const props = defineProps<{
   /**
    * The list of videos to display.
    */
-  videos: ProfileVideo[]
+  videos: VideoProfile[]
 }>()
 </script>
 

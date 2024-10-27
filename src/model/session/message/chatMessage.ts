@@ -16,8 +16,15 @@ export enum ChatMessageType {
   TEXT_MESSAGE = 'textMessage'
 }
 
+/**
+ * Message Content can either be a join notification or a string,
+ * representing the message content
+ */
 export type MessageContent = JoinNotification | string
 
+/**
+ * Chat Message model
+ */
 export interface ChatMessage<X extends MessageContent> {
   readonly content: X
   readonly sender: User
@@ -27,6 +34,9 @@ export interface ChatMessage<X extends MessageContent> {
   get getSender(): User
 }
 
+/**
+ * Notification Chat Message
+ */
 export class NotificationMessage implements ChatMessage<JoinNotification> {
   content: JoinNotification
   sender: User
