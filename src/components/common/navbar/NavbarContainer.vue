@@ -7,6 +7,8 @@ const authStore = useAuthStore()
 
 const isLoggedIn = ref(false)
 
+const router = useRouter()
+
 // Fetch logged-in state asynchronously
 onMounted(async () => {
   isLoggedIn.value = await authStore.isLoggedIn()
@@ -16,7 +18,7 @@ const logout = async () => {
   if (confirm('Are you sure you want to logout?')) {
     authStore.logout()
     isLoggedIn.value = await authStore.isLoggedIn()
-    useRouter().push('/')
+    router.push('/')
   }
 }
 </script>

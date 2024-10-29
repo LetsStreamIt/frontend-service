@@ -30,12 +30,17 @@ apiClient.interceptors.request.use(
   async (config) => {
     const authStore = useAuthStore()
     const token = authStore.accessToken
+    const refreshToken = authStore.refreshToken
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
 
-    if (await authStore.isLoggedIn()) {
+    if (refreshToken) {
+      config.headers['cookie'] = `refreshToken=${refreshToken}`
+    }
+
+    if (token && refreshToken && (await authStore.isLoggedIn())) {
       // Token is still valid
       return config
     } else {
