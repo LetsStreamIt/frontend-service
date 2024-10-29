@@ -9,7 +9,6 @@ import ApiClient from '@/middlewares/apiClient'
 import ProfileInformations from '@/components/profile/ProfileInformations.vue'
 import WatchedVideos from '@/components/profile/WatchedVideos.vue'
 import { useRouter } from 'vue-router'
-import { standardConfig } from '../config'
 
 const props = defineProps<{
   /**
@@ -18,10 +17,8 @@ const props = defineProps<{
   email: string
 }>()
 
-const profileUrl = `http://${standardConfig.PROFILE_SERVICE_HOSTNAME}:${standardConfig.PROFILE_SERVICE_PORT}`
-
+const profilePath = '/api/profile/'
 const router = useRouter()
-
 const email = ref(props.email)
 const username = ref('')
 const bio = ref('')
@@ -29,7 +26,7 @@ const videos: Ref<string[]> = ref([])
 
 const fetchProfile = async () => {
   try {
-    const response = await ApiClient.get(`${profileUrl}/users/${email.value}`)
+    const response = await ApiClient.get(`${profilePath}/users/${email.value}`)
     if (response.status === 200) {
       const data = response.data
       username.value = data.username

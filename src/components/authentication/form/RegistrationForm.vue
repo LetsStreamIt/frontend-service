@@ -82,7 +82,6 @@ import axios, { AxiosError } from 'axios'
 import { useRouter } from 'vue-router'
 import { useEmailValidator } from '@/composables/registration/email'
 import { usePasswordValidator } from '@/composables/registration/password'
-import { standardConfig } from '../../../config'
 
 const router = useRouter()
 
@@ -139,8 +138,7 @@ function submitForm() {
   /**
    * Register the user.
    */
-  const authUrl = `http://${standardConfig.AUTH_SERVICE_HOSTNAME}:${standardConfig.AUTH_SERVICE_PORT}`
-  const registerUrl = `${authUrl}/api/auth/register`
+  const registerUrl = '/api/auth/register'
 
   const formData: IRegistrationData = {
     username: form.value.username,

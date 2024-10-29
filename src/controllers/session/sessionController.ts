@@ -73,12 +73,7 @@ export class WsSessionController implements ISessionController {
   videoController: IVideoController
 
   constructor(sessionServiceUrl: string, token: string) {
-    this.socket = io(`${sessionServiceUrl}`, {
-      withCredentials: true,
-      extraHeaders: {
-        'my-custom-header': 'abcd'
-      }
-    })
+    this.socket = io({ path: sessionServiceUrl })
     this.token = token
     this.chatController = new WSChatController(this.socket)
     this.videoController = new WSVideoController(this.socket)

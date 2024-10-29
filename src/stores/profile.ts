@@ -1,14 +1,14 @@
 import ApiClient from '@/middlewares/apiClient'
 import { defineStore } from 'pinia'
-import { standardConfig } from '../config'
 import type { UserProfileState } from '@/model/profile/userProfileState'
+
+const profilePath = '/api/profile'
 
 export const useProfileStore = defineStore('profile', {
   state: (): UserProfileState => {
     return {
       email: localStorage.getItem('email') || '',
-      username: localStorage.getItem('username') || '',
-      url: `http://${standardConfig.PROFILE_SERVICE_HOSTNAME}:${standardConfig.PROFILE_SERVICE_PORT}`
+      username: localStorage.getItem('username') || ''
     }
   },
   actions: {
@@ -17,13 +17,13 @@ export const useProfileStore = defineStore('profile', {
       localStorage.setItem('username', username)
     },
     async getProfileInfo() {
-      const response = await ApiClient.get(`${this.url}/users/${this.email}`)
+      const response = await ApiClient.get(`${profilePath}/users/${this.email}`)
       if (response.status === 200) {
         this.setUsername(response.data.username)
       }
     },
     async updateProfileInfo(username: string, bio: string) {
-      const response = await ApiClient.post(`${this.url}/users/update`, {
+      const response = await ApiClient.post(`${profilePath}/users/update`, {
         email: this.email,
         username,
         bio
@@ -35,7 +35,7 @@ export const useProfileStore = defineStore('profile', {
       return false
     },
     async addWatchedVideo(videoId: string) {
-      const response = await ApiClient.post(`${this.url}/videos`, {
+      const response = await ApiClient.post(`${profilePath}/videos`, {
         videoId
       })
       return response.status === 201

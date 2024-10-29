@@ -1,10 +1,7 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import { useProfileStore } from './profile'
-import { standardConfig } from '../config'
 import type { UserAuthState } from '@/model/auth/userAuthState'
-
-const authUrl = `http://${standardConfig.AUTH_SERVICE_HOSTNAME}:${standardConfig.AUTH_SERVICE_PORT}`
 
 export const useAuthStore = defineStore('auth', {
   state: (): UserAuthState => {
@@ -43,11 +40,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async refreshAccessToken() {
       try {
-        const { data } = await axios.post(
-          `${authUrl}/api/auth/refresh`,
-          {},
-          { withCredentials: true }
-        )
+        const { data } = await axios.post('/api/auth/refresh', {}, { withCredentials: true })
         const refreshedToken = data.accessToken
         if (refreshedToken) {
           this.setAccessToken(refreshedToken)
@@ -60,7 +53,7 @@ export const useAuthStore = defineStore('auth', {
     async isLoggedIn() {
       try {
         await axios.post(
-          `${authUrl}/api/auth/validate`,
+          '/api/auth/validate',
           {},
           {
             headers: {
