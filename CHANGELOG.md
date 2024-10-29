@@ -1,3 +1,9 @@
+## [0.13.13](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.12...v0.13.13) (2024-10-29)
+
+### Bug Fixes
+
+* error on logout ([a033ca4](https://github.com/LetsStreamIt/frontend-service/commit/a033ca4a86e782c2548a5190eb29d8d3ca02deee))
+
 ## [0.13.12](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.11...v0.13.12) (2024-10-29)
 
 ### Dependency updates
