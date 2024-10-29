@@ -4,5 +4,4 @@
 export interface UserProfileState {
   email: string
   username: string
-  url: string
 }

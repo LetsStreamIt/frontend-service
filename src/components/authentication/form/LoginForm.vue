@@ -47,7 +47,6 @@ import InputField from './InputField.vue'
 import axios, { AxiosError } from 'axios'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
-import { standardConfig } from '../../../config'
 
 const router = useRouter()
 
@@ -69,10 +68,8 @@ function submitForm() {
   /**
    * Login the user.
    */
-  const authUrl = `http://${standardConfig.AUTH_SERVICE_HOSTNAME}:${standardConfig.AUTH_SERVICE_PORT}`
-  const loginUrl = `${authUrl}/api/auth/login`
   axios
-    .post(loginUrl, form.value, { withCredentials: true })
+    .post('/api/auth/login', form.value, { withCredentials: true })
     .then((response) => {
       const { _id, email, accessToken, refreshToken } = response.data
       authStore.login(_id, email, accessToken, refreshToken)

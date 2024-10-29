@@ -15,7 +15,6 @@ import { connectToSession, connectionErrors } from '@/composables/session/connec
 import { CreateSessionResponse, ResponseStatus } from '@/model/session/command/response'
 import { useAuthStore } from '@/stores/auth'
 import { Modal } from 'bootstrap'
-import { standardConfig } from '../../config'
 
 const emit = defineEmits<{
   /**
@@ -27,15 +26,13 @@ const emit = defineEmits<{
 const videoUrl = ref<string>('')
 const router: Router = useRouter()
 
-const sessionServiceUrl = ref<string>(
-  `http://${standardConfig.SESSION_SERVICE_HOSTNAME}:${standardConfig.SESSION_SERVICE_PORT}`
-)
+const sessionServicePath = ref<string>('/api/session/')
 const authStore = useAuthStore()
 
 const createSessionModal = ref<Modal | undefined>(undefined)
 // Session Controller to handle communication with the Session Service.
 const sessionController = ref<ISessionController>(
-  new WsSessionController(sessionServiceUrl.value, authStore.accessToken)
+  new WsSessionController(sessionServicePath.value, authStore.accessToken)
 )
 // Handle connection and errors from he Session Service
 const { connectionStatus, connectionErrorMessage } = connectionErrors()
