@@ -1,3 +1,23 @@
+## [0.13.12](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.11...v0.13.12) (2024-10-29)
+
+### Dependency updates
+
+* **deps:** update dependency socket.io-client to v4.8.1 ([d8f2d0f](https://github.com/LetsStreamIt/frontend-service/commit/d8f2d0f7fd969510fe9a70f755625fe4c394de55))
+
+### Bug Fixes
+
+* cors errors by substitute urls with nginx locations ([08822f6](https://github.com/LetsStreamIt/frontend-service/commit/08822f60456b5ed10a213effc5411fe78d08ab87))
+
+### Build and continuous integration
+
+* leaving alpine ([d638b77](https://github.com/LetsStreamIt/frontend-service/commit/d638b7708bbfb7ef0acb84c5704d59568e8fb957))
+
+### General maintenance
+
+* add nginx conf with upstreams ([a6e6990](https://github.com/LetsStreamIt/frontend-service/commit/a6e6990e1c384bc6121ac09e472ef87ab398ddae))
+* del config file ([6edca0a](https://github.com/LetsStreamIt/frontend-service/commit/6edca0acc580a83b3a2a33c92dd8c8461fb12468))
+* replace env variables in .env and nginx.conf at deployment ([d202e85](https://github.com/LetsStreamIt/frontend-service/commit/d202e85aa942431ad5b756bc63bcf6fcbe7ae873))
+
 ## [0.13.11](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.10...v0.13.11) (2024-10-27)
 
 ### Bug Fixes
