@@ -2,6 +2,7 @@ import axios from 'axios'
 import { defineStore } from 'pinia'
 import { useProfileStore } from './profile'
 import type { UserAuthState } from '@/model/auth/userAuthState'
+import apiClient from '@/middlewares/apiClient'
 
 export const useAuthStore = defineStore('auth', {
   state: (): UserAuthState => {
@@ -40,7 +41,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async refreshAccessToken() {
       try {
-        const { data } = await axios.post('/api/auth/refresh', {}, { withCredentials: true })
+        const { data } = await apiClient.post('/api/auth/refresh', {}, { withCredentials: true })
         const refreshedToken = data.accessToken
         if (refreshedToken) {
           this.setAccessToken(refreshedToken)
