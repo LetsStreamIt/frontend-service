@@ -16,5 +16,6 @@ RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
 
+COPY ./nginx.conf /etc/nginx/nginx.conf
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
