@@ -13,6 +13,7 @@ export const getVideoInfo = async (videoId: string): Promise<VideoProfile | null
     const response = await axios.get(
       `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails,status&id=${videoId}&key=${apiKey}`
     )
+    console.log('GETTING VIDEO INFO')
     const videoDetails = response.data.items[0]
     const { viewCount, likeCount } = videoDetails.statistics
     const { title, thumbnails } = videoDetails.snippet
