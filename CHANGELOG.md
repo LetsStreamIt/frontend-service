@@ -1,3 +1,10 @@
+## [0.13.15](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.14...v0.13.15) (2024-10-30)
+
+### Documentation
+
+* update readme ([7a0d27f](https://github.com/LetsStreamIt/frontend-service/commit/7a0d27f7ea3628b710be0f57019b607fb619591f))
+* update readme, add contributing md ([f0a7cbc](https://github.com/LetsStreamIt/frontend-service/commit/f0a7cbc1e7923c3fc97930aabf23c1e113e2f7b3))
+
 ## [0.13.14](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.13...v0.13.14) (2024-10-30)
 
 ### Dependency updates
