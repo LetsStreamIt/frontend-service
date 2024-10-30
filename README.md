@@ -1,14 +1,9 @@
 # Frontend Service
 
-![CI status](https://github.com/letsstreamit/frontend-service/actions/workflows/ci.yml/badge.svg)
-![Deploy Image status](https://github.com/letsstreamit/frontend-service/actions/workflows/deploy-image.yaml/badge.svg)
-![GH pages status](https://github.com/letsstreamit/frontend-service/actions/workflows/gh-pages.yaml/badge.svg)
-![Release status](https://github.com/letsstreamit/frontend-service/actions/workflows/release.yaml/badge.svg)
-
+![CI status](https://github.com/letsstreamit/frontend-service/actions/workflows/dispatcher.yml/badge.svg)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Version](https://img.shields.io/github/v/release/letsstreamit/frontend-service?style=plastic)
-
 
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=LetsStreamIt_frontend-service&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=LetsStreamIt_frontend-service)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=LetsStreamIt_frontend-service&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=LetsStreamIt_frontend-service)
@@ -20,6 +15,7 @@
 Frontend Service is responsible to manage the frontend of the Web application.
 
 Through the website the user can:
+
 - Authenticate to the system, by registering and login to it thanks to the [`auth-service`](https://github.com/LetsStreamIt/auth-service);
 - Create and/or join a Youtube streaming session and interact with the corresponding video and chat, by using [`session-service`](https://github.com/LetsStreamIt/session-service);
 - Navigate to the profile page and get public user information, thanks to the [`profile-service`](https://github.com/LetsStreamIt/profile-service);
@@ -46,40 +42,41 @@ Through the website the user can:
 
 [![Typedoc](https://img.shields.io/badge/Typedoc-2ECE53?style=for-the-badge&logo=readthedocs&logoColor=white)](https://typedoc.org/)
 
-
 ## Usage
 
 In order to run it, specify the following environment variables:
 
-| Variable                   | Description                         
-| -------------------------- | ----------------------------------- 
-| `SESSION_SERVICE_HOSTNAME` | The hostname of the session service
-| `SESSION_SERVICE_PORT`     | The port of the session service
-| `PROFILE_SERVICE_HOSTNAME` | The hostname of the profile service 
-| `PROFILE_SERVICE_PORT`     | The port of the profile service     
-| `AUTH_SERVICE_HOSTNAME`    | The hostname of the auth service   
-| `AUTH_SERVICE_PORT`        | The port of the auth service        
-| `AKKA_LICENSE_KEY`         | The license key for Akka            
-
+| Variable                   | Description                         |
+| -------------------------- | ----------------------------------- |
+| `SESSION_SERVICE_HOSTNAME` | The hostname of the session service |
+| `SESSION_SERVICE_PORT`     | The port of the session service     |
+| `PROFILE_SERVICE_HOSTNAME` | The hostname of the profile service |
+| `PROFILE_SERVICE_PORT`     | The port of the profile service     |
+| `AUTH_SERVICE_HOSTNAME`    | The hostname of the auth service    |
+| `AUTH_SERVICE_PORT`        | The port of the auth service        |
+| `AKKA_LICENSE_KEY`         | The license key for Akka            |
 
 The frontend service can be deployed through a Docker container:
 
-1. Create a ```env.list``` file specifying the environment variable values, as example:
-    ```plaintext
-    PROFILE_SERVICE_HOSTNAME="localhost"
-    PROFILE_SERVICE_PORT=3001
-    AUTH_SERVICE_HOSTNAME="localhost"
-    AUTH_SERVICE_PORT=3000
-    SESSION_SERVICE_HOSTNAME="localhost"
-    SESSION_SERVICE_PORT=4000
-    ```
+1. Create a `env.list` file specifying the environment variable values, as example:
+
+   ```plaintext
+   PROFILE_SERVICE_HOSTNAME="localhost"
+   PROFILE_SERVICE_PORT=3001
+   AUTH_SERVICE_HOSTNAME="localhost"
+   AUTH_SERVICE_PORT=3000
+   SESSION_SERVICE_HOSTNAME="localhost"
+   SESSION_SERVICE_PORT=4000
+   ```
 
 2. Run the docker container, by substituting `LOCAL_PORT` with your preferred port:
-    ```bash
-    docker run --env-file -p LOCAL_PORT:80 ./env.list ghcr.io/letsstreamit/frontend-service:main
-    ```
-    If the other services are running in localhost, add the option `--network host` to let the service contact them.
-        
+
+   ```bash
+   docker run --env-file -p LOCAL_PORT:80 ./env.list ghcr.io/letsstreamit/frontend-service:main
+   ```
+
+   If the other services are running in localhost, add the option `--network host` to let the service contact them.
+
 ## Contributing
 
 If you want to contribute to the project, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
