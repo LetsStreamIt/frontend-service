@@ -62,12 +62,9 @@ watch(
   () => videoId.value,
   async () => {
     try {
-      const response = await profileStore.addWatchedVideo(videoId.value)
-      if (response) {
-        console.log('Video added to watched videos')
-      }
+      await profileStore.addWatchedVideo(videoId.value)
     } catch {
-      console.log('Error adding video to watched videos')
+      console.error('Error adding video to watched videos')
     }
   }
 )

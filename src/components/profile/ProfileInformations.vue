@@ -62,7 +62,7 @@ const updateProfile = async () => {
       error.value = ''
     }
   } catch {
-    console.log('An error occurred')
+    console.error('An error occurred')
     updateSuccess.value = false
     error.value = 'An error occurred. Please try again later.'
   }
