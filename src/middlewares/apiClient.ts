@@ -54,4 +54,30 @@ apiClient.interceptors.request.use(
   }
 )
 
+export const refreshClient = axios.create({
+  timeout: 10000,
+  withCredentials: true
+})
+
+refreshClient.interceptors.request.use(
+  async (config) => {
+    const authStore = useAuthStore()
+    const token = authStore.accessToken
+    const refreshToken = authStore.refreshToken
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+
+    if (refreshToken) {
+      config.headers['cookie'] = `refreshToken=${refreshToken}`
+    }
+
+    return config
+  },
+  (error) => {
+    // Handle errors before the request is sent
+    return Promise.reject(error)
+  }
+)
 export default apiClient
