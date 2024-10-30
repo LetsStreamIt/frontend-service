@@ -50,12 +50,17 @@ Through the website the user can:
 ## Usage
 
 In order to run it, specify the following environment variables:
-- `SESSION_SERVICE_HOSTNAME`: Session Service Hostname
-- `SESSION_SERVICE_PORT`: Session Service Port
-- `PROFILE_SERVICE_HOSTNAME`: Profile Service Hostname
-- `PROFILE_SERVICE_PORT`: Profile Service Port
-- `AUTH_SERVICE_HOSTNAME`: Auth Service Hostname
-- `AUTH_SERVICE_PORT`: Auth Service Port
+
+| Variable                   | Description                         
+| -------------------------- | ----------------------------------- 
+| `SESSION_SERVICE_HOSTNAME` | The hostname of the session service
+| `SESSION_SERVICE_PORT`     | The port of the session service
+| `PROFILE_SERVICE_HOSTNAME` | The hostname of the profile service 
+| `PROFILE_SERVICE_PORT`     | The port of the profile service     
+| `AUTH_SERVICE_HOSTNAME`    | The hostname of the auth service   
+| `AUTH_SERVICE_PORT`        | The port of the auth service        
+| `AKKA_LICENSE_KEY`         | The license key for Akka            
+
 
 The frontend service can be deployed through a Docker container:
 
@@ -75,10 +80,13 @@ The frontend service can be deployed through a Docker container:
     ```
     If the other services are running in localhost, add the option `--network host` to let the service contact them.
         
+## Contributing
+
+If you want to contribute to the project, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
 
 ## License
 
-Frontend Service is licensed under [MIT](./LICENSE) license.
+Frontend Service is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 ## Authors
 
