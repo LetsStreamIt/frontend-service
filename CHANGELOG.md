@@ -1,3 +1,17 @@
+## [1.0.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.15...v1.0.0) (2024-10-30)
+
+### ⚠ BREAKING CHANGES
+
+* Release v1.0.0
+
+### Build and continuous integration
+
+* align ci with other services ([a5305fd](https://github.com/LetsStreamIt/frontend-service/commit/a5305fd9a0b90ddbf444991f496a2e1035b6bcb4))
+
+### General maintenance
+
+* remove logs ([3c8202b](https://github.com/LetsStreamIt/frontend-service/commit/3c8202bf3b825359b060fbbe9e7280286780ff9d))
+
 ## [0.13.15](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.14...v0.13.15) (2024-10-30)
 
 ### Documentation
