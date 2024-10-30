@@ -1,3 +1,22 @@
+## [0.13.14](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.13...v0.13.14) (2024-10-30)
+
+### Dependency updates
+
+* **deps:** remove vitest ([0cc609e](https://github.com/LetsStreamIt/frontend-service/commit/0cc609ef7370eb409db53a361267ad937621af85))
+
+### Bug Fixes
+
+* fixed infinite loop in login check ([fa36049](https://github.com/LetsStreamIt/frontend-service/commit/fa36049761ede050e12d940cc5bf2f26bb4bccdd))
+
+### Build and continuous integration
+
+* delete tests on workflow ([e20c5e7](https://github.com/LetsStreamIt/frontend-service/commit/e20c5e758810068d159de6ab1a25954e7619d98b))
+
+### General maintenance
+
+* delete vitest conf and UselessTest ([51ba6df](https://github.com/LetsStreamIt/frontend-service/commit/51ba6dffe01c48776b04377b725e7305eac3eb31))
+* edit husky pre-commit by deleting tests ([57677d2](https://github.com/LetsStreamIt/frontend-service/commit/57677d2ff8c380435b3189ba0ebd9d254f629904))
+
 ## [0.13.13](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.12...v0.13.13) (2024-10-29)
 
 ### Bug Fixes
