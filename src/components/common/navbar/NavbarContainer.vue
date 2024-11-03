@@ -6,7 +6,6 @@ import { onMounted, ref } from 'vue'
 const authStore = useAuthStore()
 
 const isLoggedIn = ref(false)
-
 const router = useRouter()
 
 // Fetch logged-in state asynchronously
@@ -24,26 +23,9 @@ const logout = async () => {
 </script>
 
 <template>
-  <RouterLink to="/" class="navbar-brand">LetsStreamIt</RouterLink>
-
-  <nav class="navbar navbar-dark">
-    <div class="container-fluid">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarToggleExternalContent"
-        aria-controls="navbarToggleExternalContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </nav>
-
-  <div class="collapse navbar-collapse justify-content-end" id="navigationNavbar">
-    <ul class="navbar-nav mr-auto">
+  <div class="navbar navbar-expand-md navbar-dark">
+    <RouterLink to="/" class="navbar-brand align-self-start">LetsStreamIt</RouterLink>
+    <ul class="navbar-nav mr-auto w-100 align-self-start justify-content-end">
       <li class="nav-item active">
         <RouterLink to="/" class="nav-link">Home</RouterLink>
       </li>

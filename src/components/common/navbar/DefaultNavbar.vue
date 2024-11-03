@@ -1,13 +1,15 @@
 <script setup>
-import NavbarContainer from './NavbarContainer.vue'
 import CollapsableNavbar from './CollapsableNavbar.vue'
+import NavbarContainer from './NavbarContainer.vue'
 </script>
 
 <template>
-  <div class="row">
-    <nav class="navbar navbar-expand-md navbar-dark">
+  <div class="row px-2">
+    <div class="d-none d-lg-block">
       <NavbarContainer />
-    </nav>
+    </div>
   </div>
-  <CollapsableNavbar />
+  <div class="d-lg-none">
+    <CollapsableNavbar />
+  </div>
 </template>
