@@ -6,8 +6,13 @@ import { onMounted, ref } from 'vue'
 const authStore = useAuthStore()
 
 const isLoggedIn = ref(false)
+const linkClass = ref('collapse')
 
 const router = useRouter()
+
+function toggleNavbar() {
+  linkClass.value = linkClass.value != 'collapse' ? 'collapse' : ''
+}
 
 // Fetch logged-in state asynchronously
 onMounted(async () => {
@@ -24,33 +29,50 @@ const logout = async () => {
 </script>
 
 <template>
-  <div class="row collapse justify-content-end mx-0" id="navbarToggleExternalContent">
-    <div class="col-5">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item nav-item-collapse px-2 active">
-          <RouterLink to="/" class="nav-link">Home</RouterLink>
+  <nav class="navbar navbar-dark">
+    <RouterLink to="/" class="navbar-brand">LetsStreamIt</RouterLink>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      @click="toggleNavbar"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="navbar-collapse d-flex align-items-end flex-column my-2"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav w-50">
+        <li class="nav-item active nav-item-collapse px-2">
+          <RouterLink to="/" class="nav-link" :class="linkClass">Home</RouterLink>
         </li>
         <li class="nav-item nav-item-collapse px-2">
-          <RouterLink :to="`/profile/${authStore.email || 'not-logged'}`" class="nav-link"
-            >Profile</RouterLink
-          >
+          <RouterLink
+            :to="`/profile/${authStore.email || 'not-logged'}`"
+            class="nav-link"
+            :class="linkClass"
+            >Profile
+          </RouterLink>
         </li>
         <li class="nav-item nav-item-collapse px-2">
-          <RouterLink to="/about" class="nav-link">About</RouterLink>
+          <RouterLink to="/about" class="nav-link" :class="linkClass">About</RouterLink>
         </li>
         <div v-if="!isLoggedIn">
           <li class="nav-item nav-item-collapse px-2">
-            <RouterLink to="/Login" class="nav-link">Login</RouterLink>
+            <RouterLink to="/Login" class="nav-link" :class="linkClass">Login</RouterLink>
           </li>
         </div>
         <div v-else>
           <li class="nav-item nav-item-collapse px-2">
-            <button @click="logout" class="nav-link">Logout</button>
+            <button @click="logout" class="nav-link" :class="linkClass">Logout</button>
           </li>
         </div>
       </ul>
     </div>
-  </div>
+  </nav>
 </template>
 
 <style>
