@@ -1,3 +1,26 @@
+## [1.0.1](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.0...v1.0.1) (2024-11-03)
+
+### Dependency updates
+
+* **deps:** update dependency eslint-plugin-vue to v9.30.0 ([8054e8a](https://github.com/LetsStreamIt/frontend-service/commit/8054e8a996bca1a9db12629d5b51bc0d01ef26b6))
+* **deps:** update dependency pinia to v2.2.5 ([8326829](https://github.com/LetsStreamIt/frontend-service/commit/8326829fac23e24c73d6dc704b315761e83098dd))
+* **deps:** update dependency sass to v1.80.5 ([46e60bd](https://github.com/LetsStreamIt/frontend-service/commit/46e60bd9e67d537fae8f3253791566b04bc41577))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.113 ([8be00cb](https://github.com/LetsStreamIt/frontend-service/commit/8be00cbde3d754cac907948ce3be4e13219d2fb8))
+* **deps:** update dependency typescript-eslint to v8.12.1 ([a11fe04](https://github.com/LetsStreamIt/frontend-service/commit/a11fe04b2db6c2ae1d735350d6546f526a17dc59))
+* **deps:** update dependency typescript-eslint to v8.12.2 ([c33f278](https://github.com/LetsStreamIt/frontend-service/commit/c33f278bd67c1a78a9f2af96ec6c192e8048a991))
+
+### Bug Fixes
+
+* logout not removing refresh token ([2e4a8f4](https://github.com/LetsStreamIt/frontend-service/commit/2e4a8f44764723c47cf6013ffb3e1ff57269e3d6))
+
+### Build and continuous integration
+
+* **deps:** update docker/metadata-action digest to 0de3687 ([e3efc13](https://github.com/LetsStreamIt/frontend-service/commit/e3efc13c991a5316e170da9daeff62b55df0b63f))
+
+### General maintenance
+
+* update readme ([201fd0c](https://github.com/LetsStreamIt/frontend-service/commit/201fd0cfa1b240bf0b7af2e9d144e4ee85bb1c86))
+
 ## [1.0.0](https://github.com/LetsStreamIt/frontend-service/compare/v0.13.15...v1.0.0) (2024-10-30)
 
 ### ⚠ BREAKING CHANGES
