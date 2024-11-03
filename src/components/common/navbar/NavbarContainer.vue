@@ -16,7 +16,7 @@ onMounted(async () => {
 
 const logout = async () => {
   if (confirm('Are you sure you want to logout?')) {
-    authStore.logout()
+    await authStore.logout()
     isLoggedIn.value = await authStore.isLoggedIn()
     router.push('/')
   }
