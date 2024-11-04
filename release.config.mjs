@@ -1,4 +1,4 @@
-import config from 'semantic-release-preconfigured-conventional-commits'
+import config from 'semantic-release-preconfigured-conventional-commits' assert { type: 'json' }
 
 const publishCmd = `
 git tag -a -f v\${nextRelease.version} v\${nextRelease.version} -F CHANGELOG.md  || exit 1
