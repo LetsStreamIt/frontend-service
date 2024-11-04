@@ -1,3 +1,4 @@
+import assert from 'assert'
 import config from 'semantic-release-preconfigured-conventional-commits' assert { type: 'json' }
 
 const publishCmd = `
