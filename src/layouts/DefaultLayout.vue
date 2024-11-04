@@ -11,8 +11,8 @@ export default {
 </script>
 
 <template>
-  <div class="col-md-12 background-container h-100">
-    <div class="cover-container col-md-8 col-12 d-flex h-100 px-3 mx-auto flex-column">
+  <div class="container-fluid background-container">
+    <div class="cover-container col-md-8 col-12 px-3 mx-auto d-flex justify-content-between">
       <DefaultNavbar />
       <router-view />
       <FooterComponent />
@@ -41,12 +41,21 @@ body {
 
 .cover-container {
   background-color: #2f333c;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 .background-container {
-  background-image: url('../assets/film-background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  @media screen and (min-width: 768px) {
+    background-image: url('../assets/film-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  @media screen and (max-width: 768px) {
+    padding: 0;
+  }
+  min-height: 100vh;
 }
 </style>
