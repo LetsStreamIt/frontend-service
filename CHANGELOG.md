@@ -1,3 +1,18 @@
+## [1.0.3](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.2...v1.0.3) (2024-11-04)
+
+### Dependency updates
+
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.114 ([c1e13fa](https://github.com/LetsStreamIt/frontend-service/commit/c1e13fa775a7a723b62a4d2c83f8e42e7cc36e6c))
+
+### Bug Fixes
+
+* background image not correctly rendering ([a565ff6](https://github.com/LetsStreamIt/frontend-service/commit/a565ff6071b76c3b73f9f29d3611e4c14b7e217d))
+
+### Build and continuous integration
+
+* fix release job ([#195](https://github.com/LetsStreamIt/frontend-service/issues/195)) ([4456322](https://github.com/LetsStreamIt/frontend-service/commit/445632267a7ca770530a33e15ef1e9e1a22c7594))
+* update commitlint.config.mjs ([377045f](https://github.com/LetsStreamIt/frontend-service/commit/377045f572470d22f27833af60af9177ee28f446))
+
 ## [1.0.2](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.1...v1.0.2) (2024-11-03)
 
 ### Bug Fixes
