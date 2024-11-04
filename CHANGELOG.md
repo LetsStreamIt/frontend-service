@@ -1,3 +1,9 @@
+## [1.0.4](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.3...v1.0.4) (2024-11-04)
+
+### Bug Fixes
+
+* auth forms not centered ([bac9a6f](https://github.com/LetsStreamIt/frontend-service/commit/bac9a6f17a20784f10c6d5e495676092ff628d51))
+
 ## [1.0.3](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.2...v1.0.3) (2024-11-04)
 
 ### Dependency updates
