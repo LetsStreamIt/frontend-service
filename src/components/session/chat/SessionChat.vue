@@ -8,10 +8,10 @@ import { ref, toRefs, onMounted } from 'vue'
 import { type IChatController } from '@/controllers/session/chatController'
 import TextMessageComponent from './message/TextMessageComponent.vue'
 import NotificationMessageComponent from './message/NotificationMessageComponent.vue'
-import type {
+import {
   ChatMessageType,
-  ChatMessage,
-  MessageContent
+  type ChatMessage,
+  type MessageContent
 } from '@/model/session/message/chatMessage'
 
 const props = defineProps<{
@@ -97,11 +97,11 @@ onMounted(() => {
     >
       <div v-for="(message, index) in chatContent.chatMessages" :key="index">
         <NotificationMessageComponent
-          v-if="message.type === ChatMessageType.NOTIFICATION_MESSAGE"
+          v-if="message.type == ChatMessageType.NOTIFICATION_MESSAGE"
           :message="message"
         />
         <TextMessageComponent
-          v-if="message.type === ChatMessageType.TEXT_MESSAGE"
+          v-if="message.type == ChatMessageType.TEXT_MESSAGE"
           :message="message"
         />
       </div>
