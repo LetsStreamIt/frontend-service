@@ -1,3 +1,9 @@
+## [1.0.5](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.4...v1.0.5) (2024-11-04)
+
+### Bug Fixes
+
+* chat rendering ([a227735](https://github.com/LetsStreamIt/frontend-service/commit/a2277359be016d95f77157c6328fd0d51394fe9c))
+
 ## [1.0.4](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.3...v1.0.4) (2024-11-04)
 
 ### Bug Fixes
