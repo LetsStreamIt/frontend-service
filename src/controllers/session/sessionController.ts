@@ -120,14 +120,10 @@ export class WsSessionController implements ISessionController {
 
   leaveSession(): Promise<LeaveSessionResponse> {
     return new Promise((resolve) => {
-      this.socket.emit(
-        CommandType.LEAVE_SESSION,
-        null,
-        (leaveSessionResponse: LeaveSessionResponse) => {
-          this.disconnect()
-          resolve(leaveSessionResponse)
-        }
-      )
+      this.socket.emit(CommandType.LEAVE_SESSION, (leaveSessionResponse: LeaveSessionResponse) => {
+        this.disconnect()
+        resolve(leaveSessionResponse)
+      })
     })
   }
 
