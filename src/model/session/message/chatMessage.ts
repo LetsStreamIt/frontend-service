@@ -26,53 +26,34 @@ export type MessageContent = JoinNotification | string
  * Chat Message model
  */
 export interface ChatMessage<X extends MessageContent> {
+  readonly type: ChatMessageType
   readonly content: X
   readonly sender: User
-
-  get getContent(): X
-
-  get getSender(): User
 }
 
 /**
  * Notification Chat Message
  */
 export class NotificationMessage implements ChatMessage<JoinNotification> {
-  content: JoinNotification
-  sender: User
-  type: ChatMessageType
+  readonly content: JoinNotification
+  readonly sender: User
+  readonly type: ChatMessageType
 
   constructor(sender: User, notification: JoinNotification) {
     this.content = notification
     this.sender = sender
     this.type = ChatMessageType.NOTIFICATION_MESSAGE
   }
-
-  get getContent(): JoinNotification {
-    return this.content
-  }
-
-  get getSender(): User {
-    return this.sender
-  }
 }
 
 export class TextMessage implements ChatMessage<string> {
-  content: string
-  sender: User
-  type: ChatMessageType
+  readonly content: string
+  readonly sender: User
+  readonly type: ChatMessageType
 
   constructor(sender: User, text: string) {
     this.content = text
     this.sender = sender
     this.type = ChatMessageType.TEXT_MESSAGE
-  }
-
-  get getContent(): string {
-    return this.content
-  }
-
-  get getSender(): User {
-    return this.sender
   }
 }

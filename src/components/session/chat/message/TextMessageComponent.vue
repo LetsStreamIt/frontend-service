@@ -23,14 +23,12 @@ const props = defineProps({
 const { message } = toRefs(props)
 
 const contentAlignment: string =
-  authStore.email === message.value.getSender.getId.getEmail
+  authStore.email === message.value.sender.id.email
     ? ' justify-content-end'
     : ' justify-content-start'
 
 const messageUsernameText: string =
-  authStore.email === message.value.getSender.getId.getEmail
-    ? 'Me'
-    : message.value.getSender.getUsername
+  authStore.email === message.value.sender.id.email ? 'Me' : message.value.sender.username
 </script>
 
 <template>
@@ -38,7 +36,7 @@ const messageUsernameText: string =
     <div class="p-2" style="border-radius: 15px; background-color: rgba(57, 192, 237, 0.2)">
       <p class="small mb-0">
         {{ messageUsernameText }}:
-        {{ message.getContent }}
+        {{ message.content }}
       </p>
     </div>
   </div>
