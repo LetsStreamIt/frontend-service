@@ -13,7 +13,7 @@ import {
   WsSessionController
 } from '@/controllers/session/sessionController'
 import { useRoute } from 'vue-router'
-import { JoinSessionResponseType, JoinSessionResponse } from '@/model/session/command/response'
+import { JoinSessionResponseStatus, JoinSessionResponse } from '@/model/session/command/response'
 import { connectToSession, connectionErrors } from '@/composables/session/connection'
 import { useAuthStore } from '@/stores/auth'
 
@@ -67,16 +67,16 @@ function joinSession() {
     sessionController
       .joinSession(route.params.sessionName as string)
       .then((joinSessionResponse: JoinSessionResponse) => {
-        if (joinSessionResponse.content.responseType === JoinSessionResponseType.SUCCESS) {
+        if (joinSessionResponse.content.status === JoinSessionResponseStatus.SUCCESS) {
           videoId.value = joinSessionResponse.content.videoId
           connected.value = true
         } else {
           connected.value = false
-          switch (joinSessionResponse.content.responseType) {
-            case JoinSessionResponseType.SESSION_NOT_FOUND:
+          switch (joinSessionResponse.content.status) {
+            case JoinSessionResponseStatus.SESSION_NOT_FOUND:
               connectionStatus.value = ConnectionStatus.SESSION_NOT_FOUND
               break
-            case JoinSessionResponseType.USER_ALREADY_JOINED:
+            case JoinSessionResponseStatus.USER_ALREADY_JOINED:
               connectionStatus.value = ConnectionStatus.USER_ALREADY_JOINED
               break
             default:
@@ -96,16 +96,13 @@ onUnmounted(() => {
   <div v-if="connected" class="row align-items-stretch h-100 mx-0 px-0 pb-5">
     <div class="col-md-8 col-12 my-5">
       <SessionFrame
-        :videoController="sessionController.getVideoController"
+        :videoController="sessionController.videoController"
         :videoId="videoId"
         @frameMounted="frameMounted"
       />
     </div>
     <div class="col-md-4 col-12 d-flex align-items-end my-5">
-      <SessionChat
-        :chatController="sessionController.getChatController"
-        @chatMounted="chatMounted"
-      />
+      <SessionChat :chatController="sessionController.chatController" @chatMounted="chatMounted" />
     </div>
   </div>
   <div v-else class="d-flex justify-content-center align-items-center h-100 py-5">

@@ -31,7 +31,7 @@ const messageClass = ref<string>(
 <template>
   <div style="border-radius: 15px" :class="messageClass">
     <p class="p-2 w-100 small mb-0 fst-italic">
-      <span class="fw-bolder"> {{ message.getSender.value }} </span> {{ messageBody }}
+      <span class="fw-bolder"> {{ message.sender.username }} </span> {{ messageBody }}
     </p>
   </div>
 </template>

@@ -23,15 +23,15 @@ export class Pair<X, Y> {
  * Entity
  */
 export class Entity<X, Y> {
-  protected readonly id: X
-  protected readonly value: Y
+  protected readonly entityId: X
+  protected readonly entityValue: Y
 
   constructor(id: X, value: Y) {
-    this.id = id
-    this.value = value
+    this.entityId = id
+    this.entityValue = value
   }
 
-  get getId(): X {
-    return this.id
+  get id(): X {
+    return this.entityId
   }
 }

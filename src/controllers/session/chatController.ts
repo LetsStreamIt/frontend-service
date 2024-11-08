@@ -61,15 +61,22 @@ export class WSChatController implements IChatController {
     // Separately handle Text and Notification Messages.
     this.socket.on(ChatMessageType.TEXT_MESSAGE, (chatMessages) => {
       chatMessages.forEach((message) => {
-        const sender: User = new User(new UserId(message.sender.id.email), message.sender.value)
+        const sender: User = new User(
+          new UserId(message.sender.entityId.userEmail),
+          message.sender.entityValue
+        )
         const textMessage: TextMessage = new TextMessage(sender, message.content)
         chatMessageReceivedCallback(textMessage)
       })
     })
 
     this.socket.on(ChatMessageType.NOTIFICATION_MESSAGE, (message) => {
+      const sender: User = new User(
+        new UserId(message.sender.entityId.userEmail),
+        message.sender.entityValue
+      )
       const notificationMessage: NotificationMessage = new NotificationMessage(
-        message.sender,
+        sender,
         message.content
       )
       chatMessageReceivedCallback(notificationMessage)

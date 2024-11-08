@@ -27,6 +27,9 @@ export enum ConnectionStatus {
  * Manages communication with the Session Service.
  */
 export interface ISessionController {
+  readonly chatController: IChatController
+  readonly videoController: IVideoController
+
   /**
    * Connects to the Session Service.
    * @returns User Token Response
@@ -57,9 +60,6 @@ export interface ISessionController {
    * @returns Leave Session Reponse
    */
   leaveSession(): Promise<LeaveSessionResponse>
-
-  get getChatController(): IChatController
-  get getVideoController(): IVideoController
 }
 
 /**
@@ -67,10 +67,10 @@ export interface ISessionController {
  * It leverages a websocket to handle communcation.
  */
 export class WsSessionController implements ISessionController {
-  socket: Socket
-  token: string
-  chatController: IChatController
-  videoController: IVideoController
+  readonly socket: Socket
+  readonly token: string
+  readonly chatController: IChatController
+  readonly videoController: IVideoController
 
   constructor(sessionServiceUrl: string, token: string) {
     this.socket = io({ path: sessionServiceUrl })
@@ -155,13 +155,5 @@ export class WsSessionController implements ISessionController {
     window.addEventListener('beforeunload', () => {
       this.leaveSession()
     })
-  }
-
-  get getChatController(): IChatController {
-    return this.chatController
-  }
-
-  get getVideoController(): IVideoController {
-    return this.videoController
   }
 }
