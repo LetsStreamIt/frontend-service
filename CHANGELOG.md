@@ -1,3 +1,26 @@
+## [1.0.6](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.5...v1.0.6) (2024-11-09)
+
+### Dependency updates
+
+* **deps:** update dependency @eslint/js to v9.14.0 ([d80a691](https://github.com/LetsStreamIt/frontend-service/commit/d80a691487428e5e40fac3e3130137a88ac4702f))
+* **deps:** update dependency globals to v15.12.0 ([#204](https://github.com/LetsStreamIt/frontend-service/issues/204)) ([22672b6](https://github.com/LetsStreamIt/frontend-service/commit/22672b697020e3bf8dab6cf80a623c9645345972))
+* **deps:** update dependency pinia to v2.2.6 ([b1bd0ee](https://github.com/LetsStreamIt/frontend-service/commit/b1bd0eec3b1aef61c94769c5d50f0d02c7aef7aa))
+* **deps:** update dependency sass to v1.80.6 ([0c05a39](https://github.com/LetsStreamIt/frontend-service/commit/0c05a393fd4c604fe78f8d08dfecdbaa942c4cdd))
+* **deps:** update dependency typescript-eslint to v8.13.0 ([#205](https://github.com/LetsStreamIt/frontend-service/issues/205)) ([504035b](https://github.com/LetsStreamIt/frontend-service/commit/504035b9bc802f60dbeeae3397799ae513d0f89d))
+
+### Bug Fixes
+
+* youtube thumbnail ([7a5d76b](https://github.com/LetsStreamIt/frontend-service/commit/7a5d76b9db52cbaa477b593c461f11ac97bd9321))
+
+### Build and continuous integration
+
+* **deps:** update docker/login-action digest to 7ca3450 ([fb7d258](https://github.com/LetsStreamIt/frontend-service/commit/fb7d25844554fefc3649e9323655412b81996df4))
+
+### General maintenance
+
+* align model with session's ([c918204](https://github.com/LetsStreamIt/frontend-service/commit/c91820496ac97bc71bf5dba88951ea1b27278aac))
+* remove body in leave session ([bbc5b13](https://github.com/LetsStreamIt/frontend-service/commit/bbc5b13e003228b372b494f61f93834e05c4904a))
+
 ## [1.0.5](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.4...v1.0.5) (2024-11-04)
 
 ### Bug Fixes
