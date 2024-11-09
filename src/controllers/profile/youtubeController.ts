@@ -18,7 +18,12 @@ export const getVideoInfo = async (videoId: string): Promise<VideoProfile | null
     const { title, thumbnails } = videoDetails.snippet
     let { duration } = videoDetails.contentDetails
     duration = duration.replace('PT', '').replace('H', 'h').replace('M', 'm').replace('S', 's')
-    const thumbnail = thumbnails['maxres'].url
+    let thumbnail = 'https://placehold.co/400'
+    if (thumbnails['maxres']) {
+      thumbnail = thumbnails['maxres'].url
+    } else if (thumbnails['default']) {
+      thumbnail = thumbnails['default'].url
+    }
     return { id: videoId, title, thumbnail, duration, viewCount, likeCount }
   } catch (error) {
     console.error(error)
