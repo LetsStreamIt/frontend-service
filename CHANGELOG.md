@@ -1,3 +1,9 @@
+## [1.0.7](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.6...v1.0.7) (2024-11-10)
+
+### Bug Fixes
+
+* create session after invalid url ([d2dbf74](https://github.com/LetsStreamIt/frontend-service/commit/d2dbf7445bba8de1bd616073b5d7e463b2c5dfec))
+
 ## [1.0.6](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.5...v1.0.6) (2024-11-09)
 
 ### Dependency updates
