@@ -37,6 +37,7 @@ const sessionController = ref<ISessionController>(
 // Handle connection and errors from he Session Service
 const { connectionStatus, connectionErrorMessage } = connectionErrors()
 const { connected } = connectToSession(sessionController.value, connectionStatus)
+const displayError = ref<boolean>(false)
 
 /**
  * Close Popup function.
@@ -67,11 +68,11 @@ function createSession() {
       .createSession(videoUrl.value)
       .then((createSessionResponse: CreateSessionResponse) => {
         if (createSessionResponse.content.status === ResponseStatus.SUCCESS) {
-          connected.value = true
+          displayError.value = false
           router.push(`/session/${createSessionResponse.content.sessionName}`)
           closePopup()
         } else {
-          connected.value = false
+          displayError.value = true
           connectionStatus.value = ConnectionStatus.INVALID_VIDEO_ID
         }
       })
@@ -120,7 +121,7 @@ onMounted(() => {
               </button>
             </div>
           </form>
-          <div v-if="!connected" class="text-danger">
+          <div v-if="displayError" class="text-danger">
             {{ connectionErrorMessage }}
           </div>
         </div>
