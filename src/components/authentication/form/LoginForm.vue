@@ -1,5 +1,5 @@
 <template>
-  <div class="form-signin my-auto row text-center justify-content-center p-3">
+  <div class="form-signin my-auto row text-center justify-content-center mx-3">
     <div class="col-lg-4 col-md-6">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <form @submit.prevent="submitForm" novalidate>
