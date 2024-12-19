@@ -93,19 +93,40 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="connected" class="row align-items-stretch h-100 mx-0 px-0 pb-5">
-    <div class="col-md-8 col-12 my-5">
-      <SessionFrame
-        :videoController="sessionController.videoController"
-        :videoId="videoId"
-        @frameMounted="frameMounted"
-      />
+  <div v-if="connected" class="my-pr-0 row h-80 pb-5">
+    <div class="my-pr-0 col-md-8 col-12 d-flex flex-column flex-md-row">
+      <div class="flex-fill">
+        <SessionFrame
+          :videoController="sessionController.videoController"
+          :videoId="videoId"
+          @frameMounted="frameMounted"
+        />
+      </div>
     </div>
-    <div class="col-md-4 col-12 d-flex align-items-end my-5">
-      <SessionChat :chatController="sessionController.chatController" @chatMounted="chatMounted" />
+    <div class="my-pr-0 col-md-4 col-12 d-flex flex-column flex-md-row">
+      <div class="flex-fill chat-container mt-auto">
+        <SessionChat
+          :chatController="sessionController.chatController"
+          @chatMounted="chatMounted"
+        />
+      </div>
     </div>
   </div>
   <div v-else class="d-flex justify-content-center align-items-center h-100 py-5">
     <p>{{ connectionErrorMessage }}</p>
   </div>
 </template>
+
+<style lang="scss" scoped>
+@media (max-width: 767.98px) {
+  .flex-fill {
+    height: 40vh;
+  }
+  .chat-container {
+    margin-top: 10px !important;
+  }
+}
+.my-pr-0 {
+  padding-right: 0px;
+}
+</style>
