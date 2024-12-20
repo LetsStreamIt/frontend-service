@@ -5,11 +5,11 @@
 
       <div class="row my-5 justify-content-center">
         <div class="col-md-2 col-2">
-          <img src="../assets/luca_fabri.jpg" class="img-fluid" />
+          <img alt="Luca Fabri picture" src="../assets/luca_fabri.jpg" class="img-fluid" />
           <p class="mt-2 text-center">Luca Fabri</p>
         </div>
         <div class="col-md-2 col-2">
-          <img src="../assets/simone_ceredi.jpg" class="img-fluid" />
+          <img alt="Simone Ceredi picture" src="../assets/simone_ceredi.jpg" class="img-fluid" />
           <p class="mt-2 text-center">Simone Ceredi</p>
         </div>
         <div class="col-md-10 col-10">
@@ -23,7 +23,7 @@
 
             For any issues or information about the website, please feel free to contact us at our
             university emails
-            <a href="mailto:luca.fabri@studio.unibo.it">luca.fabri1999@gmail.com</a>,
+            <a href="mailto:luca.fabri@studio.unibo.it">luca.fabri@studio.unibo.it</a>,
             <a href="mailto:simone.ceredi@studio.unibo.it">simone.ceredi@studio.unibo.it</a> or open
             a Pull Request.
           </p>
