@@ -5,9 +5,9 @@ import { RouterLink } from 'vue-router'
 <template>
   <footer class="text-secondary row text-center justify-content-center p-3">
     <div class="inner">
-      <p>
+      <p class="text-white">
         Developed by LetsStreamIt team. Code licensed under the
-        <RouterLink to="/license">MIT License. </RouterLink>
+        <RouterLink class="link-light" to="/license">MIT License. </RouterLink>
       </p>
     </div>
   </footer>
