@@ -29,6 +29,8 @@ function showPopup() {
 </script>
 
 <template>
+  <meta name="description" content="This is the Home page of LetsStreamIt platform" />
+
   <div v-if="!popupHidden">
     <CreateSessionPopup @closePopup="closePopup"></CreateSessionPopup>
   </div>
@@ -43,9 +45,14 @@ function showPopup() {
       </p>
       <div class="container-fluid">
         <div class="row">
-          <a class="btn btn-lg fw-bolder btn-secondary" style="width: 100%" @click="showPopup"
-            >Create a Streaming Session</a
+          <button
+            type="button"
+            class="btn btn-lg fw-bolder btn-secondary"
+            style="width: 100%"
+            @click="showPopup"
           >
+            Create a Streaming Session
+          </button>
         </div>
       </div>
       <p class="lead"></p>
