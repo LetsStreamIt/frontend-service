@@ -60,16 +60,12 @@ const logout = async () => {
         <li class="nav-item nav-item-collapse px-2">
           <RouterLink to="/about" class="nav-link" :class="linkClass">About</RouterLink>
         </li>
-        <div v-if="!isLoggedIn">
-          <li class="nav-item nav-item-collapse px-2">
-            <RouterLink to="/Login" class="nav-link" :class="linkClass">Login</RouterLink>
-          </li>
-        </div>
-        <div v-else>
-          <li class="nav-item nav-item-collapse px-2">
-            <button @click="logout" class="nav-link" :class="linkClass">Logout</button>
-          </li>
-        </div>
+        <li v-if="!isLoggedIn" class="nav-item nav-item-collapse px-2">
+          <RouterLink to="/Login" class="nav-link" :class="linkClass">Login</RouterLink>
+        </li>
+        <li v-else class="nav-item nav-item-collapse px-2">
+          <button @click="logout" class="nav-link" :class="linkClass">Logout</button>
+        </li>
       </ul>
     </div>
   </nav>
