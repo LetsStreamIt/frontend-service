@@ -1,3 +1,81 @@
+## [1.0.8](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.7...v1.0.8) (2024-12-22)
+
+### Dependency updates
+
+* **deps:** update commitlint monorepo to v19.6.0 ([#226](https://github.com/LetsStreamIt/frontend-service/issues/226)) ([71d75e5](https://github.com/LetsStreamIt/frontend-service/commit/71d75e521ddf653cbd58ce89b4b9be8b6dc085d3))
+* **deps:** update dependency @commitlint/cli to v19.6.1 ([#259](https://github.com/LetsStreamIt/frontend-service/issues/259)) ([59ea614](https://github.com/LetsStreamIt/frontend-service/commit/59ea6147d2c564eb57d3a85bc15f02c5fef9ada2))
+* **deps:** update dependency @eslint/js to v9.15.0 ([#222](https://github.com/LetsStreamIt/frontend-service/issues/222)) ([67c5ddf](https://github.com/LetsStreamIt/frontend-service/commit/67c5ddfd06f8975a750febab84bbc2277c0937ca))
+* **deps:** update dependency @eslint/js to v9.16.0 ([#240](https://github.com/LetsStreamIt/frontend-service/issues/240)) ([1e1d480](https://github.com/LetsStreamIt/frontend-service/commit/1e1d480c18cb1ab547d7cb6e11798cd00a7f89a2))
+* **deps:** update dependency @eslint/js to v9.17.0 ([#257](https://github.com/LetsStreamIt/frontend-service/issues/257)) ([4890b50](https://github.com/LetsStreamIt/frontend-service/commit/4890b50c6c8f6789c66df0f38559f287c3e50d27))
+* **deps:** update dependency @vitejs/plugin-vue to v5.1.5 ([#212](https://github.com/LetsStreamIt/frontend-service/issues/212)) ([02ff793](https://github.com/LetsStreamIt/frontend-service/commit/02ff79339f4361a9e501d914562de86279ee908c))
+* **deps:** update dependency @vitejs/plugin-vue to v5.2.0 ([#218](https://github.com/LetsStreamIt/frontend-service/issues/218)) ([af0aa94](https://github.com/LetsStreamIt/frontend-service/commit/af0aa94b4e5b280dde4f00ee3171950277dedead))
+* **deps:** update dependency @vitejs/plugin-vue to v5.2.1 ([#236](https://github.com/LetsStreamIt/frontend-service/issues/236)) ([fc8dd8a](https://github.com/LetsStreamIt/frontend-service/commit/fc8dd8a2649f4b43d6318b22834175fab283ac3a))
+* **deps:** update dependency axios to v1.7.8 ([#233](https://github.com/LetsStreamIt/frontend-service/issues/233)) ([cd6f459](https://github.com/LetsStreamIt/frontend-service/commit/cd6f459439339c3bb863e556f12ab8191229e8e5))
+* **deps:** update dependency axios to v1.7.9 ([#249](https://github.com/LetsStreamIt/frontend-service/issues/249)) ([c9281a6](https://github.com/LetsStreamIt/frontend-service/commit/c9281a6e3b313ee62905ae5361f5733689d6b7dc))
+* **deps:** update dependency eslint-plugin-vue to v9.31.0 ([#216](https://github.com/LetsStreamIt/frontend-service/issues/216)) ([2e06b8d](https://github.com/LetsStreamIt/frontend-service/commit/2e06b8dd70432f4b367cb0bb53adfeff0c3f969c))
+* **deps:** update dependency eslint-plugin-vue to v9.32.0 ([#241](https://github.com/LetsStreamIt/frontend-service/issues/241)) ([7ea253d](https://github.com/LetsStreamIt/frontend-service/commit/7ea253df8cec54594331c3e0b771d48bccfdba36))
+* **deps:** update dependency globals to v15.13.0 ([#243](https://github.com/LetsStreamIt/frontend-service/issues/243)) ([cfc97bb](https://github.com/LetsStreamIt/frontend-service/commit/cfc97bb0fa7ad4dd29868e8ab1daaf308df00b6e))
+* **deps:** update dependency globals to v15.14.0 ([#264](https://github.com/LetsStreamIt/frontend-service/issues/264)) ([762d88d](https://github.com/LetsStreamIt/frontend-service/commit/762d88d7f918ff0276378dbe1053b5814017449e))
+* **deps:** update dependency husky to v9.1.7 ([#224](https://github.com/LetsStreamIt/frontend-service/issues/224)) ([17efde0](https://github.com/LetsStreamIt/frontend-service/commit/17efde05d4e3e78cc17266daf61f434b609927ae))
+* **deps:** update dependency pinia to v2.2.7 ([#238](https://github.com/LetsStreamIt/frontend-service/issues/238)) ([e0d706a](https://github.com/LetsStreamIt/frontend-service/commit/e0d706a59a325fe9d6987aa847fb617c7cf4d5d6))
+* **deps:** update dependency pinia to v2.2.8 ([#239](https://github.com/LetsStreamIt/frontend-service/issues/239)) ([b10a4be](https://github.com/LetsStreamIt/frontend-service/commit/b10a4be1a9bc52f78416f3f070cd2aaf8e900f0b))
+* **deps:** update dependency pinia to v2.3.0 ([#251](https://github.com/LetsStreamIt/frontend-service/issues/251)) ([7c09395](https://github.com/LetsStreamIt/frontend-service/commit/7c09395ee8d1ddca62d29d7486e4753e8adf45d7))
+* **deps:** update dependency prettier to v3.4.0 ([#234](https://github.com/LetsStreamIt/frontend-service/issues/234)) ([757700c](https://github.com/LetsStreamIt/frontend-service/commit/757700c66e0295ab58188d69e9789b15bcaedb6a))
+* **deps:** update dependency prettier to v3.4.1 ([#237](https://github.com/LetsStreamIt/frontend-service/issues/237)) ([89721a4](https://github.com/LetsStreamIt/frontend-service/commit/89721a4ac36b21ff5f29b6f3515b8f642bcc7675))
+* **deps:** update dependency prettier to v3.4.2 ([#250](https://github.com/LetsStreamIt/frontend-service/issues/250)) ([56c1f60](https://github.com/LetsStreamIt/frontend-service/commit/56c1f60a1c887c4428dc8d62a6d28562742538d9))
+* **deps:** update dependency sass to v1.80.7 ([#217](https://github.com/LetsStreamIt/frontend-service/issues/217)) ([4fbcbea](https://github.com/LetsStreamIt/frontend-service/commit/4fbcbeaebd22bffbf13ef6f7d66baf4a6ceb7b48))
+* **deps:** update dependency sass to v1.81.0 ([#219](https://github.com/LetsStreamIt/frontend-service/issues/219)) ([1ae33d8](https://github.com/LetsStreamIt/frontend-service/commit/1ae33d8d9d980635f0483754e8753a967b9ca760))
+* **deps:** update dependency sass to v1.81.1 ([#247](https://github.com/LetsStreamIt/frontend-service/issues/247)) ([0252bf7](https://github.com/LetsStreamIt/frontend-service/commit/0252bf70fa18d62f98a5fd501fe99e6910bf2fd6))
+* **deps:** update dependency sass to v1.82.0 ([#248](https://github.com/LetsStreamIt/frontend-service/issues/248)) ([a17383e](https://github.com/LetsStreamIt/frontend-service/commit/a17383e3604096e1eeb405b48fef61046ce07833))
+* **deps:** update dependency sass to v1.83.0 ([#256](https://github.com/LetsStreamIt/frontend-service/issues/256)) ([6a4eb2b](https://github.com/LetsStreamIt/frontend-service/commit/6a4eb2b057cd115837c0744b297aff3734cf8ebd))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.115 ([#210](https://github.com/LetsStreamIt/frontend-service/issues/210)) ([f530bf4](https://github.com/LetsStreamIt/frontend-service/commit/f530bf4a0ded1370c4640e492dd19aea0e983fe0))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.116 ([#252](https://github.com/LetsStreamIt/frontend-service/issues/252)) ([9120445](https://github.com/LetsStreamIt/frontend-service/commit/91204451c25b1723e4cdb2ee441be83bb5bd5a31))
+* **deps:** update dependency typescript to v5.7.2 ([#229](https://github.com/LetsStreamIt/frontend-service/issues/229)) ([bc3aec5](https://github.com/LetsStreamIt/frontend-service/commit/bc3aec5e90c4deefd7a0f40baf7acfa8d3d9e2bd))
+* **deps:** update dependency typescript-eslint to v8.14.0 ([#215](https://github.com/LetsStreamIt/frontend-service/issues/215)) ([705ac16](https://github.com/LetsStreamIt/frontend-service/commit/705ac16507f16e8f35a7477f2eab201e86a3b1ab))
+* **deps:** update dependency typescript-eslint to v8.15.0 ([#225](https://github.com/LetsStreamIt/frontend-service/issues/225)) ([53e9e3c](https://github.com/LetsStreamIt/frontend-service/commit/53e9e3c69c43d6735511b60aa41427e9881cef05))
+* **deps:** update dependency typescript-eslint to v8.16.0 ([#232](https://github.com/LetsStreamIt/frontend-service/issues/232)) ([9a7fa97](https://github.com/LetsStreamIt/frontend-service/commit/9a7fa97a105b92653191549da1f600af6b29c90d))
+* **deps:** update dependency typescript-eslint to v8.17.0 ([#246](https://github.com/LetsStreamIt/frontend-service/issues/246)) ([11fc50e](https://github.com/LetsStreamIt/frontend-service/commit/11fc50e50dc12b776a4f07e7791b2a125c46acf1))
+* **deps:** update dependency typescript-eslint to v8.18.0 ([#254](https://github.com/LetsStreamIt/frontend-service/issues/254)) ([b9f3814](https://github.com/LetsStreamIt/frontend-service/commit/b9f3814d64d157b4b4a9f94ace7f813de76970e7))
+* **deps:** update dependency typescript-eslint to v8.18.1 ([#261](https://github.com/LetsStreamIt/frontend-service/issues/261)) ([5238b39](https://github.com/LetsStreamIt/frontend-service/commit/5238b3905a6ac8b95f8d00f1f38623e4e1fcd796))
+* **deps:** update dependency vite to v5.4.11 ([#214](https://github.com/LetsStreamIt/frontend-service/issues/214)) ([9219876](https://github.com/LetsStreamIt/frontend-service/commit/921987653b20c309749590ee075341b487462ea4))
+* **deps:** update dependency vite to v6 ([#235](https://github.com/LetsStreamIt/frontend-service/issues/235)) ([776ae28](https://github.com/LetsStreamIt/frontend-service/commit/776ae28ab4f224f3b51269d1b674dc11768e5834))
+* **deps:** update dependency vite to v6.0.2 ([#244](https://github.com/LetsStreamIt/frontend-service/issues/244)) ([33ac2b3](https://github.com/LetsStreamIt/frontend-service/commit/33ac2b3e89eadc72143f23a47e4d284ca2a627b5))
+* **deps:** update dependency vite to v6.0.3 ([#253](https://github.com/LetsStreamIt/frontend-service/issues/253)) ([e2d1415](https://github.com/LetsStreamIt/frontend-service/commit/e2d141533a7d1089eff2b7adb8a1889422657c65))
+* **deps:** update dependency vite to v6.0.4 ([#265](https://github.com/LetsStreamIt/frontend-service/issues/265)) ([80f1ab6](https://github.com/LetsStreamIt/frontend-service/commit/80f1ab6c5189f49cc1575159c33733a192053cdb))
+* **deps:** update dependency vue to v3.5.13 ([#221](https://github.com/LetsStreamIt/frontend-service/issues/221)) ([9bc6aff](https://github.com/LetsStreamIt/frontend-service/commit/9bc6aff1fe6cfdc5d1d3850e842f7ac662d0cdb5))
+* **deps:** update dependency vue-router to v4.5.0 ([#231](https://github.com/LetsStreamIt/frontend-service/issues/231)) ([e206e8f](https://github.com/LetsStreamIt/frontend-service/commit/e206e8f4742c0886863b8b21acd79fb2c57dfbe4))
+
+### Bug Fixes
+
+* login page overflow ([8a2c243](https://github.com/LetsStreamIt/frontend-service/commit/8a2c243431514b6bdf73ca2f7964cf43dda25090))
+* registration page overflow ([0f19e8a](https://github.com/LetsStreamIt/frontend-service/commit/0f19e8a274ba32ee9aa56921402545c6c69fa89f))
+
+### Build and continuous integration
+
+* **deps:** update docker/build-push-action digest to 0259cb0 ([#228](https://github.com/LetsStreamIt/frontend-service/issues/228)) ([0065b1f](https://github.com/LetsStreamIt/frontend-service/commit/0065b1f794e15792bdafceec7d8657cef0312519))
+* **deps:** update docker/build-push-action digest to 11be14d ([#245](https://github.com/LetsStreamIt/frontend-service/issues/245)) ([6588e56](https://github.com/LetsStreamIt/frontend-service/commit/6588e5637eeb88735d6127b45ea0713951b93837))
+* **deps:** update docker/build-push-action digest to 48aba3b ([#230](https://github.com/LetsStreamIt/frontend-service/issues/230)) ([9a0bacb](https://github.com/LetsStreamIt/frontend-service/commit/9a0bacbc2f4b592a774fcfafaf114823dd383bfb))
+* **deps:** update docker/build-push-action digest to 7e09459 ([#258](https://github.com/LetsStreamIt/frontend-service/issues/258)) ([46acbe9](https://github.com/LetsStreamIt/frontend-service/commit/46acbe9a24fb6be1bf94f26db5cc84b78d71c807))
+* **deps:** update docker/build-push-action digest to 8796455 ([#242](https://github.com/LetsStreamIt/frontend-service/issues/242)) ([b3a02d6](https://github.com/LetsStreamIt/frontend-service/commit/b3a02d68d09d4d06c38396fb975134a7eed3ba9f))
+* **deps:** update docker/metadata-action digest to 1156622 ([#220](https://github.com/LetsStreamIt/frontend-service/issues/220)) ([9ccf400](https://github.com/LetsStreamIt/frontend-service/commit/9ccf4004463a8a12e3e8b9445920d7ff2c3b546f))
+* **deps:** update docker/metadata-action digest to 32323e5 ([#211](https://github.com/LetsStreamIt/frontend-service/issues/211)) ([9b28932](https://github.com/LetsStreamIt/frontend-service/commit/9b28932da095c786f02b6f690f8dc5bd2f7577fd))
+* **deps:** update docker/metadata-action digest to 369eb59 ([#223](https://github.com/LetsStreamIt/frontend-service/issues/223)) ([46996ec](https://github.com/LetsStreamIt/frontend-service/commit/46996ec817518142e3381c13401d145165dfe6df))
+* **deps:** update docker/metadata-action digest to 44d81d6 ([#213](https://github.com/LetsStreamIt/frontend-service/issues/213)) ([ffeab60](https://github.com/LetsStreamIt/frontend-service/commit/ffeab60eaece8557e80ba89fdc8353f8a0af82cb))
+* **deps:** update docker/metadata-action digest to 906ecf0 ([#255](https://github.com/LetsStreamIt/frontend-service/issues/255)) ([cbea15d](https://github.com/LetsStreamIt/frontend-service/commit/cbea15d3337db7a716b09cf5db7370686c8403f9))
+* **deps:** update docker/metadata-action digest to b53be03 ([#227](https://github.com/LetsStreamIt/frontend-service/issues/227)) ([d8ebaf9](https://github.com/LetsStreamIt/frontend-service/commit/d8ebaf95b8a90dbfb2cc3d31ce2d8ef24f33d5bc))
+* **deps:** update docker/metadata-action digest to bd26c98 ([#209](https://github.com/LetsStreamIt/frontend-service/issues/209)) ([2a85283](https://github.com/LetsStreamIt/frontend-service/commit/2a85283cb074c5e8d6391589164cfe2e8fb6cf20))
+
+### General maintenance
+
+* add alt to about img, change email ([8ef2f18](https://github.com/LetsStreamIt/frontend-service/commit/8ef2f187172e5b51bd248eba0f364c8ddfa450e3))
+* add robots txt ([2736206](https://github.com/LetsStreamIt/frontend-service/commit/2736206b1e485bb1d30c3250561ff5403978a4a5))
+* change create session div to button ([3a5f9ad](https://github.com/LetsStreamIt/frontend-service/commit/3a5f9ad1fb4a17946e897c7b5f5f50596a1704fc))
+* navbar to standard ul-li format ([b4d70ad](https://github.com/LetsStreamIt/frontend-service/commit/b4d70add2531130f4b8b24bbb333b9ad115d285a))
+
+### Style improvements
+
+* edit footer text color ([77129f7](https://github.com/LetsStreamIt/frontend-service/commit/77129f7f1924877b40f7e2711b4cae929803678a))
+
 ## [1.0.7](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.6...v1.0.7) (2024-11-10)
 
 ### Bug Fixes
