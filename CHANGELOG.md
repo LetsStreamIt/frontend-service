@@ -1,3 +1,16 @@
+## [1.0.9](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.8...v1.0.9) (2024-12-29)
+
+### Dependency updates
+
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.117 ([#266](https://github.com/LetsStreamIt/frontend-service/issues/266)) ([18193d2](https://github.com/LetsStreamIt/frontend-service/commit/18193d2c5cb1bbffeb14d11ceca10f529d79e773))
+* **deps:** update dependency typescript-eslint to v8.18.2 ([#268](https://github.com/LetsStreamIt/frontend-service/issues/268)) ([898fece](https://github.com/LetsStreamIt/frontend-service/commit/898fece31d06abc5d4ff31a4a8c2319750d7ceb9))
+* **deps:** update dependency vite to v6.0.5 ([#267](https://github.com/LetsStreamIt/frontend-service/issues/267)) ([0274c47](https://github.com/LetsStreamIt/frontend-service/commit/0274c476003e730db71bd845098c9b0c3c23542f))
+* **deps:** update dependency vite to v6.0.6 ([#269](https://github.com/LetsStreamIt/frontend-service/issues/269)) ([3e20645](https://github.com/LetsStreamIt/frontend-service/commit/3e206457d122a9a6c9177732028ab8ec48860162))
+
+### Bug Fixes
+
+* trigger release for chat restyling ([0e35ad9](https://github.com/LetsStreamIt/frontend-service/commit/0e35ad9f9b3354395d20e6c4ad907e2e89a9cab6))
+
 ## [1.0.8](https://github.com/LetsStreamIt/frontend-service/compare/v1.0.7...v1.0.8) (2024-12-22)
 
 ### Dependency updates
