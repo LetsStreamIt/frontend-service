@@ -15,7 +15,7 @@ export default {
     <div class="row">
       <SessionNavbar />
     </div>
-    <div class="row vh-100">
+    <div class="row vh-100 pb-5 ml-0">
       <router-view />
     </div>
     <div class="row">

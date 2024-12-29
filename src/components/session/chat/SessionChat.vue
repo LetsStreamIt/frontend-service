@@ -93,7 +93,7 @@ onMounted(() => {
     <div
       v-if="chatStyleAttr.isChatHidden && chatContent.chatMessages.length > 0"
       class="card"
-      style="overflow-y: scroll; max-height: 500px"
+      style="overflow-y: scroll; max-height: 30vh"
     >
       <div v-for="(message, index) in chatContent.chatMessages" :key="index">
         <NotificationMessageComponent
